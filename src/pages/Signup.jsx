@@ -193,7 +193,7 @@ const Signup = () => {
                     Upload your profile picture
                   </label>
                   <Input type="file" className="text-slate-300" />
-                  <div className="h-[350px] w-[350px] mt-5 mx-auto rounded-full bg-zinc-300"></div>
+                  <div className="md:h-[350px] md:w-[350px] h-[200px] w-[200px] mt-5 mx-auto rounded-full bg-zinc-300"></div>
                 </div>
                 <div className="grid gap-2 w-full">
                   <label className="font-bold">Enter your username:</label>
