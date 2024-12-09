@@ -1,5 +1,8 @@
 import VoteCard from "./VoteCard";
-import image from "../assets/samples/ballondor.png";
+import image1 from "../assets/samples/ballondor.png";
+import image2 from "../assets/samples/chess.png";
+import image3 from "../assets/samples/oscars.png";
+import image4 from "../assets/samples/nextjs.png";
 
 const VoteLists = () => {
   const fakeVotingList = [
@@ -207,7 +210,11 @@ const VoteLists = () => {
       start_date: "2024-12-12",
       end_date: "2024-12-21",
     },
-    ];
+  ];
+
+  const images = [image1, image2, image3, image4];
+
+  const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
   return (
     <div className="mt-10 text-white">
@@ -216,7 +223,7 @@ const VoteLists = () => {
           {fakeVotingList.map((vote, index) => (
             <VoteCard
               key={index}
-              image={image}
+              image={randomImage()}
               description={vote.description}
               options={vote.options}
               status={vote.status}

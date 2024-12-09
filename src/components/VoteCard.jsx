@@ -34,8 +34,6 @@ const VoteCard = ({
     }
   };
 
-  const startDate = new Date(start_date).toDateString();
-  const endDate = new Date(end_date).toDateString();
 
   function convertUTCToEnglishDate(utcDate) {
     const date = new Date(utcDate); // Convert the UTC date string to a Date object
@@ -63,7 +61,7 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip rounded-md grid gap-2">
+    <div className="bg-zinc-800 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip shadow-md rounded-md grid gap-2">
       <div className="grid items-center py-3 px-4 gap-3">
         <h2 className="text-[1.1rem]">{description}</h2>
         <div className="flex rounded-md shadow-md overflow-clip items-stretch">
