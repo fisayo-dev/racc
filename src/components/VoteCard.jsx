@@ -56,7 +56,7 @@ const VoteCard = ({
       return <p>{voters.length} voting</p>;
     } else {
       // checks if voting has ended
-      return <p>{voters.length} voter voted </p>;
+      return <p>{voters.length} {voters.length > 1 ? 'voters': 'voter'} voted </p>;
     }
   };
   return (
