@@ -33,53 +33,35 @@ const VoteCard = ({
     }
   };
 
-  const startDate = new Date(start_date);
-  const endDate = new Date(end_date);
-  const currentDate = new Date();
-  currentDate.setHours(0, 0, 0, 0);
+  const startDate = new Date(start_date).toDateString();
+  const startDateUTC = startDate.toLocaleString();
+  const endDate = new Date(end_date).toDateString();
+  const currentDate = new Date().toDateString();
+  console.log(startDate, endDate);
 
   function convertUTCToEnglishDate(utcDate) {
     const date = new Date(utcDate); // Convert the UTC date string to a Date object
 
     // Use toLocaleDateString to format the date in an English-readable format
     const options = {
-      weekday: "long", // "Monday"
       year: "numeric", // "2024"
-      month: "long", // "December"
+      month: "short", // "December"
       day: "numeric", // "9"
-      hour: "numeric", // "12"
-      minute: "numeric", // "00"
-      second: "numeric", // "00"
-      hour12: true, // 12-hour format for the time (AM/PM)
     };
 
-    return date.toLocaleString("en-US", options); // Converts to the desired format
+    return date.toLocaleDateString("en-US", options); 
   }
 
   const getVoterStatus = () => {
-    if (voters.length !== 0) {
-      if (startDate <= currentDate && currentDate < endDate) {
-        // Checks if voting is ongoing
-        return (
-          <>
-            <p>{voters.length} voting</p>
-          </>
-        );
-      } else if (startDate < currentDate && endDate < currentDate) {
-        //   Check if voting has ended.
-        return (
-          <>
-            <p>{voters.length} voted.</p>
-          </>
-        );
-      }
+    if (status == "upcoming") {
+      // Checks if voting is upcoming
+      return <p>{convertUTCToEnglishDate(start_date)} </p>;
+    } else if (status == "ongoing") {
+      // checks if voting is ongoing
+      return <p>{voters.length} voting</p>;
     } else {
-      //  Check if voting will commence
-      return (
-        <>
-          <p>{convertUTCToEnglishDate.bind(this, start_date)}</p>
-        </>
-      );
+      // checks if voting has ended
+      return <p>{voters.length} voter voted </p>;
     }
   };
   return (
@@ -95,7 +77,9 @@ const VoteCard = ({
           ))}
         </div>
         <div className="flex text-[0.8rem] items-center justify-between gap-5">
-          <div className="flex items-center gap-[0.57rem]">{getVoteStatus()}</div>
+          <div className="flex items-center gap-[0.57rem]">
+            {getVoteStatus()}
+          </div>
           <div>{getVoterStatus()}</div>
         </div>
       </div>

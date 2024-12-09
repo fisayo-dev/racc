@@ -1,5 +1,5 @@
 import VoteCard from "./VoteCard";
-import image from "../assets/samples/chess.png";
+import image from "../assets/samples/oscars.png";
 
 const VoteLists = () => {
   const fakeVotingList = [
