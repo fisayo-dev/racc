@@ -49,7 +49,7 @@ const Signup = () => {
               <div className="grid gap-2">
                 <label className="font-bold">Repeat password:</label>
                 <input
-                  type="text"
+                  type="password"
                   className="border-[0.1rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                   placeholder="Re-enter your password"
                 />
