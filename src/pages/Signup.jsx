@@ -11,7 +11,7 @@ import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input} from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 
 import { Forward } from "iconsax-react";
+import { FingerPrintIcon } from "@heroicons/react/24/outline";
 const Signup = () => {
   const [date, setDate] = useState();
   return (
@@ -171,12 +172,52 @@ const Signup = () => {
                   className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                   placeholder="@fisayobadina"
                 />
-                <label className="text-sm">This is your public display name</label>
+                <label className="text-sm">
+                  This is your public display name
+                </label>
               </div>
             </div>
             <Button type="icon">
               <p>Next</p>
               <Forward />
+            </Button>
+          </div>
+        </div>
+        <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="grid gap-6">
+            <h2 className="text-center text-3xl font-bold">
+              How do you want to vote ?
+            </h2>
+            <div className="grid gap-3">
+              <div className="grid gap-2 w-full">
+                <label className="font-bold">Use Voting ID</label>
+                <input
+                  type="text"
+                  className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
+                  placeholder="must be at least 10 character long"
+                />
+                <label className="text-sm">
+                  You will use this ID anytime you want to vote
+                </label>
+              </div>
+              <p className="text-center py-1 text-zinc-300"> ---------------------- OR ----------------------</p>
+              <div className="grid gap-2 w-full">
+                <label className="font-bold">Use Fingerprint</label>
+                <div
+                  className="border-[0.1rem] cursor-pointer hover:text-zinc-800 shadow-md text-[0.9rem] hover:bg-zinc-400 border-zinc-400 py-3 px-3 rounded-md w-full"
+                >
+                  <div className="flex items-center gap-2 justify-center">
+                    <FingerPrintIcon className="w-6 h-6" />
+                    <p>Intergrate my Fingerprint</p>
+                  </div>
+                </div>
+                <label className="text-sm">
+                  You will have to verify via fingerprint each time you want to vote
+                </label>
+              </div>
+            </div>
+            <Button type="icon">
+              <p>Finish Account</p>
             </Button>
           </div>
         </div>
