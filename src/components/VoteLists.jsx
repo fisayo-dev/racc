@@ -230,6 +230,7 @@ const VoteLists = () => {
               description={vote.description}
               options={vote.options}
               status={vote.status}
+              tags={vote.tags}
               start_date={vote.start_date}
               voters={vote.voters}
             />

@@ -3,6 +3,7 @@ import { Clock } from "iconsax-react";
 const VoteCard = ({
   image,
   options,
+  tags,
   description,
   status,
   voters,
@@ -33,7 +34,6 @@ const VoteCard = ({
     }
   };
 
-
   function convertUTCToEnglishDate(utcDate) {
     const date = new Date(utcDate); // Convert the UTC date string to a Date object
 
@@ -60,24 +60,35 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 text-slate-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip shadow-md rounded-md grid gap-2">
+    <div className="bg-zinc-800 text-slate-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-md grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4">
-        <h2 className="text-[1.1rem]">{description}</h2>
+        <h2 className="md:text-[1.1rem] text-[1.4rem] text-slate-200 font-bold">
+          {description}
+        </h2>
+        <div className="flex items-center gap-2 flex-wrap">
+          {tags.map((tag) => (
+            <div className="px-3 text-[0.75rem] border border-zinc-700 hover:text-gray-300 text-gray-400 py-2 rounded-md">
+              #{tag}
+            </div>
+          ))}
+        </div>
         <div className="flex rounded-md shadow-md overflow-clip items-stretch">
           <img src={image} className="w-full" alt="" />
         </div>
-        <div className="grid gap-[0.4rem]">
+        {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
             <div className="px-4 py-3 hover:shadow-md border-[0.1rem] hover:bg-zinc-700 border-zinc-700 rounded-md text-[1.0.5rem]">
               {opt}
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="flex text-[0.8rem] items-center justify-between gap-5">
           <div className="flex items-center gap-[0.5rem]">
             {getVoteStatus()}
           </div>
-          <div className="hover:text-gray-200 text-gray-400">{getVoterStatus()}</div>
+          <div className="hover:text-gray-200 text-gray-400">
+            {getVoterStatus()}
+          </div>
         </div>
       </div>
     </div>
