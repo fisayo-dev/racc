@@ -23,6 +23,7 @@ import { Forward } from "iconsax-react";
 import { FingerPrintIcon } from "@heroicons/react/24/outline";
 const Signup = () => {
   const [date, setDate] = useState();
+  const [formStatus, setFormStatus] = useState(0);
   return (
     <div className="text-zinc-200 grid gap-3 py-5">
       <h2 className="md:text-4xl text-3xl text-blue-300 font-bold text-center py-5 ">
@@ -30,10 +31,26 @@ const Signup = () => {
       </h2>
       <div className="grid gap-5">
         <div className="flex justify-center gap-2">
-          <div className="rounded-xl w-10 md:w-20 p-1 bg-gray-400"></div>
-          <div className="rounded-xl w-10 md:w-20 p-1 bg-gray-400"></div>
-          <div className="rounded-xl w-10 md:w-20 p-1 bg-gray-400"></div>
-          <div className="rounded-xl w-10 md:w-20 p-1 bg-gray-400"></div>
+          <div
+            className={`rounded-xl w-10 md:w-20 p-1 ${
+              formStatus == 0 ? "bg-gray-400" : "bg-gray-600"
+            }`}
+          ></div>
+          <div
+            className={`rounded-xl w-10 md:w-20 p-1 ${
+              formStatus == 1 ? "bg-gray-400" : "bg-gray-600"
+            }`}
+          ></div>
+          <div
+            className={`rounded-xl w-10 md:w-20 p-1 ${
+              formStatus == 2 ? "bg-gray-400" : "bg-gray-600"
+            }`}
+          ></div>
+          <div
+            className={`rounded-xl w-10 md:w-20 p-1 ${
+              formStatus == 3 ? "bg-gray-400" : "bg-gray-600"
+            }`}
+          ></div>
         </div>
         <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
           <div className="grid gap-6">
@@ -200,19 +217,21 @@ const Signup = () => {
                   You will use this ID anytime you want to vote
                 </label>
               </div>
-              <p className="text-center py-1 text-zinc-300"> ---------------------- OR ----------------------</p>
+              <p className="text-center py-1 text-zinc-300">
+                {" "}
+                ---------------------- OR ----------------------
+              </p>
               <div className="grid gap-2 w-full">
                 <label className="font-bold">Use Fingerprint</label>
-                <div
-                  className="border-[0.1rem] cursor-pointer hover:text-zinc-800 shadow-md text-[0.9rem] hover:bg-zinc-400 border-zinc-400 py-3 px-3 rounded-md w-full"
-                >
+                <div className="border-[0.1rem] cursor-pointer hover:text-zinc-800 shadow-md text-[0.9rem] hover:bg-zinc-400 border-zinc-400 py-3 px-3 rounded-md w-full">
                   <div className="flex items-center gap-2 justify-center">
                     <FingerPrintIcon className="w-6 h-6" />
                     <p>Intergrate my Fingerprint</p>
                   </div>
                 </div>
                 <label className="text-sm">
-                  You will have to verify via fingerprint each time you want to vote
+                  You will have to verify via fingerprint each time you want to
+                  vote
                 </label>
               </div>
             </div>
