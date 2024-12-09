@@ -35,10 +35,7 @@ const VoteCard = ({
   };
 
   const startDate = new Date(start_date).toDateString();
-  const startDateUTC = startDate.toLocaleString();
   const endDate = new Date(end_date).toDateString();
-  const currentDate = new Date().toDateString();
-  console.log(startDate, endDate);
 
   function convertUTCToEnglishDate(utcDate) {
     const date = new Date(utcDate); // Convert the UTC date string to a Date object
@@ -50,7 +47,7 @@ const VoteCard = ({
       day: "numeric", // "9"
     };
 
-    return date.toLocaleDateString("en-US", options); 
+    return date.toLocaleDateString("en-US", options);
   }
 
   const getVoterStatus = () => {
@@ -66,10 +63,12 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 cursor-pointer overflow-clip  rounded-md grid gap-2">
-      <img src={image} alt="" />
-      <div className="grid py-3 px-4 gap-3">
+    <div className="bg-zinc-800 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip rounded-md grid gap-2">
+      <div className="grid items-center py-3 px-4 gap-3">
         <h2 className="text-[1.1rem]">{description}</h2>
+        <div className="flex rounded-md shadow-md overflow-clip items-stretch">
+          <img src={image} className="w-full" alt="" />
+        </div>
         <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
             <div className="px-4 py-3 hover:shadow-md border-[0.1rem] hover:bg-zinc-700 border-zinc-700 rounded-md text-[1.0.5rem]">

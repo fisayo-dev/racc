@@ -207,12 +207,12 @@ const VoteLists = () => {
       start_date: "2024-12-12",
       end_date: "2024-12-21",
     },
-  ];
+    ];
 
   return (
     <div className="mt-10 text-white">
       <div className="container mx-auto md:px-20 px-5 ">
-        <div className="grid gap-5 grid-cols-4">
+        <div className="grid gap-5 2xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
             <VoteCard
               key={index}
