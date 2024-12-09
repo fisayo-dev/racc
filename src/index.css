@@ -8,6 +8,10 @@
   font-family: 'Geist', 'Sora', 'Poppins';
 }
 
+body {
+  @apply bg-zinc-900
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
