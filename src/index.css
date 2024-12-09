@@ -77,7 +77,7 @@ body {
   }
 }
 
-input,button {
+input,button,select {
   background-color: transparent;
   outline: none;
 }
