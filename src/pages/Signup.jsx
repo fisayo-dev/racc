@@ -145,22 +145,6 @@ const Signup = () => {
                   </PopoverContent>
                 </Popover>
               </div>
-              <div className="grid gap-2">
-                <label className="font-bold">Password:</label>
-                <input
-                  type="password"
-                  className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
-                  placeholder="Must not be less than 6 digits"
-                />
-              </div>
-              <div className="grid gap-2">
-                <label className="font-bold">Repeat password:</label>
-                <input
-                  type="password"
-                  className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
-                  placeholder="Re-enter your password"
-                />
-              </div>
             </div>
             <Button type="icon">
               <p>Next</p>
