@@ -35,23 +35,21 @@ const Signup = () => {
       <div className="grid gap-5 my-3">
         <div className="flex justify-center gap-2">
           <div
+            className="rounded-xl w-10 md:w-20 p-1 bg-gray-400
+          "></div>
+          <div
             className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus == 0 ? "bg-gray-400" : "bg-gray-600"
+              formStatus >=  1 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
           <div
             className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus == 1 ? "bg-gray-400" : "bg-gray-600"
+              formStatus >= 2 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
           <div
             className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus == 2 ? "bg-gray-400" : "bg-gray-600"
-            }`}
-          ></div>
-          <div
-            className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus == 3 ? "bg-gray-400" : "bg-gray-600"
+              formStatus >= 3 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
         </div>
