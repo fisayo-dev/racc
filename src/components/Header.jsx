@@ -18,7 +18,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <SearchNormal1 className="block md:hidden h-6 w-6 text-zinc-300" />
           <Link to="/signup">
-            <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg px-4 py-5">
+            <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg ">
               Sign in to vote
             </Button>
           </Link>
