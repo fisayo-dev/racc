@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,9 +27,11 @@ const Signup = () => {
   const [formStatus, setFormStatus] = useState(0);
   return (
     <div className="text-zinc-200 grid gap-3 py-5">
+      <Link to="/">
       <h2 className="md:text-4xl text-3xl text-blue-300 font-bold text-center py-5 ">
         Racc
       </h2>
+      </Link>
       <div className="grid gap-5">
         <div className="flex justify-center gap-2">
           <div
