@@ -218,7 +218,10 @@ const VoteLists = () => {
 
   return (
     <div className="mt-10 text-white">
-      <div className="container mx-auto md:px-20 px-5 ">
+      <div className="container grid gap-8 mx-auto md:px-20 px-5 ">
+        <h2 className="md:text-5xl text-3xl font-bold">
+          Join the community of voters
+        </h2>
         <div className="grid gap-5 2xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
             <VoteCard
