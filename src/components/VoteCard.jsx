@@ -2,7 +2,7 @@ import { Timer, Calendar, TickCircle } from "iconsax-react";
 const VoteCard = ({
   image,
   options,
-  title,
+  description,
   status,
   voters,
   start_date,
@@ -12,21 +12,21 @@ const VoteCard = ({
     if (status == "ongoing") {
       return (
         <>
-          <Timer className="h-6 w-6" />
+          <Timer className="h-5 w-5" />
           <p>Ongoing</p>
         </>
       );
     } else if (status == "upcoming") {
       return (
         <>
-          <Calendar className="h-6 w-6" />
+          <Calendar className="h-5 w-5" />
           <p>Upcoming</p>
         </>
       );
     } else {
       return (
         <>
-          <TickCircle className="h-6 w-6" />
+          <TickCircle className="h-5 w-5" />
           <p>Ended</p>
         </>
       );
@@ -83,10 +83,10 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-700 hover:bg-zinc-600 rounded-md grid gap-3">
+    <div className="bg-zinc-800 cursor-pointer  overflow-clip hover:bg-zinc-700 rounded-md grid gap-2">
       <img src={image} alt="" />
-      <div className="py-3 px-4">
-        <h2 className="text-[1.1rem]">{title}</h2>
+      <div className="grid py-3 px-4 gap-3">
+        <h2 className="text-[1.1rem]">{description}</h2>
         <div className="grid gap-3">
           {options.map((opt) => {
             <div className="px-4 py-3 border-[0.1rem] border-zinc-700 rounded-md text-[1.0.5rem]">
@@ -94,9 +94,9 @@ const VoteCard = ({
             </div>;
           })}
         </div>
-        <div className="flex text-[0.9rem] items-center justify-between gap-5">
-          <div className="flex items-center gap-2">{getVoteStatus}</div>
-          <div>{getVoterStatus}</div>
+        <div className="flex text-[0.8rem] items-center justify-between gap-5">
+          <div className="flex items-center gap-[0.57rem]">{getVoteStatus()}</div>
+          <div>{getVoterStatus()}</div>
         </div>
       </div>
     </div>
