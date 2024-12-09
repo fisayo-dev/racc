@@ -56,7 +56,7 @@ const Signup = () => {
           ></div>
         </div>
         {formStatus == 0 && (
-          <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
             <div className="grid gap-6">
               <h2 className="text-center text-3xl font-bold">
                 Hi, Lets get to know you
@@ -116,7 +116,7 @@ const Signup = () => {
           </div>
         )}
         {formStatus == 1 && (
-          <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
             <div className="grid gap-6">
               <h2 className="text-center text-3xl font-bold">
                 Tell us more about yourself, Fisayo
@@ -185,7 +185,7 @@ const Signup = () => {
           </div>
         )}
         {formStatus == 2 && (
-          <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
             <div className="grid gap-6">
               <h2 className="text-center text-3xl font-bold">
                 Let people be able to see you
@@ -221,7 +221,7 @@ const Signup = () => {
           </div>
         )}
         {formStatus == 3 && (
-          <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
             <div className="grid gap-6">
               <h2 className="text-center text-3xl font-bold">
                 How do you want to vote ?
