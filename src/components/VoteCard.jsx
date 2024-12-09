@@ -1,4 +1,5 @@
 import { Timer, Calendar, TickCircle } from "iconsax-react";
+import { Clock } from "iconsax-react";
 const VoteCard = ({
   image,
   options,
@@ -12,7 +13,7 @@ const VoteCard = ({
     if (status == "ongoing") {
       return (
         <>
-          <Timer className="h-5 w-5" />
+          <Clock className="h-5 w-5" />
           <p>Ongoing</p>
         </>
       );
