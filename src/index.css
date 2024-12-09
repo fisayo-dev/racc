@@ -82,3 +82,7 @@ input,select {
   border: none;
   outline: none;
 }
+
+.search-input::placeholder {
+  @apply text-slate-300;
+}

@@ -7,7 +7,7 @@ const Header = () => {
         <div className="hidden md:grid bg-zinc-600 w-3/5 rounded-lg px-4 py-3">
           <input
             type="text"
-            className="w-full text-slate-100"
+            className="search-input w-full text-slate-100"
             placeholder="Search for votes by name or tags"
           />
         </div>
