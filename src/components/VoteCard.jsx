@@ -7,7 +7,6 @@ const VoteCard = ({
   status,
   voters,
   start_date,
-  end_date,
 }) => {
   const getVoteStatus = () => {
     if (status == "ongoing") {

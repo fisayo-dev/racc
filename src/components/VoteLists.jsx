@@ -228,7 +228,6 @@ const VoteLists = () => {
               options={vote.options}
               status={vote.status}
               start_date={vote.start_date}
-              end_date={vote.end_date}
               voters={vote.voters}
             />
           ))}
