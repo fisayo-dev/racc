@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -6,8 +5,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import { Forward } from "iconsax-react";
 const Signup = () => {
+  const [date, setDate] = useState();
   return (
     <div className="text-zinc-200 grid gap-3 py-5">
       <h2 className="md:text-4xl text-3xl text-blue-300 font-bold text-center py-5 ">
@@ -84,7 +97,7 @@ const Signup = () => {
               <div className="grid gap-2 w-full shadow-md">
                 <label className="font-bold">Where do you live ?</label>
                 <Select className="outline-none">
-                  <SelectTrigger >
+                  <SelectTrigger>
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -97,7 +110,7 @@ const Signup = () => {
               <div className="grid gap-2 w-full shadow-md">
                 <label className="font-bold">What's your Gender ?</label>
                 <Select className="outline-none">
-                  <SelectTrigger >
+                  <SelectTrigger>
                     <SelectValue placeholder="Choose your gender" />
                   </SelectTrigger>
                   <SelectContent>
@@ -108,12 +121,29 @@ const Signup = () => {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <label className="font-bold">Email address:</label>
-                <input
-                  type="text"
-                  className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
-                  placeholder="Ex. johndoe@gmail.com"
-                />
+                <label className="font-bold">When were you born ?</label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "bg-transparent text-gray-200 justify-start text-left font-normal",
+                        !date && "text-gray-300"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="grid gap-2">
                 <label className="font-bold">Password:</label>

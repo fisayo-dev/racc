@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@radix-ui/react-popover": "^1.1.2",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "appwrite": "^16.0.2",
