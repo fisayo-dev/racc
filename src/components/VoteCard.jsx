@@ -60,7 +60,7 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip shadow-md rounded-md grid gap-2">
+    <div className="bg-zinc-800 text-slate-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer overflow-clip shadow-md rounded-md grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4">
         <h2 className="text-[1.1rem]">{description}</h2>
         <div className="flex rounded-md shadow-md overflow-clip items-stretch">
@@ -74,10 +74,10 @@ const VoteCard = ({
           ))}
         </div>
         <div className="flex text-[0.8rem] items-center justify-between gap-5">
-          <div className="flex items-center gap-[0.57rem]">
+          <div className="flex items-center gap-[0.5rem]">
             {getVoteStatus()}
           </div>
-          <div>{getVoterStatus()}</div>
+          <div className="text-blue-300">{getVoterStatus()}</div>
         </div>
       </div>
     </div>
