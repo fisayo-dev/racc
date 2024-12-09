@@ -3,6 +3,11 @@ import image1 from "../assets/samples/ballondor.png";
 import image2 from "../assets/samples/chess.png";
 import image3 from "../assets/samples/oscars.png";
 import image4 from "../assets/samples/nextjs.png";
+import image5 from "../assets/samples/nextjs2.png";
+import image6 from "../assets/samples/no.png";
+import image7 from "../assets/samples/performance.png";
+import image8 from "../assets/samples/tricks.png";
+import image9 from "../assets/samples/dailydotdev.png";
 
 const VoteLists = () => {
   const fakeVotingList = [
@@ -212,7 +217,7 @@ const VoteLists = () => {
     },
   ];
 
-  const images = [image1, image2, image3, image4];
+  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
 
   const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
