@@ -14,9 +14,12 @@ const Header = () => {
           />
           <SearchNormal1 className="h-6 w-6" />
         </div>
-        <Button className="border-[0.1rem] text-[1rem] text-blue-300 hover:bg-zinc-700 border-zinc-700 rounded-lg">
-          Sign in to vote
-        </Button>
+              <div className="flex items-center gap-3">
+                  <SearchNormal1 className="block md:hidden h-6 w-6 text-zinc-300"/>
+          <Button className="border-[0.1rem] text-[1rem] text-blue-300 hover:bg-zinc-700 border-zinc-700 rounded-lg p-4">
+            Sign in to vote
+          </Button>
+        </div>
       </div>
     </div>
   );
