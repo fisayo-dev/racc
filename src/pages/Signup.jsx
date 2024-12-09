@@ -237,7 +237,7 @@ const Signup = () => {
                 </div>
                 <p className="text-center py-1 text-zinc-300">
                   {" "}
-                  ---------------------- OR ----------------------
+                  OR
                 </p>
                 <div className="grid gap-2 w-full">
                   <label className="font-bold">Use Fingerprint</label>
