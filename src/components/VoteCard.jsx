@@ -1,4 +1,5 @@
-import { Calendar, TickCircle } from "iconsax-react";
+import { FingerPrintIcon } from "@heroicons/react/24/outline";
+import { Calendar, Graph, Status, TickCircle } from "iconsax-react";
 import { Clock } from "iconsax-react";
 const VoteCard = ({
   image,
@@ -56,7 +57,11 @@ const VoteCard = ({
       return <p>{voters.length} voting</p>;
     } else {
       // checks if voting has ended
-      return <p>{voters.length} {voters.length > 1 ? 'voters': 'voter'} voted </p>;
+      return (
+        <p>
+          {voters.length} {voters.length > 1 ? "voters" : "voter"} voted{" "}
+        </p>
+      );
     }
   };
   return (
@@ -90,6 +95,24 @@ const VoteCard = ({
             {getVoterStatus()}
           </div>
         </div>
+        {status == "ongoing" && (
+          <button className="flex items-center justify-center text-center w-full p-3 bg-green-300 hover:bg-green-400 text-zinc-900 rounded-lg gap-2">
+            <FingerPrintIcon className="h-6 w-6" />
+            <p>Cast Vote</p>
+          </button>
+        )}
+        {status == "ended" && (
+          <button className="flex items-center justify-center text-center w-full p-3 bg-blue-300 hover:bg-blue-400 text-zinc-900 rounded-lg gap-2">
+            <Status className="h-6 w-6" />
+            <p>View Result</p>
+          </button>
+        )}
+        {status == "upcoming" && (
+          <button className="flex items-center justify-center text-center w-full p-3 bg-orange-300 hover:bg-orange-400 text-zinc-900 rounded-lg gap-2">
+            <Graph className="h-6 w-6" />
+            <p>Analyze Options</p>
+          </button>
+        )}
       </div>
     </div>
   );
