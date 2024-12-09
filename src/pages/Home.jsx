@@ -1,7 +1,10 @@
+import { Button } from "@/components/ui/button";
 const Home = () => {
   return (
-    <div className="tex-2xl">Home</div>
-  )
-}
+    <div className="bg-zinc-900">
+      <Button>Click me</Button>
+    </div>
+  );
+};
 
-export default Home
+export default Home;
