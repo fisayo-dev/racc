@@ -11,6 +11,7 @@ import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Input} from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -144,6 +145,33 @@ const Signup = () => {
                     />
                   </PopoverContent>
                 </Popover>
+              </div>
+            </div>
+            <Button type="icon">
+              <p>Next</p>
+              <Forward />
+            </Button>
+          </div>
+        </div>
+        <div className=" md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+          <div className="grid gap-6">
+            <h2 className="text-center text-3xl font-bold">
+              Let people be able to see you
+            </h2>
+            <div className="grid gap-3">
+              <div className="grid gap-2 w-full">
+                <label className="font-bold">Upload your profile picture</label>
+                <Input type="file" className="text-slate-300" />
+                <div className="h-[350px] w-[350px] mt-5 mx-auto rounded-full bg-zinc-300"></div>
+              </div>
+              <div className="grid gap-2 w-full">
+                <label className="font-bold">Enter your username:</label>
+                <input
+                  type="text"
+                  className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
+                  placeholder="@fisayobadina"
+                />
+                <label className="text-sm">This is your public display name</label>
               </div>
             </div>
             <Button type="icon">
