@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Filter, SearchNormal1 } from "iconsax-react";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
@@ -16,9 +17,11 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-3">
           <SearchNormal1 className="block md:hidden h-6 w-6 text-zinc-300" />
-          <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg px-4 py-5">
-            Sign in to vote
-          </Button>
+          <Link to="/signup">
+            <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg px-4 py-5">
+              Sign in to vote
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
