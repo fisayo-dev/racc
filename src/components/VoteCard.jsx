@@ -1,4 +1,4 @@
-import { Timer, Calendar, TickCircle } from "iconsax-react";
+import { Calendar, TickCircle } from "iconsax-react";
 import { Clock } from "iconsax-react";
 const VoteCard = ({
   image,
