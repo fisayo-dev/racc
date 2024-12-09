@@ -217,7 +217,7 @@ const VoteLists = () => {
   const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
   return (
-    <div className="mt-[7rem] text-white">
+    <div className="mt-[7rem] mb-[4rem] text-white">
       <div className="container grid gap-8 mx-auto md:px-20 px-5 ">
         <h2 className="md:text-5xl text-3xl font-bold">
           Join the community of voters

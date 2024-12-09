@@ -60,9 +60,9 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 text-slate-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-md grid gap-2">
+    <div className="bg-zinc-800 text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-md grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4">
-        <h2 className="md:text-[1.1rem] text-[1.4rem] text-slate-200 font-bold">
+        <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
           {description}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
