@@ -82,7 +82,7 @@ const Signup = () => {
             </h2>
             <div className="grid gap-3">
               <div className="grid gap-2 w-full shadow-md">
-                <label className="font-bold">Natinality:</label>
+                <label className="font-bold">Where do you live ?</label>
                 <Select className="outline-none">
                   <SelectTrigger >
                     <SelectValue placeholder="Select your country" />
@@ -95,15 +95,15 @@ const Signup = () => {
                 </Select>
               </div>
               <div className="grid gap-2 w-full shadow-md">
-                <label className="font-bold">Last Name:</label>
+                <label className="font-bold">What's your Gender ?</label>
                 <Select className="outline-none">
                   <SelectTrigger >
-                    <SelectValue placeholder="Select your country" />
+                    <SelectValue placeholder="Choose your gender" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Nigeria</SelectItem>
-                    <SelectItem value="dark">South America</SelectItem>
-                    <SelectItem value="system">China</SelectItem>
+                    <SelectItem value="light">Male</SelectItem>
+                    <SelectItem value="dark">Female</SelectItem>
+                    <SelectItem value="system">Others</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
