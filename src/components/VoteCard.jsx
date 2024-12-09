@@ -77,7 +77,7 @@ const VoteCard = ({
           <div className="flex items-center gap-[0.5rem]">
             {getVoteStatus()}
           </div>
-          <div className="text-blue-300">{getVoterStatus()}</div>
+          <div className="hover:text-gray-200 text-gray-400">{getVoterStatus()}</div>
         </div>
       </div>
     </div>
