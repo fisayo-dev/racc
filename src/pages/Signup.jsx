@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { FormatSquare, Forward } from "iconsax-react";
+import { Forward } from "iconsax-react";
 import { FingerPrintIcon } from "@heroicons/react/24/outline";
 const Signup = () => {
   const [date, setDate] = useState();
@@ -102,7 +102,10 @@ const Signup = () => {
                   />
                 </div>
               </div>
-              <Button type="icon">
+              <Button
+                onClick={() => setFormStatus((prev) => prev + 1)}
+                type="icon"
+              >
                 <p>Next</p>
                 <Forward />
               </Button>
@@ -168,7 +171,10 @@ const Signup = () => {
                   </Popover>
                 </div>
               </div>
-              <Button type="icon">
+              <Button
+                onClick={() => setFormStatus((prev) => prev + 1)}
+                type="icon"
+              >
                 <p>Next</p>
                 <Forward />
               </Button>
@@ -201,7 +207,10 @@ const Signup = () => {
                   </label>
                 </div>
               </div>
-              <Button type="icon">
+              <Button
+                onClick={() => setFormStatus((prev) => prev + 1)}
+                type="icon"
+              >
                 <p>Next</p>
                 <Forward />
               </Button>
@@ -244,7 +253,9 @@ const Signup = () => {
                   </label>
                 </div>
               </div>
-              <Button type="icon">
+              <Button
+                type="icon"
+              >
                 <p>Finish Account</p>
               </Button>
             </div>
