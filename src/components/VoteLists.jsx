@@ -268,7 +268,7 @@ const VoteLists = () => {
         <h2 className="md:text-5xl text-3xl font-bold">
           Join the community of voters
         </h2>
-        <div className="grid items-center gap-4 2xl:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+        <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
             <Link key={index} to={`/vote/${vote.id}`}>
               <VoteCard
