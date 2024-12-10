@@ -105,13 +105,13 @@ const Signup = () => {
                     />
                   </div>
                 </div>
+
                 <Button
-                  className="bg-zinc-700 hover:bg-zinc-600"
+                  className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
                   <p>Next</p>
-                  <Forward />
                 </Button>
               </div>
             </div>
@@ -181,14 +181,22 @@ const Signup = () => {
                     </Popover>
                   </div>
                 </div>
-                <Button
-                  className="bg-zinc-700 hover:bg-zinc-600"
-                  onClick={() => setFormStatus((prev) => prev + 1)}
-                  type="icon"
-                >
-                  <p>Next</p>
-                  <Forward />
-                </Button>
+                <div className="flex items-center gap-2 justify-center">
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={() => setFormStatus((prev) => prev - 1)}
+                    type="icon"
+                  >
+                    <p>Previous</p>
+                  </Button>
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={() => setFormStatus((prev) => prev + 1)}
+                    type="icon"
+                  >
+                    <p>Next</p>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -220,14 +228,22 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button
-                  className="bg-zinc-700 hover:bg-zinc-600"
-                  onClick={() => setFormStatus((prev) => prev + 1)}
-                  type="icon"
-                >
-                  <p>Next</p>
-                  <Forward />
-                </Button>
+                <div className="flex items-center gap-2 justify-center">
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={() => setFormStatus((prev) => prev - 1)}
+                    type="icon"
+                  >
+                    <p>Previous</p>
+                  </Button>
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={() => setFormStatus((prev) => prev + 1)}
+                    type="icon"
+                  >
+                    <p>Next</p>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -266,7 +282,10 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button className="bg-zinc-700 hover:bg-zinc-600" type="icon">
+                <Button
+                  className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                  type="icon"
+                >
                   <p>Finish Account</p>
                 </Button>
               </div>
