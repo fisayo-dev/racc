@@ -51,7 +51,7 @@ const VoteDescription = () => {
                   {voters.length > 0 ? (
                     <p>
                       {voters.length} people{" "}
-                      {status == "ended" ? "voted" : "are voting"}
+                      {status == "ended" ? "voted" : "have voted"}
                     </p>
                   ) : (
                     <p>No voters available</p>
