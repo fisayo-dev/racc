@@ -26,11 +26,11 @@ const VoteDescription = () => {
                 <img src={image4} className="w-full" alt="" />
               </div>
               <div className="grid gap-3">
-                <div className="flex text-yellow-400 items-center gap-2">
+                <div className="flex text-green-400 items-center gap-2">
                   <Clock className="w-6 h-6" />
                   <p>Ongoing - 2 days left</p>
                 </div>
-                <div className="flex text-green-400 items-center gap-2">
+                <div className="flex text-yellow-400 items-center gap-2">
                   <PiGraph className="w-6 h-6" />
                   <p>11 people voting</p>
                 </div>
