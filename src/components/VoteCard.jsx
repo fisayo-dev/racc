@@ -95,7 +95,7 @@ const VoteCard = ({
             {getVoterStatus()}
           </div>
         </div>
-        {status == "ongoing" && (
+        {/* {status == "ongoing" && (
           <button className="flex items-center justify-center text-center w-full p-3 bg-green-300 hover:bg-green-400 text-zinc-900 rounded-lg gap-2">
             <FingerPrintIcon className="h-6 w-6" />
             <p>Cast Vote</p>
@@ -112,7 +112,7 @@ const VoteCard = ({
             <Graph className="h-6 w-6" />
             <p>Analyze Options</p>
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
