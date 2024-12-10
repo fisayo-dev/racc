@@ -247,7 +247,7 @@ const Signup = () => {
                       className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Must be at least 10 character long"
                     />
-                    <label className="text-[0.8rem]">
+                    <label className="text-[0.8rem] text-zinc-300">
                       You will use this ID anytime you want to vote
                     </label>
                   </div>
@@ -260,7 +260,7 @@ const Signup = () => {
                         <p>Intergrate my Fingerprint</p>
                       </div>
                     </div>
-                    <label className="text-[0.8rem]">
+                    <label className="text-[0.8rem] text-zinc-300">
                       You will have to verify via fingerprint each time you want
                       to vote
                     </label>
