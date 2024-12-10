@@ -61,30 +61,26 @@ const VoteDescription = () => {
             </div>
             <div className="grid gap-5">
               <div className="grid gap-2">
-                <h2 className="md:text-3xl text-2xl">Options:</h2>
+                <h2 className="md:text-3xl text-2xl">Options</h2>
                 <p className="text-md">
-                  You have particpated in this voting exercise
+                  {status == "ongoing" &&
+                    "You have particpated in this voting exercise"}
+                  {/* Later, this code above should check if user id is among the voters arrauy of the vote object */}
+                  {status == "ended" && "You didn't participate in this vote."}
+                  {/* Later, this code above should check if user id is among the voters arrauy of the vote object */}
                 </p>
               </div>
               <div className="grid gap-3">
-                <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <p>Lionel Messi</p>
-                    <CheckBadgeIcon className="text-green-400 h-6 w-6" />
-                  </div>
-                </div>
-                <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <p>Christiano Ronaldo</p>
-                    {/* <CheckBadgeIcon className="text-green-400 h-6 w-6" /> */}
-                  </div>
-                </div>
-                <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
-                  <div className="flex items-center justify-between">
-                    <p>Kylian Mbappe</p>
-                    {/* <CheckBadgeIcon className="text-green-400 h-6 w-6" /> */}
-                  </div>
-                </div>
+                {options.map((option) => (
+                  <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
+                    <div className="flex items-center justify-between">
+                      <p>{option}</p>
+                            <CheckBadgeIcon className="text-green-400 h-6 w-6" />
+                            {/* Only show check badge if user choose it */}
+                    </div>
+                    </div>
+                    // When user clicks on option, if the vote is upcoming notify them that it is upcoming, else : allow them vote if vote is ongoing 
+                ))}
               </div>
             </div>
           </div>
