@@ -36,10 +36,11 @@ const Signup = () => {
         <div className="flex justify-center gap-2">
           <div
             className="rounded-xl w-10 md:w-20 p-1 bg-gray-400
-          "></div>
+          "
+          ></div>
           <div
             className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus >=  1 ? "bg-gray-400" : "bg-gray-600"
+              formStatus >= 1 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
           <div
@@ -58,7 +59,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Hi, Lets get to know you
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-3">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid md:flex items-center md:gap-10 gap-3">
@@ -104,8 +105,8 @@ const Signup = () => {
                     />
                   </div>
                 </div>
-                <Button 
-                className="bg-zinc-700 hover:bg-zinc-600"
+                <Button
+                  className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -121,7 +122,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Tell us more about yourself, Fisayo
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full shadow-md">
@@ -154,7 +155,7 @@ const Signup = () => {
                     <label className="font-bold">When were you born ?</label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button 
+                        <Button
                           variant={"outline"}
                           className={cn(
                             "bg-zinc-700 hover:bg-zinc-600 text-gray-200 justify-start text-left font-normal",
@@ -180,8 +181,8 @@ const Signup = () => {
                     </Popover>
                   </div>
                 </div>
-                <Button 
-                className="bg-zinc-700 hover:bg-zinc-600"
+                <Button
+                  className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -197,7 +198,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Let people be able to see you
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full">
@@ -219,8 +220,8 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button 
-                className="bg-zinc-700 hover:bg-zinc-600"
+                <Button
+                  className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -236,7 +237,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               How do you want to vote ?
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full">
@@ -265,14 +266,22 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button 
-                className="bg-zinc-700 hover:bg-zinc-600" type="icon">
+                <Button className="bg-zinc-700 hover:bg-zinc-600" type="icon">
                   <p>Finish Account</p>
                 </Button>
               </div>
             </div>
           </div>
         )}
+      </div>
+      <div className="text-sm flex justify-center items-center gap-1">
+        <p>Already have an account? </p>
+        <Link
+          to="/login"
+          className="text-zinc-300 hover:text-zinc-200 font-bold"
+        >
+          Login to the account
+        </Link>
       </div>
     </div>
   );
