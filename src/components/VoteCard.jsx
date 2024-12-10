@@ -77,8 +77,8 @@ const VoteCard = ({
             </div>
           ))}
         </div>
-        <div className="flex h-40 rounded-lg shadow-md overflow-clip items-stretch">
-          <img src={image} className="w-full bg-center bg-cover " alt="" draggable={false} />
+        <div className={`flex h-40 rounded-lg shadow-md overflow-clip`}>
+          <img src={image} className="w-full bg-center bg-cover"  draggable={false} />
         </div>
         {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
