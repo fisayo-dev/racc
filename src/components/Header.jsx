@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
-      <div className="container mx-auto md:px-20 px-5 flex gap-20 justify-between items-center">
+      <div className="container mx-auto xl:px-20 md:px-15 px-5 flex gap-20 justify-between items-center">
         <h2 className="text-2xl text-blue-300 font-bold">Racc</h2>
         <div className="hidden md:flex items-center gap-4 bg-zinc-700 w-3/5 rounded-lg px-4 py-3">
           <Filter className="h-6 w-6" />
