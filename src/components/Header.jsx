@@ -19,7 +19,12 @@ const Header = () => {
           <SearchNormal1 className="block md:hidden h-6 w-6 text-zinc-300" />
           <Link to="/signup">
             <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg ">
-              Sign in to vote
+              Signup
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button className="text-[1rem] text-blue-300 hover:bg-zinc-600 border-[0.1rem] border-zinc-600 rounded-lg ">
+              Login
             </Button>
           </Link>
         </div>
