@@ -26,11 +26,11 @@ const VoteDescription = () => {
                 <img src={image4} className="w-full" alt="" />
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex text-yellow-400 items-center gap-2">
                   <Clock className="w-6 h-6" />
                   <p>Ongoing - 2 days left</p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex text-green-400 items-center gap-2">
                   <PiGraph className="w-6 h-6" />
                   <p>11 people voting</p>
                 </div>
@@ -39,7 +39,7 @@ const VoteDescription = () => {
             <div className="grid gap-5">
               <div className="grid gap-2">
                 <h2 className="md:text-3xl text-2xl">Options:</h2>
-                <p className="text-md">Pick an option to vote</p>
+                <p className="text-md">You have particpated in this voting exercise</p>
               </div>
               <div className="grid gap-3">
                 <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
