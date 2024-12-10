@@ -5,6 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Home, Signup, Login } from "./pages";
+import VoteDescription from "./pages/vote/VoteDescription";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -13,6 +14,7 @@ function App() {
         {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/vote/:id" element={<VoteDescription />} />
       </>
     )
   );
