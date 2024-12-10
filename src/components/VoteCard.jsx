@@ -65,10 +65,10 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
+    <div className="bg-zinc-800 h-[410px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4">
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
-          {description}
+          {description.length > 50 ? `${description.substr(0,50)}...`: description}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
           {tags.map((tag) => (
@@ -77,8 +77,8 @@ const VoteCard = ({
             </div>
           ))}
         </div>
-        <div className="flex rounded-lg shadow-md overflow-clip items-stretch">
-          <img src={image} className="w-full" alt="" draggable={false} />
+        <div className="flex h-40 rounded-lg shadow-md overflow-clip items-stretch">
+          <img src={image} className="w-full bg-center bg-cover " alt="" draggable={false} />
         </div>
         {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
