@@ -33,7 +33,7 @@ const VoteDescription = () => {
               <div className="grid gap-3">
                 <div
                   className={`capitalize flex ${
-                    status == "upcoming" && "text-blue-400"
+                    status == "upcoming" && "text-yellow-400"
                   } ${status == "ended" && "text-red-400"} ${
                     status == "ongoing" && "text-green-400"
                   } items-center gap-2`}
@@ -44,13 +44,10 @@ const VoteDescription = () => {
                   <p>{status}</p>
                 </div>
                 <div
-                  className={`flex ${
-                    status == "ended" && "text-red-400"
-                  } ${
-                    status == "ongoing" && "text-green-400"
+                  className={`flex ${status == "ended" && "text-red-300"} ${
+                    status == "ongoing" && "text-green-300"
                   } items-center gap-2`}
                 >
-                  <PiGraph className="w-6 h-6" />
                   {voters.length > 0 ? (
                     <p>
                       {voters.length} people{" "}
