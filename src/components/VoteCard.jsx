@@ -13,21 +13,21 @@ const VoteCard = ({
   const getVoteStatus = () => {
     if (status == "ongoing") {
       return (
-        <div className="flex hover:text-yellow-300 text-yellow-400 items-center gap-[0.5rem]">
+        <div className="flex hover:text-green-300 text-green-400 items-center gap-[0.5rem]">
           <Clock className="h-5 w-5" />
           <p>Ongoing</p>
         </div>
       );
     } else if (status == "upcoming") {
       return (
-        <div className="flex hover:text-blue-300 text-blue-400 items-center gap-[0.5rem]">
+        <div className="flex hover:text-yellow-300 text-yellow-400 items-center gap-[0.5rem]">
           <Calendar className="h-5 w-5" />
           <p>Upcoming</p>
         </div>
       );
     } else {
       return (
-        <div className="flex hover:text-green-300 text-green-400 items-center gap-[0.5rem]">
+        <div className="flex hover:text-red-300 text-red-400 items-center gap-[0.5rem]">
           <TickCircle className="h-5 w-5" />
           <p>Ended</p>
         </div>
