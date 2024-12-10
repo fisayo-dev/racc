@@ -58,7 +58,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Hi, Lets get to know you
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-3">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-3">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid md:flex items-center md:gap-10 gap-3">
@@ -104,7 +104,8 @@ const Signup = () => {
                     />
                   </div>
                 </div>
-                <Button
+                <Button 
+                className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -120,7 +121,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Tell us more about yourself, Fisayo
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full shadow-md">
@@ -153,7 +154,8 @@ const Signup = () => {
                     <label className="font-bold">When were you born ?</label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button
+                        <Button 
+                        className="bg-zinc-700 hover:bg-zinc-600"
                           variant={"outline"}
                           className={cn(
                             "bg-transparent text-gray-200 justify-start text-left font-normal",
@@ -179,7 +181,8 @@ const Signup = () => {
                     </Popover>
                   </div>
                 </div>
-                <Button
+                <Button 
+                className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -195,7 +198,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               Let people be able to see you
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full">
@@ -217,7 +220,8 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button
+                <Button 
+                className="bg-zinc-700 hover:bg-zinc-600"
                   onClick={() => setFormStatus((prev) => prev + 1)}
                   type="icon"
                 >
@@ -233,7 +237,7 @@ const Signup = () => {
             <h2 className="text-center text-3xl font-bold">
               How do you want to vote ?
             </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full shadow-md mx-auto bg-zinc-700 md:rounded-xl rounded-t-3xl p-5 my-5">
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full">
@@ -243,7 +247,7 @@ const Signup = () => {
                       className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Must be at least 10 character long"
                     />
-                    <label className="text-[0.85rem]">
+                    <label className="text-[0.8rem]">
                       You will use this ID anytime you want to vote
                     </label>
                   </div>
@@ -256,13 +260,14 @@ const Signup = () => {
                         <p>Intergrate my Fingerprint</p>
                       </div>
                     </div>
-                    <label className="text-[0.85rem]">
+                    <label className="text-[0.8rem]">
                       You will have to verify via fingerprint each time you want
                       to vote
                     </label>
                   </div>
                 </div>
-                <Button type="icon">
+                <Button 
+                className="bg-zinc-700 hover:bg-zinc-600" type="icon">
                   <p>Finish Account</p>
                 </Button>
               </div>
