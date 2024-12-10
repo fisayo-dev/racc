@@ -155,10 +155,9 @@ const Signup = () => {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button 
-                        className="bg-zinc-700 hover:bg-zinc-600"
                           variant={"outline"}
                           className={cn(
-                            "bg-transparent text-gray-200 justify-start text-left font-normal",
+                            "bg-zinc-700 hover:bg-zinc-600 text-gray-200 justify-start text-left font-normal",
                             !date && "text-gray-300"
                           )}
                         >
