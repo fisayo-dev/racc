@@ -54,7 +54,7 @@ const VoteDescription = () => {
                       {status == "ended" ? "voted" : "have voted"}
                     </p>
                   ) : (
-                    <p>No voters available</p>
+                    <p>No votes available yet</p>
                   )}
                 </div>
               </div>
