@@ -1,4 +1,4 @@
-import { Hashtag, Paperclip } from "iconsax-react";
+import { Building, Hashtag, Paperclip } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
@@ -33,7 +33,7 @@ const CreateVote = () => {
       <Header />
       <div className="mt-[8rem]">
         <div className="container grid mx-auto xl:px-20 md:px-15 px-5 ">
-          <div className="grid gap[2.5rem] sm:gap-[7.5rem] md:gap-[10rem] items-start grid-cols-1 md:grid-cols-2">
+          <div className="grid gap-[3.5rem] sm:gap-[7.5rem] md:gap-[10rem] items-start grid-cols-1 md:grid-cols-2">
             <div className="grid gap-[5rem] my-5">
               <div className="grid gap-4">
                 <div className="flex items-center gap-2">
@@ -260,6 +260,26 @@ const CreateVote = () => {
                     <SelectContent>
                       <SelectItem value="female">Yes</SelectItem>
                       <SelectItem value="male">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                <div className="flex items-center gap-2">
+                  <Building className="h-7 w-7" />
+                  <h2 className="text-3xl font-bold">Voting Policy</h2>
+                </div>
+                <div className="grid gap-4">
+                  <h2 className="text-md">
+                    Do you want to enable franchise ?
+                  </h2>
+                  <Select className="outline-none">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose an option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dark">Yes, enable it</SelectItem>
+                      <SelectItem value="system">No, don't enable it</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
