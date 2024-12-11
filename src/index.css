@@ -85,3 +85,12 @@ input,button,select {
 .search-input::placeholder {
   @apply text-slate-300;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  @apply bg-zinc-900
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-600 rounded-full
+}
