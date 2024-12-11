@@ -1,6 +1,9 @@
+import { Header } from "../../components"
 const CreateVote = () => {
   return (
-    <div>CreateVote</div>
+    <>
+    <Header />
+  </>
   )
 }
 
