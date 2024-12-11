@@ -68,7 +68,7 @@ const VoteCard = ({
     <div className="bg-zinc-800 h-[410px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4">
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
-          {description.length > 50 ? `${description.substr(0,50)}...`: description}
+          {description.length > 40 ? `${description.substr(0,40)}...`: description}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
           {tags.map((tag) => (

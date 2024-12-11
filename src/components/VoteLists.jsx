@@ -27,7 +27,6 @@ export const fakeVotingList = [
     image: "",
     options: ["Android", "iOS"],
     description: "Which mobile OS offers better features and usability?",
-    status: "upcoming",
     voters: [],
     status: "upcoming",
     tags: ["tech", "mobile"],
