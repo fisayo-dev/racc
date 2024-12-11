@@ -156,6 +156,64 @@ const CreateVote = () => {
                     </Select>
                   </div>
                 </div>
+                <div className="grid gap-4">
+                  <h2 className="text-md">
+                    What date do you want the vote to end ?
+                  </h2>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "bg-zinc-700 hover:bg-zinc-600 text-gray-200 justify-start text-left font-normal",
+                          !date && "text-gray-300"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="grid gap-4">
+                  <h2 className="text-md">
+                    What time do you want the vote to end ?
+                  </h2>
+                  <div className="grid md:flex gap-3 md:gap-5  items-center">
+                    <Select className="outline-none w-full">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pick a time" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="time1">11:00</SelectItem>
+                        <SelectItem value="time2">12:00</SelectItem>
+                        <SelectItem value="time3">1:00</SelectItem>
+                        <SelectItem value="time4">2:00</SelectItem>
+                        <SelectItem value="time5">3:00</SelectItem>
+                        <SelectItem value="time6">4:00</SelectItem>
+                        <SelectItem value="time7">5:00</SelectItem>
+                        <SelectItem value="time8">6:00</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select className="outline-none">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Time Zone" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="am">AM</SelectItem>
+                        <SelectItem value="pm">PM</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="grid gap-[5rem] my-5">
