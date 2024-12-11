@@ -77,7 +77,7 @@ body {
   }
 }
 
-input,button,select {
+input,button,select,textarea {
   background-color: transparent;
   outline: none;
 }
