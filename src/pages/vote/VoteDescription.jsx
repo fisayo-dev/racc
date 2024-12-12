@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { PiGraph } from "react-icons/pi";
 import { fakeVotingList } from "../../components/VoteLists";
-import { Calendar } from "lucide-react";
+import { Calendar, Megaphone } from "lucide-react";
 
 const VoteDescription = () => {
   const { id } = useParams();
@@ -26,7 +26,13 @@ const VoteDescription = () => {
           </Link>
           <div className="grid gap-10 items-start md:grid-cols-2">
             <div className="grid gap-8">
-              <h2 className="md:text-3xl text-2xl">{description}</h2>
+              <div className="grid gap-3">
+                <h2 className="md:text-3xl text-2xl">{description}</h2>
+                <div className=" text-sm flex gap-2 px-3 py-2 rounded-lg bg-zinc-700 hover:bg-zinc-600 mr-auto items-center">
+                  <Megaphone className="h-4 w-4" />
+                  <p>Public</p>
+                </div>
+              </div>
               <div className="shadow-md rounded-lg overflow-hidden">
                 <img src={image4} className="w-full" alt="" />
               </div>
