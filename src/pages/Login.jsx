@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 const Login = () => {
-  const navigate = useNavigate()
-  const {user} = useAuth()
+  const navigate = useNavigate();
+  const { user, registerUser} = useAuth();
   // Input states
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,15 +27,19 @@ const Login = () => {
     }
 
     if (password.trim() != "" && emailUsername.trim() != "") {
-      console.log(`Success, ${emailUsername}`);
+      const userData = {
+        email: emailUsername,
+        password,
+      };
+      registerUser(userData)
     }
   };
 
   useEffect(() => {
     if (user) {
-      navigate('/')
+      navigate("/");
     }
-  },[])
+  }, []);
 
   return (
     <div className="text-zinc-200 grid gap-5 py-5">
@@ -50,9 +54,7 @@ const Login = () => {
         </h2>
         <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto p-5 my-3">
           <div className="grid gap-5">
-            <form
-              className="grid gap-2 w-full shadow-md"
-            >
+            <form className="grid gap-2 w-full shadow-md">
               <label className="font-bold">Username / Email Address</label>
               <input
                 type="text"

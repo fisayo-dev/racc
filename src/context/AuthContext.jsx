@@ -1,5 +1,5 @@
 import { useContext, useState, createContext, useEffect } from "react";
-// import { account } from "../appwrite/config";
+import { account } from "../appwrite/config";
 import { ID } from "appwrite";
 import Swal from "sweetalert2";
 import BarLoader from "react-spinners/BarLoader";
@@ -140,10 +140,10 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={contextData}>
       {loading ? (
-        <div className="w-[100vw] h-[100vh] grid items-center justify-center bg-gray-50 overflow-hidden anmate-load">
+        <div className="w-[100vw] h-[100vh] grid items-center justify-center bg-zinc-900 overflow-hidden anmate-load">
           <div className="text-center app-text-color justify-items-center grid gap-4 mx-auto">
-            <img src="./SeekJob (1).png" alt="" className="w-1/6" />
-            <BarLoader loading={loading} />
+            <h2 className="text-4xl font-bold text-blue-400">Racc</h2>
+            <BarLoader className="bg-zinc-50" loading={loading} />
           </div>
         </div>
       ) : (
