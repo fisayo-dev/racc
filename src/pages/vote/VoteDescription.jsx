@@ -78,14 +78,14 @@ const VoteDescription = () => {
                   {options.map((option) => (
                     <div className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
                       <div className="flex items-center justify-between">
-                        <p>{option}</p>
+                        <p className="font-bold">{option}</p>
                         <CheckBadgeIcon className="text-green-400 h-6 w-6" />
                         {/* Only show check badge if user choose it */}
                       </div>
                       {status != "upcoming" && (
                         <div className="grid gap-2">
                           <div className="text-sm flex items-center justify-between">
-                            <h2>Winner!!</h2>
+                            <h2>Least Popular Choice</h2>
                             <p className="text-zinc-500">24 votes</p>
                           </div>
                           <div className="bg-zinc-700 h-2 rounded-full overflow-hidden">
