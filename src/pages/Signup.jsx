@@ -282,12 +282,21 @@ const Signup = () => {
                     </label>
                   </div>
                 </div>
-                <Button
-                  className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
-                  type="icon"
-                >
-                  <p>Finish Account</p>
-                </Button>
+                <div className="flex items-center gap-2 justify-center">
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={() => setFormStatus((prev) => prev - 1)}
+                    type="icon"
+                  >
+                    <p>Previous</p>
+                  </Button>
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    type="icon"
+                  >
+                    <p>Finish Account</p>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
