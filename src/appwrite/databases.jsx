@@ -1,14 +1,28 @@
+import { databases } from "./config";
+import { ID } from "appwrite";
 
-import { Databases, Client, Account } from "appwrite";
+const db = {};
 
-const client = new Client();
+const collections = [
+  {
+    dbId: import.meta.env.VITE_DATABASE_ID,
+    id: import.meta.env.VITE_COLLECTION_ID_BOOKMARKS,
+    name: "bookmarks",
+  },
+];
 
-client
-  .setEndpoint(import.meta.env.VITE_ENDPOINT)
-  .setProject(import.meta.env.VITE_PROJECT_ID);
+collections.forEach((col) => {
+  db[col.name] = {
+    create: (payload, permissions, id = ID.unique()) =>
+      databases.createDocument(col.dbId, col.id, id, payload, permissions),
+    update: (id, payload, permissions) =>
+      databases.updateDocument(col.dbId, col.id, id, payload, permissions),
+    delete: (id) => databases.deleteDocument(col.dbId, col.id, id),
 
-const databases = new Databases(client);
-const account = new Account(client);
-// const users = new Users(client);
+    list: (queries = []) => databases.listDocuments(col.dbId, col.id, queries),
 
-export { client, databases, account,};
+    get: (id) => databases.getDocument(col.dbId, col.id, id),
+  };
+});
+
+export default db;
