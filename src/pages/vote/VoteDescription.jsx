@@ -95,7 +95,7 @@ const VoteDescription = () => {
                             <p className="text-zinc-500">24 votes</p>
                           </div>
                           <div className="bg-zinc-700 h-2 rounded-full overflow-hidden">
-                            <div className="h-2 w-3/4 bg-blue-300"></div>
+                            <div className="h-2 w-3/4 bg-blue-400"></div>
                           </div>
                         </div>
                       )}
