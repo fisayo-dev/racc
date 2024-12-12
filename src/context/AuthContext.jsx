@@ -142,8 +142,18 @@ export const AuthProvider = ({ children }) => {
       {loading ? (
         <div className="w-[100vw] h-[100vh] grid items-center justify-center bg-zinc-900 overflow-hidden anmate-load">
           <div className="text-center app-text-color justify-items-center grid gap-4 mx-auto">
-            <h2 className="text-4xl font-bold text-blue-400">Racc</h2>
-            <BarLoader className="bg-zinc-50" loading={loading} />
+            <h2 className="text-7xl font-bold text-blue-400">Racc</h2>
+            <BarLoader
+              className="bg-blue-400 rounded-full"
+              cssOverride={{
+                borderColor: "transparent",
+                backgroundColor: "transparent",
+              }}
+              loading={loading}
+              color="#4e8fca" // Set color for the loaded part (blue)
+              width={250} // Custom width for the loader
+              height={7} // Custom height for the loader
+            />
           </div>
         </div>
       ) : (
