@@ -15,7 +15,7 @@ const VoteDescription = () => {
   return (
     <div className="grid gap-2 text-zinc-200">
       <Header />
-      <div className="container mx-auto xl:px-20 md:px-15 px-5 my-[8rem]">
+      <div className="app-container my-[8rem]">
         <div className="grid gap-5">
           <Link to="/">
             <button className="my-1 rounded-lg text-zinc-800 flex items-center gap-1 hover:bg-zinc-200 bg-zinc-300 px-4 py-3">

@@ -94,3 +94,7 @@ input,button,select,textarea {
 ::-webkit-scrollbar-thumb {
   @apply bg-zinc-600 rounded-full
 }
+
+.app-container {
+  @apply container mx-auto xl:px-20 px-5;
+}

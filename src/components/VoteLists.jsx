@@ -263,7 +263,7 @@ const VoteLists = () => {
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
-      <div className="container grid gap-8 mx-auto xl:px-20 md:px-15 px-5 ">
+      <div className="app-container grid gap-8">
         <h2 className="md:text-5xl text-3xl font-bold">
           Join the community of voters
         </h2>

@@ -34,7 +34,7 @@ const CreateVote = () => {
     <div className="w-full grid text-zinc-200">
       <Header />
       <div className="mt-[8rem]">
-        <div className="container grid mx-auto xl:px-20 md:px-15 px-5 ">
+        <div className="app-container">
           <div className="grid gap-[3.5rem] sm:gap-[7.5rem] md:gap-[10rem] items-start grid-cols-1 md:grid-cols-2">
             <div className="grid gap-[5rem] my-5">
               <div className="grid gap-4">
