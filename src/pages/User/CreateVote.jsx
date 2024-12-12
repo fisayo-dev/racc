@@ -4,9 +4,10 @@ import {
   Cog8ToothIcon,
   ListBulletIcon,
   CalendarIcon,
-  FingerPrintIcon
+  FingerPrintIcon,
+  PlusIcon
 } from "@heroicons/react/24/outline";
-import { MegaphoneIcon } from "lucide-react";
+import { MegaphoneIcon, UploadIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useState } from "react";
@@ -56,6 +57,20 @@ const CreateVote = () => {
                     className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
                     placeholder="Tell us what your vote is all about"
                   ></textarea>
+                </div>
+                <div className="grid gap-4">
+                  <label>Vote Image</label>
+                  <p className="text-sm">Upload an image about your vote to increase visiblilty. </p>
+                  <div
+                    type="text"
+                    className="grid justify-items-center place-content-center border-[0.1rem] border-zinc-700 rounded-lg h-[350px]"
+                    placeholder="Tell us what your vote is all about"
+                  >
+                    <div className="hover:bg-zinc-700 bg-zinc-800 flex px-4 py-3 rounded-lg cursor-pointer items-center gap-2">
+                      <UploadIcon className="h-6 w-6" />
+                      <p>Upload an image</p>
+                    </div>
+                  </div>
                 </div>
                 <div className="grid gap-4">
                   <label>Vote Tags</label>
