@@ -3,15 +3,22 @@ import image4 from "../../assets/samples/nextjs.png";
 import { Header } from "../../components";
 import { Link, useParams } from "react-router-dom";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { fakeVotingList } from "../../components/VoteLists";
+import { fakeVotingList, randomImage } from "../../components/VoteLists";
 import { Calendar, Megaphone } from "lucide-react";
 
 const VoteDescription = () => {
   const { id } = useParams();
 
   const particularVote = fakeVotingList.filter((vote) => vote.id == id);
-  const { description, voters, status, tags, start_date, end_date, options } =
-    particularVote[0];
+  const {
+    description,
+    voters,
+    status,
+    tags,
+    start_date,
+    end_date,
+    options,
+  } = particularVote[0];
   return (
     <div className="grid gap-2 text-zinc-200">
       <Header />
@@ -32,7 +39,7 @@ const VoteDescription = () => {
                       key={index}
                       className="flex items-center gap-1 border-[0.102rem] px-3 py-2 rounded-lg border-zinc-600"
                     >
-                      <Hashtag className="h-5 w-5"/>
+                      <Hashtag className="h-5 w-5" />
                       <p>{tag}</p>
                     </div>
                   ))}
@@ -43,9 +50,14 @@ const VoteDescription = () => {
                   <p>Public</p>
                 </div>
               </div>
-              <div className="shadow-md rounded-lg overflow-hidden">
+              {/* <div className="shadow-md rounded-lg overflow-hidden">
                 <img src={image4} className="w-full" alt="" />
-              </div>
+              </div> */}
+              <div
+                className="rounded-lg shadow-md h-64 w-full bg-cover bg-center
+              "
+                style={{ backgroundImage: `url(../${randomImage()})` }}
+              ></div>
               <div className="grid gap-3">
                 <div
                   className={`capitalize flex ${

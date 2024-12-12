@@ -244,22 +244,21 @@ export const fakeVotingList = [
   },
 ];
 
+const images = [
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+];
+
+const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
-
-  const images = [
-    image1,
-    image2,
-    image3,
-    image4,
-    image5,
-    image6,
-    image7,
-    image8,
-    image9,
-  ];
-
-  const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
@@ -287,4 +286,5 @@ const VoteLists = () => {
   );
 };
 
+export { randomImage };
 export default VoteLists;
