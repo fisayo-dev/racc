@@ -28,7 +28,7 @@ const VoteDescription = () => {
             <div className="grid gap-8">
               <div className="grid gap-3">
                 <h2 className="md:text-3xl text-2xl">{description}</h2>
-                <div className=" text-sm flex gap-2 px-3 py-2 rounded-lg bg-zinc-700 hover:bg-zinc-600 mr-auto items-center">
+                <div className=" text-sm flex gap-2 px-3 py-2 rounded-lg border-[0.102rem] border-zinc-600  mr-auto items-center">
                   <Megaphone className="h-4 w-4" />
                   <p>Public</p>
                 </div>
