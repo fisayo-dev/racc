@@ -1,9 +1,10 @@
-import { Building, Hashtag, Paperclip } from "iconsax-react";
+import { Building, Hashtag } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
   ListBulletIcon,
   CalendarIcon,
+  FingerPrintIcon
 } from "@heroicons/react/24/outline";
 import { MegaphoneIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -37,7 +38,7 @@ const CreateVote = () => {
             <div className="grid gap-[5rem] my-5">
               <div className="grid gap-4">
                 <div className="flex items-center gap-2">
-                  <Paperclip className="h-7 w-7" />
+                  <FingerPrintIcon className="h-7 w-7" />
                   <h2 className="text-3xl font-bold">Vote Info</h2>
                 </div>
                 <div className="grid gap-4">
