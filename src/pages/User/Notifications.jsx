@@ -1,6 +1,10 @@
+import { Header } from "../../components"
+
 const Notifications = () => {
   return (
-    <div>Notifications</div>
+    <div>
+      <Header />
+    </div>
   )
 }
 
