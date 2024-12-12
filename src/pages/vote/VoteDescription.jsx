@@ -1,9 +1,8 @@
-import { ArrowLeft, Check, Clock } from "iconsax-react";
+import { ArrowLeft, Check, Clock, Hashtag } from "iconsax-react";
 import image4 from "../../assets/samples/nextjs.png";
 import { Header } from "../../components";
 import { Link, useParams } from "react-router-dom";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { PiGraph } from "react-icons/pi";
 import { fakeVotingList } from "../../components/VoteLists";
 import { Calendar, Megaphone } from "lucide-react";
 
@@ -27,6 +26,17 @@ const VoteDescription = () => {
           <div className="grid gap-10 items-start md:grid-cols-2">
             <div className="grid gap-8">
               <div className="grid gap-3">
+                <div className="text-[0.7rem] flex gap-2  items-center">
+                  {tags.map((tag, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-1 border-[0.102rem] px-3 py-2 rounded-lg border-zinc-600"
+                    >
+                      <Hashtag className="h-5 w-5"/>
+                      <p>{tag}</p>
+                    </div>
+                  ))}
+                </div>
                 <h2 className="md:text-3xl text-2xl">{description}</h2>
                 <div className=" text-sm flex gap-2 px-3 py-2 rounded-lg border-[0.102rem] border-zinc-600  mr-auto items-center">
                   <Megaphone className="h-4 w-4" />
