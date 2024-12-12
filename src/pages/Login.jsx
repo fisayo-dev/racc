@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 const Login = () => {
+  const navigate = useNavigate()
+  const {user} = useAuth()
   // Input states
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +30,12 @@ const Login = () => {
       console.log(`Success, ${emailUsername}`);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  },[])
 
   return (
     <div className="text-zinc-200 grid gap-5 py-5">

@@ -7,8 +7,9 @@ import {
   SearchNormal1,
 } from "iconsax-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const Header = () => {
-  const user = true;
+  const {user} = useAuth();
   return (
     <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
       <div className="app-container flex gap-20 justify-between items-center">

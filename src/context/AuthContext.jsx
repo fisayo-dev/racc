@@ -1,5 +1,5 @@
 import { useContext, useState, createContext, useEffect } from "react";
-import { account } from "../appwrite/config";
+// import { account } from "../appwrite/config";
 import { ID } from "appwrite";
 import Swal from "sweetalert2";
 import BarLoader from "react-spinners/BarLoader";
@@ -135,7 +135,6 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     logoutUser,
     deleteUser,
-    googleSignIn,
   };
 
   return (

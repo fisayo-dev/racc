@@ -3,10 +3,12 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Route,
+  Routes,
 } from "react-router-dom";
 import { Home, Signup, Login } from "./pages";
 import VoteDescription from "./pages/vote/VoteDescription";
 import { Notifications, CreateVote, Profile } from "./pages/User/";
+import PrivateRoutes from "./utils/PrivateRoutes";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -16,10 +18,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/vote/:id" element={<VoteDescription />} />
-        <Route path="/create-vote" element={<CreateVote />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/create-vote" element={<CreateVote />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="" element={<PrivateRoutes />}>
+          <Route path="/create-vote" element={<CreateVote />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </>
     )
   );

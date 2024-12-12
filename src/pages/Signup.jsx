@@ -5,10 +5,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,11 +20,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { Forward } from "iconsax-react";
 import { FingerPrintIcon } from "@heroicons/react/24/outline";
+import { useAuth } from "../context/AuthContext";
 const Signup = () => {
   const [date, setDate] = useState();
   const [formStatus, setFormStatus] = useState(0);
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  },[])
   return (
     <div className="text-zinc-200 grid gap-5 py-5">
       <Link to="/">
