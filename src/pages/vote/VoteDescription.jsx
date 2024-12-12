@@ -62,7 +62,9 @@ const VoteDescription = () => {
             <div className="grid gap-8">
               <div className="grid gap-5">
                 <div className="grid gap-2">
-                  <h2 className="md:text-3xl text-2xl">Options</h2>
+                  <h2 className="md:text-3xl text-2xl">
+                    {status == "ended" ? "Results" : "Options"}
+                  </h2>
                   <p className="text-md">
                     {status == "ongoing" &&
                       "You have particpated in this voting exercise"}
@@ -74,12 +76,23 @@ const VoteDescription = () => {
                 </div>
                 <div className="grid gap-3">
                   {options.map((option) => (
-                    <div className="px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
+                    <div className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
                       <div className="flex items-center justify-between">
                         <p>{option}</p>
                         <CheckBadgeIcon className="text-green-400 h-6 w-6" />
                         {/* Only show check badge if user choose it */}
                       </div>
+                      {status != "upcoming" && (
+                        <div className="grid gap-2">
+                          <div className="text-sm flex items-center justify-between">
+                            <h2>Winner!!</h2>
+                            <p className="text-zinc-500">24 votes</p>
+                          </div>
+                          <div className="bg-zinc-700 h-2 rounded-full overflow-hidden">
+                            <div className="h-2 w-3/4 bg-blue-300"></div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     // When user clicks on option, if the vote is upcoming notify them that it is upcoming, else : allow them vote if vote is ongoing
                   ))}
@@ -87,8 +100,11 @@ const VoteDescription = () => {
               </div>
 
               <div className="grid gap-2">
-                <h2 className="md:text-3xl text-2xl">Analytics</h2>
-                <p>An analytics grpah of votes ongoing, ended or upcoming (anticipation) should be here.</p>
+                <h2 className="md:text-3xl text-2xl">Related Votes</h2>
+                <p>
+                  Sections showing related votes for users to participate or
+                  upcoming.{" "}
+                </p>
               </div>
             </div>
           </div>
