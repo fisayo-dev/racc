@@ -1,4 +1,3 @@
-
 import { Databases, Client, Account } from "appwrite";
 
 const client = new Client();
