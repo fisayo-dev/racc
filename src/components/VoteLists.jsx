@@ -10,6 +10,7 @@ import image8 from "../assets/samples/tricks.png";
 import image9 from "../assets/samples/dailydotdev.png";
 import { Link } from "react-router-dom";
 import ButtonEl from "./Button";
+import landing_voters from "../assets/landing_voters.png";
 
 export const fakeVotingList = [
   {
@@ -261,16 +262,18 @@ const VoteLists = () => {
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
       <div className="app-container grid gap-8">
-        <div className="flex justify-between gap-5">
+        <div className="flex items-center justify-center md:justify-between gap-5">
           <div className="grid gap-4">
-            <h2 className="md:text-5xl text-3xl font-bold">
+            <h2 className="text-center md:text-left md:text-6xl text-3xl font-bold">
               Join the community of voters
             </h2>
-            <Link to="/signup">
-              <ButtonEl text="Join now"/>
+            <Link className="mx-auto md:m-0" to="/signup">
+              <ButtonEl text="Join now" />
             </Link>
           </div>
-          <img src=""/>
+          <div className="hidden w-full md:flex justify-end">
+            <img className="w-2/4 " src={landing_voters} />
+          </div>
         </div>
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
