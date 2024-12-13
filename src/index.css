@@ -101,5 +101,5 @@ input,button,select,textarea {
 
 .profile-grid {
   grid-template-columns: 2fr 5fr;
-  @apply grid gap-10
+  @apply gap-10
 }
