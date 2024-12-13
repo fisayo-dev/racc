@@ -35,7 +35,7 @@ const Profile = () => {
                 <h2 className="text-2xl font-bold">Your Activity</h2>
                 <div className="grid gap-5 my-5 grid-cols-1 md:grid-cols-3">
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
-                    <h2 className="text-xl font-bold">Total Votes</h2>
+                    <h2 className="text-xl font-bold">Vote Participation </h2>
                     <div className="grid text-center justify-center">
                       <p className="text-8xl font-bold">24</p>
                       <p className="text-sm">votes</p>
@@ -47,12 +47,11 @@ const Profile = () => {
                       <p className="text-8xl font-bold">11</p>
                       <p className="text-sm">votes</p>
                     </div>
-                      <Link to="/profile/my-votes" className="text-sm">View them</Link>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
-                    <h2 className="text-xl font-bold">Total Votes</h2>
+                    <h2 className="text-xl font-bold">Favoured Votes</h2>
                     <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">24</p>
+                      <p className="text-8xl font-bold">0</p>
                       <p className="text-sm">votes</p>
                     </div>
                   </div>
