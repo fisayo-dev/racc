@@ -9,25 +9,72 @@ import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 
 const VoteDescription = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Extract the vote ID from the route parameters
   const [particularVote, setParticularVote] = useState(null);
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
+  const [voters, setVoters] = useState(null);
+  const userId = "user_unique_id"; // Replace with actual logic to fetch current user's ID
 
+  // Function to fetch the vote details
   const getParticularVote = async () => {
     const results = await db.votes.list([Query.orderDesc("$createdAt")]);
     const votes = results.documents;
     const index_vote = votes.filter((vote) => vote.$id === id);
     setParticularVote(index_vote[0]);
-    console.log(index_vote[0]);
 
+    // Parse the JSON fields for tags, options, and voters
     setVoteTags(JSON.parse(index_vote[0].tags));
     setVoteOptions(JSON.parse(index_vote[0].options));
+    setVoters(JSON.parse(index_vote[0].voters));
+  };
+
+  // Function to determine the status of the vote
+  const getVoteStatus = (startDate, endDate) => {
+    const currentDate = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (currentDate < start) return "upcoming";
+    if (currentDate > end) return "ended";
+    return "ongoing";
+  };
+
+  // Function to handle voting on an option
+  const handleVote = async (option) => {
+    if (
+      getVoteStatus(particularVote.start_date, particularVote.end_date) !==
+      "ongoing"
+    ) {
+      alert("This vote is not currently ongoing.");
+      return;
+    }
+
+    // Check if user has already voted
+    if (voters.some((voter) => voter.voter_id === userId)) {
+      alert("You have already voted.");
+      return;
+    }
+
+    // Update the voters array and save to Appwrite
+    const newVoter = {
+      voter_id: userId,
+      date_voted: new Date().toISOString(),
+    };
+    const updatedVoters = [...voters, newVoter];
+    setVoters(updatedVoters);
+
+    await db.votes.update(particularVote.$id, {
+      voters: JSON.stringify(updatedVoters),
+    });
+
+    alert(`You voted for: ${option.title}`);
   };
 
   useEffect(() => {
     getParticularVote();
   }, []);
+
   return (
     <div className="grid gap-2 text-zinc-200">
       <Header />
@@ -43,7 +90,8 @@ const VoteDescription = () => {
             <div className="grid gap-10 items-start md:grid-cols-2">
               <div className="grid gap-8">
                 <div className="grid gap-3">
-                  <div className="text-[0.7rem] flex gap-2  items-center">
+                  {/* Display vote tags */}
+                  <div className="text-[0.7rem] flex gap-2 items-center">
                     {voteTags.map((tag, index) => (
                       <div
                         key={index}
@@ -54,17 +102,19 @@ const VoteDescription = () => {
                       </div>
                     ))}
                   </div>
+
+                  {/* Display vote title and publicity */}
                   <h2 className="md:text-3xl text-2xl">
                     {particularVote.title}
                   </h2>
-                  <div className=" text-sm flex gap-2 px-3 py-2 rounded-lg border-[0.102rem] border-zinc-600  mr-auto items-center">
-                    {particularVote.publicity == "Yes" && (
+                  <div className="text-sm flex gap-2 px-3 py-2 rounded-lg border-[0.102rem] border-zinc-600  mr-auto items-center">
+                    {particularVote.publicity === "Yes" && (
                       <>
                         <Megaphone className="h-4 w-4" />
                         <p>Public</p>
                       </>
                     )}
-                    {particularVote.publicity == "No" && (
+                    {particularVote.publicity === "No" && (
                       <>
                         <Lock className="h-4 w-4" />
                         <p>Private</p>
@@ -72,89 +122,42 @@ const VoteDescription = () => {
                     )}
                   </div>
                 </div>
-                {/* <div className="shadow-md rounded-lg overflow-hidden">
-                <img src={image4} className="w-full" alt="" />
-              </div> */}
+
+                {/* Background image for the vote */}
                 <div
-                  className="rounded-lg shadow-md h-64 w-full bg-cover bg-center
-              "
+                  className="rounded-lg shadow-md h-64 w-full bg-cover bg-center"
                   style={{ backgroundImage: `url(../${randomImage()})` }}
                 ></div>
-                <div className="grid gap-3">
-                  {/* <div
-                    className={`capitalize flex ${
-                      status == "upcoming" && "text-yellow-400"
-                    } ${status == "ended" && "text-red-400"} ${
-                      status == "ongoing" && "text-green-400"
-                    } items-center gap-2`}
-                  >
-                    {status == "upcoming" && <Calendar className="w-6 h-6" />}
-                    {status == "ended" && <Check className="w-6 h-6" />}
-                    {status == "ongoing" && <Clock className="w-6 h-6" />}
-                    <p>{status}</p>
-                  </div> */}
-                  <div
-                    className={`flex ${status == "ended" && "text-red-300"} ${
-                      status == "ongoing" && "text-green-300"
-                    } items-center gap-2`}
-                  >
-                    {/* {voters.length > 0 ? (
-                      <p>
-                        {voters.length} people{" "}
-                        {status == "ended" ? "voted" : "have voted"}
-                      </p>
-                    ) : (
-                      <p>No votes available yet</p>
-                    )} */}
-                  </div>
-                </div>
               </div>
+
               <div className="grid gap-8">
                 <div className="grid gap-5">
+                  {/* Display vote options */}
                   <div className="grid gap-2">
                     <h2 className="md:text-3xl text-2xl">
-                      {status == "ended" ? "Results" : "Options"}
+                      {getVoteStatus(
+                        particularVote.start_date,
+                        particularVote.end_date
+                      ) === "ended"
+                        ? "Results"
+                        : "Options"}
                     </h2>
-                    <p className="text-md">
-                      {status == "ongoing" &&
-                        "You have particpated in this voting exercise"}
-                      {/* Later, this code above should check if user id is among the voters arrauy of the vote object */}
-                      {status == "ended" &&
-                        "You didn't participate in this vote."}
-                      {/* Later, this code above should check if user id is among the voters arrauy of the vote object */}
-                    </p>
                   </div>
+
                   <div className="grid gap-3">
                     {voteOptions.map((option) => (
-                      <div className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800  border-[0.102rem] border-zinc-200 cursor-pointer">
+                      <div
+                        key={option.title}
+                        className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800 border-[0.102rem] border-zinc-200 cursor-pointer"
+                        onClick={() => handleVote(option)}
+                      >
                         <div className="flex items-center justify-between">
                           <p className="font-bold">{option.title}</p>
                           <CheckBadgeIcon className="text-green-400 h-6 w-6" />
-                          {/* Only show check badge if user choose it */}
                         </div>
-                        {status != "upcoming" && (
-                          <div className="grid gap-2">
-                            <div className="text-sm flex items-center justify-between">
-                              <h2>Least Popular Choice</h2>
-                              <p className="text-zinc-500">24 votes</p>
-                            </div>
-                            <div className="bg-zinc-700 h-2 rounded-full overflow-hidden">
-                              <div className="h-2 w-3/4 bg-blue-400"></div>
-                            </div>
-                          </div>
-                        )}
                       </div>
-                      // When user clicks on option, if the vote is upcoming notify them that it is upcoming, else : allow them vote if vote is ongoing
                     ))}
                   </div>
-                </div>
-
-                <div className="grid gap-2">
-                  <h2 className="md:text-3xl text-2xl">Related Votes</h2>
-                  <p>
-                    Sections showing related votes for users to participate or
-                    upcoming.{" "}
-                  </p>
                 </div>
               </div>
             </div>
