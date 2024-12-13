@@ -65,8 +65,8 @@ const VoteCard = ({
     }
   };
   return (
-    <div className="bg-zinc-800 h-[400px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
-      <div className="grid items-center py-3 px-4 gap-4">
+    <div className="bg-zinc-800 h-[425px] md:h-[400px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
+      <div className="grid items-center py-3 px-4 gap-4 md:gap-0">
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
           {description.length > 40 ? `${description.substr(0,40)}...`: description}
         </h2>
@@ -77,7 +77,7 @@ const VoteCard = ({
             </div>
           ))}
         </div>
-        <div className={`rounded-lg shadow-md h-52 w-full bg-cover bg-center`} style={{ backgroundImage: `url(${image})` }}>
+        <div className={`rounded-lg shadow-md h-56 md:h-52 w-full bg-cover bg-center`} style={{ backgroundImage: `url(${image})` }}>
         </div>
         {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
