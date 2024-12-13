@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
-  const { user, registerUser} = useAuth();
+  const { user, loginUser} = useAuth();
   // Input states
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +31,7 @@ const Login = () => {
         email: emailUsername,
         password,
       };
-      registerUser(userData)
+      loginUser(userData)
     }
   };
 

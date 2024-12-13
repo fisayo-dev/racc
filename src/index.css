@@ -98,3 +98,8 @@ input,button,select,textarea {
 .app-container {
   @apply container mx-auto xl:px-20 px-5;
 }
+
+.profile-grid {
+  grid-template-columns: 2fr 5fr;
+  @apply grid gap-10
+}
