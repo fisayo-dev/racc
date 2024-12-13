@@ -11,7 +11,7 @@ const Profile = () => {
       <Header />
       <div className="mt-[8rem] mb-[5rem]">
         <div className="app-container ">
-          <div className="grid items-start md:flex profile-grid">
+          <div className=" md:flex profile-grid">
             <div className="bg-zinc-800 shadow-md rounded-lg p-6">
               <div className="grid gap-4">
                 <div
