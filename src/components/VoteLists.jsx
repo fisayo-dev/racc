@@ -10,7 +10,8 @@ import image8 from "../assets/samples/tricks.png";
 import image9 from "../assets/samples/dailydotdev.png";
 import { Link } from "react-router-dom";
 import ButtonEl from "./Button";
-import landing_voters from "../assets/landing_voters.png";
+import landing_voters from "../assets/freepik__background__39362.png";
+import { useAuth } from "../context/AuthContext";
 
 export const fakeVotingList = [
   {
@@ -259,22 +260,26 @@ const images = [
 const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
+  const { user } = useAuth();
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
       <div className="app-container grid gap-8">
-        <div className="flex items-center justify-center md:justify-between gap-5">
-          <div className="grid gap-4">
-            <h2 className="text-center md:text-left md:text-6xl text-3xl font-bold">
-              Join the community of voters
-            </h2>
-            <Link className="mx-auto md:m-0" to="/signup">
-              <ButtonEl text="Join now" />
-            </Link>
+        {!user && (
+          <div className="flex items-center justify-center md:justify-between gap-5">
+            <div className="grid gap-4">
+              <h2 className="text-center text-4xl md:text-left md:text-6xl font-bold">
+                Join the community of voters
+              </h2>
+              <Link className="mx-auto md:m-0" to="/signup">
+                <ButtonEl text="Join now" />
+              </Link>
+            </div>
+            <div className="hidden w-full md:flex justify-end">
+              <img className="" draggable={false} src={landing_voters} />
+            </div>
           </div>
-          <div className="hidden w-full md:flex justify-end">
-            <img className="w-2/4 " src={landing_voters} />
-          </div>
-        </div>
+        )}
+
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
             <Link key={index} to={`/vote/${vote.id}`}>
