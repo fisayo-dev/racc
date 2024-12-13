@@ -4,6 +4,7 @@ import { Clock } from "iconsax-react";
 const VoteCard = ({
   image,
   options,
+  title,
   tags,
   description,
   status,
@@ -68,7 +69,7 @@ const VoteCard = ({
     <div className="bg-zinc-800 h-[425px] md:h-[400px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4 md:gap-0">
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
-          {description.length > 40 ? `${description.substr(0,40)}...`: description}
+          {title.length > 40 ? `${title.substr(0,40)}...`: title}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
           {tags.map((tag) => (

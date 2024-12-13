@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import ButtonEl from "./Button";
 import landing_voters from "../assets/freepik__background__39362.png";
 import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import db from "../appwrite/databases";
+import { Query } from "appwrite";
 
 export const fakeVotingList = [
   {
@@ -261,6 +264,24 @@ const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
   const { user } = useAuth();
+
+  const [listOfVotes, setListOfVotes] = useState([])
+
+  const fetchVotes = async () => {
+    try {
+      const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+      const votes = results.documents;
+      setListOfVotes(votes)
+      console.log(votes)
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+
+  useEffect(() => {
+    fetchVotes()
+  },[])
+
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
       <div className="app-container grid gap-8">
@@ -281,18 +302,21 @@ const VoteLists = () => {
         )}
 
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {fakeVotingList.map((vote, index) => (
-            <Link key={index} to={`/vote/${vote.id}`}>
+          {listOfVotes.length !== 0 && listOfVotes.map((vote, index) => (
+            <Link key={index} to={`/vote/${vote.$id}`}>
               <VoteCard
                 image={randomImage()}
+                title={vote.title}
                 description={vote.description}
                 options={vote.options}
-                status={vote.status}
-                tags={vote.tags}
+                status='ongoing'
+                tags={JSON.parse(vote.tags)}
                 start_date={vote.start_date}
+                end_date={vote.start_date}
                 voters={vote.voters}
               />
             </Link>
+            // <p>Hi</p>
           ))}
         </div>
       </div>
