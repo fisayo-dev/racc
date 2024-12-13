@@ -25,10 +25,29 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import db from "../../appwrite/databases";
+import { useAuth } from "../../context/AuthContext";
 
 const CreateVote = () => {
+  // User variable
+  const { user } = useAuth()
+
   const [date, setDate] = useState();
+  const [date2, setDate2] = useState();
   const [backgroundImage, setBackgroundImage] = useState(null);
+
+  // Vote input states
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [creatorId, setCreatorId] = useState("");
+  const [publicity, setPublicity] = useState(true);
+  const [franchisePolicy, setFranchisePolicy] = useState(true);
+  const [tag1, setTag1] = useState("");
+  const [tag2, setTag2] = useState("");
+
+  // Getting the vote tag
+  const jsonedTags = JSON.stringify([tag1, tag2]);
+  console.log(jsonedTags);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -38,7 +57,20 @@ const CreateVote = () => {
     }
   };
 
-  const 
+  const createVote = async () => {
+    await db.votes.create({
+      title,
+      description,
+      publicity,
+      start_date: date,
+      end_date: date2,
+      voters: json.stringify([]), // -By default voters' array will be empty
+      options,
+      tags: jsonedTags,
+      creator_id: user.$id,
+      franchise_policy: franchisePolicy,
+    });
+  };
 
   return (
     <div className="w-full grid text-zinc-200">
@@ -86,8 +118,8 @@ const CreateVote = () => {
                         onChange={handleImageUpload}
                         className="hidden"
                       />
-                        <UploadIcon className="h-6 w-6" />
-                        <p>Upload an image</p>
+                      <UploadIcon className="h-6 w-6" />
+                      <p>Upload an image</p>
                     </div>
                   </div>
                 </div>
@@ -201,18 +233,22 @@ const CreateVote = () => {
                         variant={"outline"}
                         className={cn(
                           "bg-zinc-700 hover:bg-zinc-600 text-gray-200 justify-start text-left font-normal",
-                          !date && "text-gray-300"
+                          !date2 && "text-gray-300"
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        {date2 ? (
+                          format(date2, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
                       <Calendar
                         mode="single"
-                        selected={date}
-                        onSelect={setDate}
+                        selected={date2}
+                        onSelect={setDate2}
                         initialFocus
                       />
                     </PopoverContent>
