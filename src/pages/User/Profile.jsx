@@ -19,7 +19,7 @@ const Profile = () => {
                   style={{ backgroundImage: `url(${image})` }}
                 ></div>
                 <div className="text-center">
-                  <p>{user.name}</p>
+                  <p>@{user.name}</p>
                   <p className="text-sm">{user.email}</p>
                 </div>
                 <div className="mx-auto" onClick={logoutUser}>
