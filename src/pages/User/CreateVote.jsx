@@ -5,7 +5,7 @@ import {
   ListBulletIcon,
   CalendarIcon,
   FingerPrintIcon,
-  PlusIcon
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 import { MegaphoneIcon, UploadIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -28,7 +28,17 @@ import { cn } from "@/lib/utils";
 
 const CreateVote = () => {
   const [date, setDate] = useState();
-  const [formStatus, setFormStatus] = useState(0);
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setBackgroundImage(imageUrl);
+    }
+  };
+
+  const 
 
   return (
     <div className="w-full grid text-zinc-200">
@@ -60,15 +70,24 @@ const CreateVote = () => {
                 </div>
                 <div className="grid gap-4">
                   <label>Vote Image</label>
-                  <p className="text-sm">Upload an image about your vote to increase visiblilty. </p>
+                  <p className="text-sm">
+                    Upload an image about your vote to increase visiblilty.{" "}
+                  </p>
                   <div
                     type="text"
                     className="grid justify-items-center place-content-center border-[0.1rem] border-zinc-700 rounded-lg h-[350px]"
                     placeholder="Tell us what your vote is all about"
                   >
                     <div className="hover:bg-zinc-700 bg-zinc-800 flex px-4 py-3 rounded-lg cursor-pointer items-center gap-2">
-                      <UploadIcon className="h-6 w-6" />
-                      <p>Upload an image</p>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        id="image-upload"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                        <UploadIcon className="h-6 w-6" />
+                        <p>Upload an image</p>
                     </div>
                   </div>
                 </div>
@@ -286,16 +305,16 @@ const CreateVote = () => {
                   <h2 className="text-3xl font-bold">Voting Policy</h2>
                 </div>
                 <div className="grid gap-4">
-                  <h2 className="text-md">
-                    Do you want to enable franchise ?
-                  </h2>
+                  <h2 className="text-md">Do you want to enable franchise ?</h2>
                   <Select className="outline-none">
                     <SelectTrigger>
                       <SelectValue placeholder="Choose an option" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="dark">Yes, enable it</SelectItem>
-                      <SelectItem value="system">No, don't enable it</SelectItem>
+                      <SelectItem value="system">
+                        No, don't enable it
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
