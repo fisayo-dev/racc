@@ -20,19 +20,44 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-import { FingerPrintIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/AuthContext";
 const Signup = () => {
-  const [date, setDate] = useState();
   const [formStatus, setFormStatus] = useState(0);
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  
+  const { user, registerUser } = useAuth();
+  const navigate = useNavigate();
+
+  // Inpur states
+  const [date, setDate] = useState();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [username, setUsername] = useState("");
+  const [votingId, setVotingId] = useState("");
+  const [country, setCountry] = useState("");
+
   useEffect(() => {
     if (user) {
-      navigate('/')
+      navigate("/");
     }
-  },[])
+  }, []);
+
+  const submitForm = () => {
+    const userInfo = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      password,
+      country,
+      gender,
+      birth_date: date,
+      username,
+      voting_id: votingId,
+    };
+    registerUser(userInfo)
+  };
   return (
     <div className="text-zinc-200 grid gap-5 py-5">
       <Link to="/">
@@ -77,6 +102,8 @@ const Signup = () => {
                         type="text"
                         className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                         placeholder="Ex. John "
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
                     <div className="grid gap-2 w-full shadow-md">
@@ -85,6 +112,8 @@ const Signup = () => {
                         type="text"
                         className="border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                         placeholder="Ex. Doe "
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -94,6 +123,8 @@ const Signup = () => {
                       type="text"
                       className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Ex. johndoe@gmail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -102,6 +133,8 @@ const Signup = () => {
                       type="password"
                       className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Must not be less than 6 digits"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div className="grid gap-2">
@@ -110,6 +143,8 @@ const Signup = () => {
                       type="password"
                       className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Re-enter your password"
+                      value={repeatPassword}
+                      onChange={(e) => setRepeatPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -135,27 +170,37 @@ const Signup = () => {
                 <div className="grid gap-3">
                   <div className="grid gap-2 w-full shadow-md">
                     <label className="font-bold">Where do you live ?</label>
-                    <Select className="outline-none">
+                    <Select
+                      className="outline-none"
+                      value={country}
+                      onValueChange={(value) => setCountry(value)}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select your country" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="light">Nigeria</SelectItem>
-                        <SelectItem value="dark">South America</SelectItem>
-                        <SelectItem value="system">China</SelectItem>
+                        <SelectItem value="Nigeria">Nigeria</SelectItem>
+                        <SelectItem value="South America">
+                          South America
+                        </SelectItem>
+                        <SelectItem value="China">China</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="grid gap-2 w-full shadow-md">
                     <label className="font-bold">What's your Gender ?</label>
-                    <Select className="outline-none">
+                    <Select
+                      className="outline-none"
+                      value={gender}
+                      onValueChange={(value) => setGender(value)}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Choose your gender" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="light">Male</SelectItem>
-                        <SelectItem value="dark">Female</SelectItem>
-                        <SelectItem value="system">Others</SelectItem>
+                        <SelectItem value="Male">Male</SelectItem>
+                        <SelectItem value="Female">Female</SelectItem>
+                        <SelectItem value="Others">Others</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -230,6 +275,8 @@ const Signup = () => {
                       type="text"
                       className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="@fisayobadina"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <label className="text-sm">
                       This is your public display name
@@ -270,23 +317,11 @@ const Signup = () => {
                       type="text"
                       className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                       placeholder="Must be at least 10 character long"
+                      value={votingId}
+                      onChange={(e) => setVotingId(e.target.value)}
                     />
                     <label className="text-[0.8rem] text-zinc-300">
                       You will use this ID anytime you want to vote
-                    </label>
-                  </div>
-                  <p className="text-center py-1 text-zinc-300"> OR</p>
-                  <div className="grid gap-2 w-full">
-                    <label className="font-bold">Use Fingerprint</label>
-                    <div className="border-[0.1rem] cursor-pointer hover:text-zinc-800 shadow-md text-[0.9rem] hover:bg-zinc-400 border-zinc-400 py-3 px-3 rounded-md w-full">
-                      <div className="flex items-center gap-2 justify-center">
-                        <FingerPrintIcon className="w-6 h-6" />
-                        <p>Intergrate my Fingerprint</p>
-                      </div>
-                    </div>
-                    <label className="text-[0.8rem] text-zinc-300">
-                      You will have to verify via fingerprint each time you want
-                      to vote
                     </label>
                   </div>
                 </div>
@@ -300,6 +335,7 @@ const Signup = () => {
                   </Button>
                   <Button
                     className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={submitForm}
                     type="icon"
                   >
                     <p>Finish Account</p>

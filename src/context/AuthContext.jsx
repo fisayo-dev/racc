@@ -3,15 +3,16 @@ import { account } from "../appwrite/config";
 import { ID } from "appwrite";
 import Swal from "sweetalert2";
 import BarLoader from "react-spinners/BarLoader";
+import db from "../appwrite/databases";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
-    checkUserStatus();
+    if (!user) checkUserStatus();
   }, []);
 
   const loginUser = async (userInfo) => {
@@ -52,43 +53,81 @@ export const AuthProvider = ({ children }) => {
   const registerUser = async (userInfo) => {
     setLoading(true);
 
+    const {
+      first_name,
+      last_name,
+      email,
+      password,
+      country,
+      gender,
+      birth_date,
+      username,
+      voting_id,
+    } = userInfo;
+
     try {
-      await account.create(
-        ID.unique(),
-        userInfo.email,
-        userInfo.password,
-        userInfo.username
-      );
+      // Create the user account in Appwrite
+      await account.create(ID.unique(), email, password, username);
 
       // Logs user in after creating account
-      await account.createEmailPasswordSession(
-        userInfo.email,
-        userInfo.password
-      );
-      let accountDetail = await account.get();
+      await account.createEmailPasswordSession(email, password);
+
+      // Fetch user account details after login
+      const accountDetail = await account.get();
+
+      // Save additional user information to the database
+      
+      const payload = {
+        first_name,
+        last_name,
+        email,
+        country,
+        birth_date,
+        gender,
+        username,
+        password,
+        voting_id,
+        user_id: accountDetail.$id, // Appwrite user ID
+      };
+
+      console.log(payload);
+
+      await db.users.create(payload);
+
+      // Update local user state
       setUser(accountDetail);
+      Swal.fire({
+        toast: true,
+        text: "Registration successful!",
+        icon: "success",
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+      });
     } catch (err) {
-      // Check email duplicate error code.
-      if (err.code == 409) {
+      // Handle errors like email already taken or server issues
+      if (err.code === 409) {
         Swal.fire({
           toast: true,
-          text: "Email Address has already been taken",
-          position: "top",
+          text: "Email address has already been taken.",
           icon: "error",
+          position: "top",
           showConfirmButton: false,
           timer: 4000,
         });
       } else {
         Swal.fire({
           toast: true,
-          text: "Unable to reach server. Try again",
+          text: "Unable to reach server. Please try again.",
           icon: "error",
           position: "top",
           showConfirmButton: false,
           timer: 2000,
         });
+        console.log(err.message)
       }
     }
+
     setLoading(false);
   };
 
@@ -124,7 +163,7 @@ export const AuthProvider = ({ children }) => {
       let accountDetail = await account.get();
       setUser(accountDetail);
     } catch (err) {
-      //   console.log(err)
+        console.log(err)
     }
     setLoading(false);
   };
