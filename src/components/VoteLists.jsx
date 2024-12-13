@@ -9,10 +9,11 @@ import image7 from "../assets/samples/performance.png";
 import image8 from "../assets/samples/tricks.png";
 import image9 from "../assets/samples/dailydotdev.png";
 import { Link } from "react-router-dom";
+import ButtonEl from "./Button";
 
 export const fakeVotingList = [
   {
-    id:1,
+    id: 1,
     image: "",
     options: ["Lionel Messi", "Christiano Ronaldo", "Kylian Mbappe"],
     description: "Who is the greatest football player of all time?",
@@ -23,7 +24,7 @@ export const fakeVotingList = [
     end_date: "2024-12-25",
   },
   {
-    id:2,
+    id: 2,
     image: "",
     options: ["Android", "iOS"],
     description: "Which mobile OS offers better features and usability?",
@@ -34,7 +35,7 @@ export const fakeVotingList = [
     end_date: "2024-12-28",
   },
   {
-    id:3,
+    id: 3,
     image: "",
     options: ["Artificial Intelligence", "Human Intelligence"],
     description: "Will AI ever surpass human intelligence completely?",
@@ -46,7 +47,7 @@ export const fakeVotingList = [
     end_date: "2025-01-02",
   },
   {
-    id:4,
+    id: 4,
     image: "",
     options: ["Electric Cars", "Gasoline Cars"],
     description: "Are electric cars the ultimate future of transportation?",
@@ -58,7 +59,7 @@ export const fakeVotingList = [
     end_date: "2025-01-01",
   },
   {
-    id:5,
+    id: 5,
     image: "",
     options: ["Elon Musk", "Jeff Bezos", "Bill Gates"],
     description:
@@ -70,7 +71,7 @@ export const fakeVotingList = [
     end_date: "2024-12-20",
   },
   {
-    id:6,
+    id: 6,
     image: "",
     options: ["Remote Work", "Office Work"],
     description: "Is remote work as productive as traditional office work?",
@@ -81,7 +82,7 @@ export const fakeVotingList = [
     end_date: "2024-12-08",
   },
   {
-    id:7,
+    id: 7,
     image: "",
     options: ["Freedom of Speech", "Regulated Speech"],
     description: "Should freedom of speech come with more regulations?",
@@ -93,7 +94,7 @@ export const fakeVotingList = [
     end_date: "2024-12-31",
   },
   {
-    id:8,
+    id: 8,
     image: "",
     options: ["Books", "Movies"],
     description: "Which medium tells stories more effectively?",
@@ -104,7 +105,7 @@ export const fakeVotingList = [
     end_date: "2024-12-24",
   },
   {
-    id:9,
+    id: 9,
     image: "",
     options: ["Bitcoin", "Ethereum"],
     description: "Which cryptocurrency has better potential in the long run?",
@@ -116,7 +117,7 @@ export const fakeVotingList = [
     end_date: "2025-01-05",
   },
   {
-    id:10,
+    id: 10,
     image: "",
     options: ["Fast Food", "Home-Cooked Meals"],
     description: "Which is more practical in today's busy world?",
@@ -127,7 +128,7 @@ export const fakeVotingList = [
     end_date: "2024-11-24",
   },
   {
-    id:11,
+    id: 11,
     image: "",
     options: ["E-books", "Printed Books"],
     description: "Which format do people prefer for reading?",
@@ -139,7 +140,7 @@ export const fakeVotingList = [
     end_date: "2024-12-27",
   },
   {
-    id:12,
+    id: 12,
     image: "",
     options: ["Universal Healthcare", "Private Healthcare"],
     description: "Which healthcare system is better for society?",
@@ -151,7 +152,7 @@ export const fakeVotingList = [
     end_date: "2025-01-06",
   },
   {
-    id:13,
+    id: 13,
     image: "",
     options: ["Social Media", "Real-Life Connections"],
     description: "Is social media killing real-life connections?",
@@ -162,7 +163,7 @@ export const fakeVotingList = [
     end_date: "2024-12-22",
   },
   {
-    id:14,
+    id: 14,
     image: "",
     options: ["Capitalism", "Socialism"],
     description: "Which economic system serves humanity better?",
@@ -174,11 +175,10 @@ export const fakeVotingList = [
     end_date: "2025-01-07",
   },
   {
-    id:15,
+    id: 15,
     image: "",
     options: ["Vaccines", "Alternative Medicine"],
-    description:
-      "Which approach is better for tackling global health issues?",
+    description: "Which approach is better for tackling global health issues?",
     voters: [7, 9, 11],
     status: "ongoing",
     tags: ["health", "medicine"],
@@ -186,7 +186,7 @@ export const fakeVotingList = [
     end_date: "2024-12-23",
   },
   {
-    id:16,
+    id: 16,
     image: "",
     options: ["MacOS", "Windows"],
     description: "Which operating system offers the best overall experience?",
@@ -197,7 +197,7 @@ export const fakeVotingList = [
     end_date: "2024-12-26",
   },
   {
-    id:17,
+    id: 17,
     image: "",
     options: ["Climate Change is Man-Made", "Climate Change is Natural"],
     description: "What is the primary cause of climate change?",
@@ -208,11 +208,10 @@ export const fakeVotingList = [
     end_date: "2024-12-20",
   },
   {
-    id:18,
+    id: 18,
     image: "",
     options: ["Marvel", "DC"],
-    description:
-      "Which comic universe produces better stories and characters?",
+    description: "Which comic universe produces better stories and characters?",
     voters: [8, 18, 28],
     status: "ongoing",
     tags: ["entertainment", "comics"],
@@ -220,7 +219,7 @@ export const fakeVotingList = [
     end_date: "2024-12-20",
   },
   {
-    id:19,
+    id: 19,
     image: "",
     options: ["Space Exploration", "Earth Conservation"],
     description:
@@ -232,7 +231,7 @@ export const fakeVotingList = [
     end_date: "2024-12-06",
   },
   {
-    id:20,
+    id: 20,
     image: "",
     options: ["School Uniforms", "Casual Wear"],
     description: "Should students be required to wear uniforms in schools?",
@@ -259,13 +258,20 @@ const images = [
 const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
-
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
       <div className="app-container grid gap-8">
-        <h2 className="md:text-5xl text-3xl font-bold">
-          Join the community of voters
-        </h2>
+        <div className="flex justify-between gap-5">
+          <div className="grid gap-4">
+            <h2 className="md:text-5xl text-3xl font-bold">
+              Join the community of voters
+            </h2>
+            <Link to="/signup">
+              <ButtonEl text="Join now"/>
+            </Link>
+          </div>
+          <img src=""/>
+        </div>
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {fakeVotingList.map((vote, index) => (
             <Link key={index} to={`/vote/${vote.id}`}>
