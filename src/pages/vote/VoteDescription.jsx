@@ -7,14 +7,16 @@ import { Calendar, Megaphone } from "lucide-react";
 import { useEffect, useState } from "react";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
+import { useAuth } from "../../context/AuthContext";
 
 const VoteDescription = () => {
   const { id } = useParams(); // Extract the vote ID from the route parameters
+  const { user } = useAuth();
   const [particularVote, setParticularVote] = useState(null);
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
-  const userId = "user_unique_id"; // Replace with actual logic to fetch current user's ID
+  const userId = user.$id; // Replace with actual logic to fetch current user's ID
 
   // Function to fetch the vote details
   const getParticularVote = async () => {
@@ -64,12 +66,36 @@ const VoteDescription = () => {
     const updatedVoters = [...voters, newVoter];
     setVoters(updatedVoters);
 
+    const updatedOptions = voteOptions.map((opt) => {
+      if (opt.title === option.title) {
+        // Add voter_id to the voter's array of the selected option
+        const optionVoters = opt.voters || [];
+        return {
+          ...opt,
+          votes: (opt.votes || 0) + 1,
+          voters: [...optionVoters, userId],
+        };
+      }
+      return opt;
+    });
+    setVoteOptions(updatedOptions);
+
     await db.votes.update(particularVote.$id, {
       voters: JSON.stringify(updatedVoters),
+      options: JSON.stringify(updatedOptions),
     });
 
     alert(`You voted for: ${option.title}`);
   };
+
+  // Live update of votes every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getParticularVote();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     getParticularVote();
@@ -128,6 +154,33 @@ const VoteDescription = () => {
                   className="rounded-lg shadow-md h-64 w-full bg-cover bg-center"
                   style={{ backgroundImage: `url(../${randomImage()})` }}
                 ></div>
+
+                {/* Display number of users voting or voted */}
+                <div
+                  className={`capitalize flex gap-2 items-center ${
+                    getVoteStatus(
+                      particularVote.start_date,
+                      particularVote.end_date
+                    ) === "ongoing"
+                      ? "text-green-400"
+                      : "text-red-400"
+                  }`}
+                >
+                  {getVoteStatus(
+                    particularVote.start_date,
+                    particularVote.end_date
+                  ) === "ongoing" ? (
+                    <>
+                      <Clock className="w-6 h-6" />
+                      <p>{voters.length} users voting</p>
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-6 h-6" />
+                      <p>{voters.length} users voted</p>
+                    </>
+                  )}
+                </div>
               </div>
 
               <div className="grid gap-8">
@@ -145,18 +198,47 @@ const VoteDescription = () => {
                   </div>
 
                   <div className="grid gap-3">
-                    {voteOptions.map((option) => (
-                      <div
-                        key={option.title}
-                        className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800 border-[0.102rem] border-zinc-200 cursor-pointer"
-                        onClick={() => handleVote(option)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <p className="font-bold">{option.title}</p>
-                          <CheckBadgeIcon className="text-green-400 h-6 w-6" />
+                    {voteOptions.map((option) => {
+                      const percentage =
+                        voters.length > 0
+                          ? ((option.votes || 0) / voters.length) * 100
+                          : 0;
+
+                      return (
+                        <div
+                          key={option.title}
+                          className="grid gap-3 px-4 py-3 rounded-lg hover:bg-zinc-800 border-[0.102rem] border-zinc-200 cursor-pointer"
+                          onClick={() => handleVote(option)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <p className="font-bold">{option.title}</p>
+                            {option.voters &&
+                              option.voters.some(
+                                (voter) => voter === userId
+                              ) && (
+                                <CheckBadgeIcon className="text-blue-400 h-6 w-6" />
+                              )}
+                          </div>
+                          {getVoteStatus(
+                            particularVote.start_date,
+                            particularVote.end_date
+                          ) !== "upcoming" && (
+                            <div className="grid gap-2">
+                              <div className="w-full bg-zinc-700 rounded-full h-2.5">
+                                <div
+                                  className="bg-blue-400 h-2.5 rounded-full"
+                                  style={{ width: `${percentage}%` }}
+                                ></div>
+                              </div>
+                              <p className="text-sm">
+                                {percentage.toFixed(2)}% ({option.votes || 0}{" "}
+                                votes)
+                              </p>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
