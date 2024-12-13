@@ -1,11 +1,10 @@
-import { Building, Hashtag } from "iconsax-react";
+import { Building, Hashtag, Trash } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
   ListBulletIcon,
   CalendarIcon,
   FingerPrintIcon,
-  PlusIcon,
 } from "@heroicons/react/24/outline";
 import { MegaphoneIcon, UploadIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -27,10 +26,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import db from "../../appwrite/databases";
 import { useAuth } from "../../context/AuthContext";
+import ButtonEl from "../../components/Button";
 
 const CreateVote = () => {
   // User variable
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const [date, setDate] = useState();
   const [date2, setDate2] = useState();
@@ -39,15 +39,14 @@ const CreateVote = () => {
   // Vote input states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [creatorId, setCreatorId] = useState("");
+  const [genderRestriction, setGenderRestriction] = useState("");
+  const [restrictedGender, setRestrictedGender] = useState("");
   const [publicity, setPublicity] = useState(true);
   const [franchisePolicy, setFranchisePolicy] = useState(true);
   const [tag1, setTag1] = useState("");
   const [tag2, setTag2] = useState("");
 
   // Getting the vote tag
-  const jsonedTags = JSON.stringify([tag1, tag2]);
-  console.log(jsonedTags);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -57,19 +56,60 @@ const CreateVote = () => {
     }
   };
 
+  const [options, setOptions] = useState([{ title: "", option_voters: [] }]);
+
+  // Add a new option
+  const addOption = () => {
+    setOptions([...options, { title: "", option_voters: [] }]);
+  };
+
+  // Update an option's title
+  const updateOptionTitle = (index, newTitle) => {
+    const updatedOptions = options.map((option, i) =>
+      i === index ? { ...option, title: newTitle } : option
+    );
+    setOptions(updatedOptions);
+  };
+
+  // Remove an option
+  const removeOption = (index) => {
+    const updatedOptions = options.filter((_, i) => i !== index);
+    setOptions(updatedOptions);
+  };
+
   const createVote = async () => {
+    const stringifiedOptions = JSON.stringify(options);
+    const jsonedTags = JSON.stringify([tag1, tag2]);
+
     await db.votes.create({
       title,
       description,
       publicity,
       start_date: date,
       end_date: date2,
-      voters: json.stringify([]), // -By default voters' array will be empty
-      options,
+      voters: JSON.stringify([]),
+      options: stringifiedOptions, // Store the options here
       tags: jsonedTags,
+      restricted_gender: restrictedGender,
+      gender_restriction: genderRestriction,
       creator_id: user.$id,
       franchise_policy: franchisePolicy,
     });
+
+    // console.log({
+    //   title,
+    //   description,
+    //   publicity,
+    //   start_date: date,
+    //   end_date: date2,
+    //   voters: JSON.stringify([]),
+    //   options: stringifiedOptions, // Store the options here
+    //   tags: jsonedTags,
+    //   restricted_gender: restrictedGender,
+    //   gender_restriction: genderRestriction,
+    //   creator_id: user.$id,
+    //   franchise_policy: franchisePolicy,
+    // });
   };
 
   return (
@@ -90,6 +130,8 @@ const CreateVote = () => {
                     type="text"
                     className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
                     placeholder="Enter a title that best describes your vote"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-4">
@@ -98,6 +140,8 @@ const CreateVote = () => {
                     type="text"
                     className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
                     placeholder="Tell us what your vote is all about"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                 </div>
                 <div className="grid gap-4">
@@ -128,11 +172,24 @@ const CreateVote = () => {
                   <div className="grid lg:flex gap-3">
                     <div className="flex items-center gap-2 border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3">
                       <Hashtag className="h-6 w-6" />
-                      <input type="text" className="" placeholder="Tag 1" />
+                      <input
+                        type="text"
+                        className=""
+                        placeholder="Tag 
+                      1"
+                        value={tag1}
+                        onChange={(e) => setTag1(e.target.value)}
+                      />
                     </div>
                     <div className="flex items-center gap-2 border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3">
                       <Hashtag className="h-6 w-6" />
-                      <input type="text" className="" placeholder="Tag 2" />
+                      <input
+                        type="text"
+                        className=""
+                        placeholder="Tag 2"
+                        value={tag2}
+                        onChange={(e) => setTag2(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -142,22 +199,36 @@ const CreateVote = () => {
                   <ListBulletIcon className="h-7 w-7" />
                   <h2 className="text-3xl font-bold">Vote Options:</h2>
                 </div>
-                <div className="grid gap-4">
-                  <label>Option 1</label>
-                  <input
-                    type="text"
-                    className="w-full border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
-                    placeholder="Your vote option or candidate "
-                  />
-                </div>
-                <div className="grid gap-4">
-                  <label>Option 2</label>
-                  <input
-                    type="text"
-                    className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
-                    placeholder="Your vote option or candidate "
-                  />
-                </div>
+                {options.map((option, index) => (
+                  <div key={index} className="grid gap-4">
+                    <label>Option {index + 1}</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3 flex-1"
+                        placeholder="Enter option title"
+                        value={option.title}
+                        onChange={(e) =>
+                          updateOptionTitle(index, e.target.value)
+                        }
+                      />
+                      {options.length > 2 && (
+                        <button
+                          className="hover:text-red-400 text-red-500"
+                          onClick={() => removeOption(index)}
+                        >
+                          <Trash />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={addOption}
+                  className="ml-auto mt-2 bg-zinc-600 text-white px-4 py-2 rounded-lg"
+                >
+                  Add Option
+                </button>
                 <div className="text-md flex items-center justify-end hover:bg-zinc-300 bg-zinc-500"></div>
               </div>
               <div className="grid gap-4">
@@ -297,13 +368,17 @@ const CreateVote = () => {
                   <h2 className="text-md">
                     Do you want any gender restriction ?
                   </h2>
-                  <Select className="outline-none">
+                  <Select
+                    value={genderRestriction}
+                    onValueChange={(value) => setGenderRestriction(value)}
+                    className="outline-none"
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose an option" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="dark">Yes</SelectItem>
-                      <SelectItem value="system">No</SelectItem>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -311,26 +386,35 @@ const CreateVote = () => {
                   <h2 className="text-md">
                     Which gender so you want to restrict?
                   </h2>
-                  <Select className="outline-none">
+                  <Select
+                    value={restrictedGender}
+                    onValueChange={(value) => setRestrictedGender(value)}
+                    className="outline-none"
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Pick a gender" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="male">Male</SelectItem>
-                      <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="others">Others</SelectItem>
+                      <SelectItem value="Male">Male</SelectItem>
+                      <SelectItem value="Female">Female</SelectItem>
+                      <SelectItem value="Others">Others</SelectItem>
+                      <SelectItem value="None">None</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="grid gap-4">
                   <h2 className="text-md">Do you want the vote to be public</h2>
-                  <Select className="outline-none">
+                  <Select
+                    value={publicity}
+                    onValueChange={(value) => setPublicity(value)}
+                    className="outline-none"
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose an option" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="female">Yes</SelectItem>
-                      <SelectItem value="male">No</SelectItem>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -342,20 +426,26 @@ const CreateVote = () => {
                 </div>
                 <div className="grid gap-4">
                   <h2 className="text-md">Do you want to enable franchise ?</h2>
-                  <Select className="outline-none">
+                  <Select
+                    value={franchisePolicy}
+                    onValueChange={(value) => setFranchisePolicy(value)}
+                    className="outline-none"
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose an option" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="dark">Yes, enable it</SelectItem>
-                      <SelectItem value="system">
-                        No, don't enable it
-                      </SelectItem>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div onClick={createVote}>
+            <ButtonEl text="Submit" className="mx-auto my-5" />
           </div>
         </div>
       </div>
