@@ -1,6 +1,6 @@
 import { Button, Header } from "../../components";
 import { useAuth } from "../../context/AuthContext";
-import image from "../../assets/samples/Nextjs.png";
+import image from "../../assets/samples/nextjs.png";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
