@@ -32,18 +32,31 @@ const VoteDescription = () => {
 
   // Function to fetch the vote details
   const getParticularVote = async () => {
-    const results = await db.votes.list([Query.orderDesc("$createdAt")]);
-    const votes = results.documents;
-    const index_vote = votes.filter((vote) => vote.$id === id);
-    setParticularVote(index_vote[0]);
-
-    // Parse the JSON fields for tags, options, and voters
-    setVoteTags(JSON.parse(index_vote[0].tags));
-    setVoteOptions(JSON.parse(index_vote[0].options));
-    setVoters(JSON.parse(index_vote[0].voters));
-
-    if (user && particularVote.publicity === "No") {
-      navigate("/home");
+    try {
+      const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+      const votes = results.documents;
+      const index_vote = votes.find((vote) => vote.$id === id);
+  
+      if (!index_vote) {
+        navigate("/home"); // Redirect if the vote is not found
+        return;
+      }
+  
+      // Check if the vote is private and the user is not logged in
+      if (!user && index_vote.publicity === "No") {
+        navigate("/login"); // Redirect guest users to the login page for private votes
+        return;
+      }
+  
+      setParticularVote(index_vote);
+  
+      // Parse the JSON fields for tags, options, and voters
+      setVoteTags(JSON.parse(index_vote.tags));
+      setVoteOptions(JSON.parse(index_vote.options));
+      setVoters(JSON.parse(index_vote.voters));
+    } catch (error) {
+      console.error("Error fetching the vote details:", error);
+      navigate("/home"); // Redirect in case of an error
     }
   };
 
