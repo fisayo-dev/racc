@@ -232,7 +232,10 @@ const VoteDescription = () => {
                           {getVoteStatus(
                             particularVote.start_date,
                             particularVote.end_date
-                          ) !== "upcoming" && (
+                          ) !== "upcoming" && voters && user &&
+                          voters.some(
+                            (vote) => vote.voter_id === userId
+                          ) && (
                             <div className="grid gap-2">
                               <div className="w-full bg-zinc-700 rounded-full h-2.5">
                                 <div
