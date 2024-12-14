@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 const Profile = () => {
   const { user, logoutUser } = useAuth();
   const [createdVotes, setCreatedVotes] = useState([]);
+  const [participatedVotes, setParticipatedVotes] = useState([]);
 
   const getCreatedVotes = async () => {
     try {
@@ -21,8 +22,26 @@ const Profile = () => {
     }
   };
 
+  const getParticipatedVotes = async () => {
+    try {
+      // Fetch all votes
+      const results = await db.votes.list();
+      const votes = results.documents;
+  
+      // Filter votes where the user has participated
+      const participatedVotes = votes.filter((vote) => {
+        const voters = JSON.parse(vote.voters); // Parse the voters JSON array
+        return voters.some((voter) => voter.voter_id === user.$id); // Check if user.$id is in the voters array
+      });
+  
+      setParticipatedVotes(participatedVotes); // Update state with filtered votes
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   useEffect(() => {
     getCreatedVotes()
+    getParticipatedVotes()
   },[])
   return (
     <div>
@@ -55,15 +74,15 @@ const Profile = () => {
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">Vote Participation </h2>
                     <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">24</p>
-                      <p className="text-sm">votes</p>
+                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 && participatedVotes.length}</p>
+                      <p className="text-sm">{participatedVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid text-center justify-center">
                       <p className="text-8xl font-bold">{createdVotes.length !== 0 && createdVotes.length}</p>
-                      <p className="text-sm">votes</p>
+                      <p className="text-sm">{createdVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
