@@ -97,7 +97,9 @@ const VoteCard = ({
       <div className="grid items-center py-3 px-4 gap-4 md:gap-3">
         {voteCreator && (
           <div className=" text-zinc-200 ">
-            <p className="md:text-[0.9rem] my-1 text-md">@{voteCreator.username}</p>
+            <p className="md:text-[0.9rem] my-1 text-md">
+              @{voteCreator.username}
+            </p>
           </div>
         )}
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">

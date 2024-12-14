@@ -1,11 +1,29 @@
 import { Button, Header } from "../../components";
 import { useAuth } from "../../context/AuthContext";
 import image from "../../assets/samples/nextjs.png";
-import { Link } from "react-router-dom";
+import db from "../../appwrite/databases";
+import { Query } from "appwrite";
+import { useState, useEffect } from "react";
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
-  console.log(user);
+  const [createdVotes, setCreatedVotes] = useState([]);
+
+  const getCreatedVotes = async () => {
+    try {
+      const results = await db.votes.list([
+        Query.equal("creator_id", user.$id),
+      ]);
+      const data = results.documents;
+      setCreatedVotes(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getCreatedVotes()
+  },[])
   return (
     <div>
       <Header />
@@ -44,7 +62,7 @@ const Profile = () => {
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">11</p>
+                      <p className="text-8xl font-bold">{createdVotes.length !== 0 && createdVotes.length}</p>
                       <p className="text-sm">votes</p>
                     </div>
                   </div>
