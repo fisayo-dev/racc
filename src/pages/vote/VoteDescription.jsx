@@ -27,7 +27,7 @@ const VoteDescription = () => {
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
-  const userId = user.$id;
+  const [userId,setUserId] = useState('')
   const navigate = useNavigate();
 
   // Function to fetch the vote details
@@ -108,6 +108,9 @@ const VoteDescription = () => {
   }, []);
 
   useEffect(() => {
+    if (user) {
+      setUserId(user.$id)
+    }
     getParticularVote();
   }, []);
 
