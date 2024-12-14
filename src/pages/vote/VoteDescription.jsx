@@ -230,10 +230,14 @@ const VoteDescription = () => {
                                   style={{ width: `${percentage}%` }}
                                 ></div>
                               </div>
-                              <p className="text-sm">
-                                {percentage.toFixed(2)}% ({option.votes || 0}{" "}
-                                votes)
-                              </p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-sm">
+                                  {percentage.toFixed(2)}%
+                                </p>
+                                <p className="text-sm">
+                                  {option.votes || 0} {option.votes > 1 ? 'votes': 'vote'}
+                                </p>
+                              </div>
                             </div>
                           )}
                         </div>
