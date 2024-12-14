@@ -9,6 +9,17 @@ import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useAuth } from "../../context/AuthContext";
 
+// Function to determine the status of the vote
+export const getVoteStatus = (startDate, endDate) => {
+  const currentDate = new Date();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (currentDate < start) return "upcoming";
+  if (currentDate > end) return "ended";
+  return "ongoing";
+};
+
 const VoteDescription = () => {
   const { id } = useParams(); // Extract the vote ID from the route parameters
   const { user } = useAuth();
@@ -16,8 +27,8 @@ const VoteDescription = () => {
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
-  const userId = user.$id; 
-  const navigate = useNavigate()
+  const userId = user.$id;
+  const navigate = useNavigate();
 
   // Function to fetch the vote details
   const getParticularVote = async () => {
@@ -32,19 +43,8 @@ const VoteDescription = () => {
     setVoters(JSON.parse(index_vote[0].voters));
 
     if (user && particularVote.publicity === "No") {
-      navigate('/home')
+      navigate("/home");
     }
-  };
-
-  // Function to determine the status of the vote
-  const getVoteStatus = (startDate, endDate) => {
-    const currentDate = new Date();
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    if (currentDate < start) return "upcoming";
-    if (currentDate > end) return "ended";
-    return "ongoing";
   };
 
   // Function to handle voting on an option
@@ -64,7 +64,7 @@ const VoteDescription = () => {
     }
 
     if (!user) {
-      alert('You cannot vote. Please sign in')
+      alert("You cannot vote. Please sign in");
       return;
     }
 
@@ -109,7 +109,6 @@ const VoteDescription = () => {
 
   useEffect(() => {
     getParticularVote();
-    
   }, []);
 
   return (
@@ -246,7 +245,8 @@ const VoteDescription = () => {
                                   {percentage.toFixed(2)}%
                                 </p>
                                 <p className="text-sm">
-                                  {option.votes || 0} {option.votes > 1 ? 'votes': 'vote'}
+                                  {option.votes || 0}{" "}
+                                  {option.votes > 1 ? "votes" : "vote"}
                                 </p>
                               </div>
                             </div>

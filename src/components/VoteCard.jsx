@@ -1,6 +1,7 @@
 import { FingerPrintIcon } from "@heroicons/react/24/outline";
 import { Calendar, Graph, Status, TickCircle } from "iconsax-react";
 import { Clock } from "iconsax-react";
+import { getVoteStatus } from "../pages/vote/VoteDescription";
 const VoteCard = ({
   image,
   options,
@@ -10,16 +11,17 @@ const VoteCard = ({
   status,
   voters,
   start_date,
+  end_date,
 }) => {
-  const getVoteStatus = () => {
-    if (status == "ongoing") {
+  const gettingVoteStatus = () => {
+    if (getVoteStatus(start_date, end_date) == 'ongoing') {
       return (
         <div className="flex hover:text-green-300 text-green-400 items-center gap-[0.5rem]">
           <Clock className="h-5 w-5" />
           <p>Ongoing</p>
         </div>
       );
-    } else if (status == "upcoming") {
+    } else if (getVoteStatus(start_date, end_date) == 'upcoming') {
       return (
         <div className="flex hover:text-yellow-300 text-yellow-400 items-center gap-[0.5rem]">
           <Calendar className="h-5 w-5" />
@@ -50,17 +52,17 @@ const VoteCard = ({
   }
 
   const getVoterStatus = () => {
-    if (status == "upcoming") {
+    if (getVoteStatus(start_date, end_date) == 'upcoming') {
       // Checks if voting is upcoming
       return <p>{convertUTCToEnglishDate(start_date)} </p>;
-    } else if (status == "ongoing") {
+    } else if (getVoteStatus(start_date, end_date) == 'ongoing') {
       // checks if voting is ongoing
-      return <p>{voters.length} voting</p>;
+      return <p>{JSON.parse(voters).length} voting</p>;
     } else {
       // checks if voting has ended
       return (
         <p>
-          {voters.length} {voters.length > 1 ? "voters" : "voter"} voted{" "}
+          {JSON.parse(voters).length} {JSON.parse(voters).length > 1 ? "voters" : "voter"} voted{" "}
         </p>
       );
     }
@@ -89,7 +91,7 @@ const VoteCard = ({
         </div> */}
         <div className="flex text-[0.8rem] items-center justify-between gap-5">
           <div className="flex items-center gap-[0.5rem]">
-            {getVoteStatus()}
+            {gettingVoteStatus()}
           </div>
           <div className="hover:text-gray-200 text-gray-400">
             {getVoterStatus()}

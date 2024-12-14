@@ -312,7 +312,7 @@ const VoteLists = () => {
                 status='ongoing'
                 tags={JSON.parse(vote.tags)}
                 start_date={vote.start_date}
-                end_date={vote.start_date}
+                end_date={vote.end_date}
                 voters={vote.voters}
               />
             </Link>
