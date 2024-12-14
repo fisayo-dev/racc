@@ -1,9 +1,9 @@
 import { ArrowLeft, Check, Clock, Hashtag, Lock } from "iconsax-react";
 import { Header } from "../../components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { fakeVotingList, randomImage } from "../../components/VoteLists";
-import { Calendar, Megaphone } from "lucide-react";
+import { randomImage } from "../../components/VoteLists";
+import { Megaphone } from "lucide-react";
 import { useEffect, useState } from "react";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
@@ -16,7 +16,8 @@ const VoteDescription = () => {
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
-  const userId = user.$id; // Replace with actual logic to fetch current user's ID
+  const userId = user.$id; 
+  const navigate = useNavigate()
 
   // Function to fetch the vote details
   const getParticularVote = async () => {
@@ -29,6 +30,10 @@ const VoteDescription = () => {
     setVoteTags(JSON.parse(index_vote[0].tags));
     setVoteOptions(JSON.parse(index_vote[0].options));
     setVoters(JSON.parse(index_vote[0].voters));
+
+    if (user && particularVote.publicity === "No") {
+      navigate('/home')
+    }
   };
 
   // Function to determine the status of the vote
@@ -55,6 +60,11 @@ const VoteDescription = () => {
     // Check if user has already voted
     if (voters.some((voter) => voter.voter_id === userId)) {
       alert("You have already voted.");
+      return;
+    }
+
+    if (!user) {
+      alert('You cannot vote. Please sign in')
       return;
     }
 
@@ -99,6 +109,7 @@ const VoteDescription = () => {
 
   useEffect(() => {
     getParticularVote();
+    
   }, []);
 
   return (
