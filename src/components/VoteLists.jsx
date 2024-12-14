@@ -272,7 +272,6 @@ const VoteLists = () => {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
       setListOfVotes(votes)
-      console.log(votes)
     } catch (err) {
       console.log(err.message)
     }
@@ -306,6 +305,7 @@ const VoteLists = () => {
             <Link key={index} to={`/vote/${vote.$id}`}>
               <VoteCard
                 image={randomImage()}
+                id={vote.$id}
                 title={vote.title}
                 description={vote.description}
                 options={vote.options}
@@ -314,6 +314,7 @@ const VoteLists = () => {
                 start_date={vote.start_date}
                 end_date={vote.end_date}
                 voters={vote.voters}
+                creatorId={vote.creator_id}
               />
             </Link>
             // <p>Hi</p>

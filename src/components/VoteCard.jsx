@@ -1,7 +1,10 @@
-import { FingerPrintIcon } from "@heroicons/react/24/outline";
-import { Calendar, Graph, Status, TickCircle } from "iconsax-react";
+import { Calendar, TickCircle } from "iconsax-react";
 import { Clock } from "iconsax-react";
 import { getVoteStatus } from "../pages/vote/VoteDescription";
+import { useEffect, useState } from "react";
+import db from "../appwrite/databases";
+import { Query } from "appwrite";
+
 const VoteCard = ({
   image,
   options,
@@ -9,19 +12,24 @@ const VoteCard = ({
   tags,
   description,
   status,
+  id,
   voters,
   start_date,
   end_date,
+  creatorId,
 }) => {
+  // Vote creator state
+  const [voteCreator, setVoteCreator] = useState(null);
+
   const gettingVoteStatus = () => {
-    if (getVoteStatus(start_date, end_date) == 'ongoing') {
+    if (getVoteStatus(start_date, end_date) == "ongoing") {
       return (
         <div className="flex hover:text-green-300 text-green-400 items-center gap-[0.5rem]">
           <Clock className="h-5 w-5" />
           <p>Ongoing</p>
         </div>
       );
-    } else if (getVoteStatus(start_date, end_date) == 'upcoming') {
+    } else if (getVoteStatus(start_date, end_date) == "upcoming") {
       return (
         <div className="flex hover:text-yellow-300 text-yellow-400 items-center gap-[0.5rem]">
           <Calendar className="h-5 w-5" />
@@ -52,26 +60,48 @@ const VoteCard = ({
   }
 
   const getVoterStatus = () => {
-    if (getVoteStatus(start_date, end_date) == 'upcoming') {
+    if (getVoteStatus(start_date, end_date) == "upcoming") {
       // Checks if voting is upcoming
       return <p>{convertUTCToEnglishDate(start_date)} </p>;
-    } else if (getVoteStatus(start_date, end_date) == 'ongoing') {
+    } else if (getVoteStatus(start_date, end_date) == "ongoing") {
       // checks if voting is ongoing
       return <p>{JSON.parse(voters).length} voting</p>;
     } else {
       // checks if voting has ended
       return (
         <p>
-          {JSON.parse(voters).length} {JSON.parse(voters).length > 1 ? "voters" : "voter"} voted{" "}
+          {JSON.parse(voters).length}{" "}
+          {JSON.parse(voters).length > 1 ? "voters" : "voter"} voted{" "}
         </p>
       );
     }
   };
+
+  const getCreatorProfile = async () => {
+    console.log(creatorId);
+    try {
+      const results = await db.users.list([Query.equal("user_id", creatorId)]);
+      const data = results.documents[0];
+      console.log(data);
+      setVoteCreator(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getCreatorProfile();
+  }, []);
   return (
-    <div className="bg-zinc-800 h-[425px] md:h-[400px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
-      <div className="grid items-center py-3 px-4 gap-4 md:gap-0">
+    <div className="bg-zinc-800 h-[500px] md:h-[440px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
+      <div className="grid items-center py-3 px-4 gap-4 md:gap-3">
+        {voteCreator && (
+          <div className=" text-zinc-200 ">
+            <p className="md:text-[0.9rem] my-1 text-md">@{voteCreator.username}</p>
+          </div>
+        )}
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
-          {title.length > 40 ? `${title.substr(0,40)}...`: title}
+          {title.length > 40 ? `${title.substr(0, 40)}...` : title}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
           {tags.map((tag) => (
@@ -80,8 +110,10 @@ const VoteCard = ({
             </div>
           ))}
         </div>
-        <div className={`rounded-lg shadow-md h-56 md:h-52 w-full bg-cover bg-center`} style={{ backgroundImage: `url(${image})` }}>
-        </div>
+        <div
+          className={`rounded-lg shadow-md h-56 md:h-52 w-full bg-cover bg-center`}
+          style={{ backgroundImage: `url(${image})` }}
+        ></div>
         {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (
             <div className="px-4 py-3 hover:shadow-md border-[0.1rem] hover:bg-zinc-700 border-zinc-700 rounded-lg text-[1.0.5rem]">
