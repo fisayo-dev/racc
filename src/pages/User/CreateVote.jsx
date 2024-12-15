@@ -182,7 +182,7 @@ const CreateVote = () => {
                       <Hashtag className="h-6 w-6" />
                       <input
                         type="text"
-                        className=""
+                        className="w-full "
                         placeholder="Tag 1"
                         value={tag1}
                         onChange={(e) => setTag1(e.target.value)}
@@ -192,7 +192,7 @@ const CreateVote = () => {
                       <Hashtag className="h-6 w-6" />
                       <input
                         type="text"
-                        className=""
+                        className="w-full "
                         placeholder="Tag 2"
                         value={tag2}
                         onChange={(e) => setTag2(e.target.value)}
@@ -270,7 +270,7 @@ const CreateVote = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div className="grid gap-4">
+                {/* <div className="grid gap-4">
                   <h2 className="text-md">
                     What time do you want the vote to commence ?
                   </h2>
@@ -300,7 +300,7 @@ const CreateVote = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
+                </div> */}
                 <div className="grid gap-4">
                   <h2 className="text-md">
                     What date do you want the vote to end ?
@@ -332,7 +332,7 @@ const CreateVote = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div className="grid gap-4">
+                {/* <div className="grid gap-4">
                   <h2 className="text-md">
                     What time do you want the vote to end ?
                   </h2>
@@ -362,7 +362,7 @@ const CreateVote = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="grid gap-[5rem] my-5">
