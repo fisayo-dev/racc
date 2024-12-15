@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useAuth } from "../../context/AuthContext";
+import { LoadingIcon } from "../../components";
 
 // Function to determine the status of the vote
 export const getVoteStatus = (startDate, endDate) => {
@@ -27,7 +28,7 @@ const VoteDescription = () => {
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
-  const [userId,setUserId] = useState('')
+  const [userId, setUserId] = useState("");
   const navigate = useNavigate();
 
   // Function to fetch the vote details
@@ -36,20 +37,20 @@ const VoteDescription = () => {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
       const index_vote = votes.find((vote) => vote.$id === id);
-  
+
       if (!index_vote) {
         navigate("/home"); // Redirect if the vote is not found
         return;
       }
-  
+
       // Check if the vote is private and the user is not logged in
       if (!user && index_vote.publicity === "No") {
         navigate("/login"); // Redirect guest users to the login page for private votes
         return;
       }
-  
+
       setParticularVote(index_vote);
-  
+
       // Parse the JSON fields for tags, options, and voters
       setVoteTags(JSON.parse(index_vote.tags));
       setVoteOptions(JSON.parse(index_vote.options));
@@ -122,7 +123,7 @@ const VoteDescription = () => {
 
   useEffect(() => {
     if (user) {
-      setUserId(user.$id)
+      setUserId(user.$id);
     }
     getParticularVote();
   }, []);
@@ -131,6 +132,7 @@ const VoteDescription = () => {
     <div className="grid gap-2 text-zinc-200">
       <Header />
       <div className="app-container my-[8rem]">
+       
         <div className="grid gap-5">
           <Link to="/">
             <button className="my-1 rounded-lg text-zinc-800 flex items-center gap-1 hover:bg-zinc-200 bg-zinc-300 px-4 py-3">
@@ -138,6 +140,12 @@ const VoteDescription = () => {
               <p>Back</p>
             </button>
           </Link>
+          {!particularVote && (
+          <div className="mx-auto justify-center grid gap-5 text-center my-10">
+            <LoadingIcon />
+            <p className="text-lg">Fetching vote description</p>
+          </div>
+        )}
           {particularVote && (
             <div className="grid gap-10 items-start md:grid-cols-2">
               <div className="grid gap-8">
@@ -248,28 +256,28 @@ const VoteDescription = () => {
                           {getVoteStatus(
                             particularVote.start_date,
                             particularVote.end_date
-                          ) !== "upcoming" && voters && user &&
-                          voters.some(
-                            (vote) => vote.voter_id === userId
-                          ) && (
-                            <div className="grid gap-2">
-                              <div className="w-full bg-zinc-700 rounded-full h-2.5">
-                                <div
-                                  className="bg-blue-400 h-2.5 rounded-full"
-                                  style={{ width: `${percentage}%` }}
-                                ></div>
+                          ) !== "upcoming" &&
+                            voters &&
+                            user &&
+                            voters.some((vote) => vote.voter_id === userId) && (
+                              <div className="grid gap-2">
+                                <div className="w-full bg-zinc-700 rounded-full h-2.5">
+                                  <div
+                                    className="bg-blue-400 h-2.5 rounded-full"
+                                    style={{ width: `${percentage}%` }}
+                                  ></div>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <p className="text-sm">
+                                    {percentage.toFixed(2)}%
+                                  </p>
+                                  <p className="text-sm">
+                                    {option.votes || 0}{" "}
+                                    {option.votes > 1 ? "votes" : "vote"}
+                                  </p>
+                                </div>
                               </div>
-                              <div className="flex items-center justify-between">
-                                <p className="text-sm">
-                                  {percentage.toFixed(2)}%
-                                </p>
-                                <p className="text-sm">
-                                  {option.votes || 0}{" "}
-                                  {option.votes > 1 ? "votes" : "vote"}
-                                </p>
-                              </div>
-                            </div>
-                          )}
+                            )}
                         </div>
                       );
                     })}

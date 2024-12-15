@@ -3,7 +3,7 @@ const LoadingIcon = () => {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
       <path
         fill="none"
-        stroke="#3F3F46"
+        stroke="#72727F"
         stroke-width="22"
         stroke-linecap="round"
         stroke-dasharray="300 385"
