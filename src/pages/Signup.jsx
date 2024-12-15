@@ -56,7 +56,7 @@ const Signup = () => {
       username,
       voting_id: votingId,
     };
-    registerUser(userInfo)
+    registerUser(userInfo);
   };
   return (
     <div className="text-zinc-200 grid gap-5 py-5">
@@ -81,11 +81,7 @@ const Signup = () => {
               formStatus >= 2 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
-          <div
-            className={`rounded-xl w-10 md:w-20 p-1 ${
-              formStatus >= 3 ? "bg-gray-400" : "bg-gray-600"
-            }`}
-          ></div>
+          
         </div>
         {formStatus == 0 && (
           <div className="grid my-3 gap-5">
@@ -280,48 +276,6 @@ const Signup = () => {
                     />
                     <label className="text-sm">
                       This is your public display name
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 justify-center">
-                  <Button
-                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
-                    onClick={() => setFormStatus((prev) => prev - 1)}
-                    type="icon"
-                  >
-                    <p>Previous</p>
-                  </Button>
-                  <Button
-                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
-                    onClick={() => setFormStatus((prev) => prev + 1)}
-                    type="icon"
-                  >
-                    <p>Next</p>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-        {formStatus == 3 && (
-          <div className="grid my-3 gap-5">
-            <h2 className="text-center text-3xl font-bold">
-              How do you want to vote ?
-            </h2>
-            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
-              <div className="grid gap-6">
-                <div className="grid gap-3">
-                  <div className="grid gap-2 w-full">
-                    <label className="font-bold">Use Voting ID</label>
-                    <input
-                      type="text"
-                      className="border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
-                      placeholder="Must be at least 10 character long"
-                      value={votingId}
-                      onChange={(e) => setVotingId(e.target.value)}
-                    />
-                    <label className="text-[0.8rem] text-zinc-300">
-                      You will use this ID anytime you want to vote
                     </label>
                   </div>
                 </div>
