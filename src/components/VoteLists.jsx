@@ -266,21 +266,21 @@ const randomImage = () => images[Math.floor(Math.random() * images.length)];
 const VoteLists = () => {
   const { user } = useAuth();
 
-  const [listOfVotes, setListOfVotes] = useState([])
+  const [listOfVotes, setListOfVotes] = useState([]);
 
   const fetchVotes = async () => {
     try {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
-      setListOfVotes(votes)
+      setListOfVotes(votes);
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchVotes()
-  },[])
+    fetchVotes();
+  }, []);
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
@@ -309,24 +309,25 @@ const VoteLists = () => {
         )}
 
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {listOfVotes.length !== 0 && listOfVotes.map((vote, index) => (
-            <Link key={index} to={`/vote/${vote.$id}`}>
-              <VoteCard
-                image={randomImage()}
-                id={vote.$id}
-                title={vote.title}
-                description={vote.description}
-                options={vote.options}
-                status='ongoing'
-                tags={JSON.parse(vote.tags)}
-                start_date={vote.start_date}
-                end_date={vote.end_date}
-                voters={vote.voters}
-                creatorId={vote.creator_id}
-              />
-            </Link>
-            // <p>Hi</p>
-          ))}
+          {listOfVotes.length !== 0 &&
+            listOfVotes.map((vote, index) => (
+              <Link key={index} to={`/vote/${vote.$id}`}>
+                <VoteCard
+                  image={randomImage()}
+                  id={vote.$id}
+                  title={vote.title}
+                  description={vote.description}
+                  options={vote.options}
+                  status="ongoing"
+                  tags={JSON.parse(vote.tags)}
+                  start_date={vote.start_date}
+                  end_date={vote.end_date}
+                  voters={vote.voters}
+                  creatorId={vote.creator_id}
+                />
+              </Link>
+              // <p>Hi</p>
+            ))}
         </div>
       </div>
     </div>

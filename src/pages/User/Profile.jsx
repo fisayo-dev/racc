@@ -5,6 +5,7 @@ import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useState, useEffect } from "react";
 import { Loader2Icon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
@@ -89,7 +90,7 @@ const Profile = () => {
                   </div>
 
                   {/* Created Votes */}
-                  <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
+                  <Link to='/profile/my-votes' className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid gap-5 text-center justify-center">
                       {createdVotes === null ? (
@@ -105,7 +106,7 @@ const Profile = () => {
                           : "vote"}
                       </p>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Favoured Votes */}
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
