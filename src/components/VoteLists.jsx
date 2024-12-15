@@ -15,6 +15,7 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import db from "../appwrite/databases";
 import { Query } from "appwrite";
+import LoadingIcon from "./LoadingIcon";
 
 export const fakeVotingList = [
   {
@@ -297,6 +298,13 @@ const VoteLists = () => {
             <div className="hidden w-full md:flex justify-end">
               <img className="" draggable={false} src={landing_voters} />
             </div>
+          </div>
+        )}
+
+        {listOfVotes.length == 0 && (
+          <div className="mx-auto justify-center grid gap-5 text-center my-10">
+            <LoadingIcon />
+            <p className="text-lg">Fetching votes</p>
           </div>
         )}
 
