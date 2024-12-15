@@ -10,7 +10,7 @@ import image8 from "../assets/samples/tricks.png";
 import image9 from "../assets/samples/dailydotdev.png";
 import { Link } from "react-router-dom";
 import ButtonEl from "./Button";
-import landing_voters from "../assets/freepik__background__39362.png";
+import landing_voters from "../assets/freepik__adjust__39359-removebg-preview.png";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import db from "../appwrite/databases";
