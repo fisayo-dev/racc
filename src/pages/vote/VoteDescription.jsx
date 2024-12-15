@@ -177,7 +177,7 @@ const VoteDescription = () => {
 
                 {/* Background image for the vote */}
                 <div
-                  className="rounded-lg shadow-md h-64 w-full bg-cover bg-center"
+                  className="rounded-lg bg-zinc-700 shadow-md h-64 w-full bg-cover bg-center"
                   style={{ backgroundImage: `url(../${randomImage()})` }}
                 ></div>
 

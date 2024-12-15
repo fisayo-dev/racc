@@ -113,7 +113,7 @@ const VoteCard = ({
           ))}
         </div>
         <div
-          className={`rounded-lg shadow-md h-56 md:h-52 w-full bg-cover bg-center`}
+          className={`rounded-lg bg-zinc-700 shadow-md h-56 md:h-52 w-full bg-cover bg-center`}
           style={{ backgroundImage: `url(${image})` }}
         ></div>
         {/* <div className="grid gap-[0.4rem]">
