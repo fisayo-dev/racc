@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { AtSignIcon, CalendarIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { ImageUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -346,11 +346,19 @@ const Signup = () => {
                     <label className="font-bold">
                       Upload your profile picture
                     </label>
-                    <Input
-                      type="file"
-                      className="text-slate-300"
-                      onChange={handleImageUpload}
-                    />
+                    <div className="relative overflow-hidden justify-center hover:bg-zinc-700 bg-zinc-800 flex px-4 py-3 rounded-lg cursor-pointer items-center gap-2 shadow-lg">
+                      <Input
+                        type="file"
+                        className="absolute opacity-0 h-full w-full cursor-pointer"
+                        onChange={handleImageUpload}
+                      />
+                      <ImageUp className="h-6 w-6 cursor-pointer" />
+                      <p>
+                        {profilePreview
+                          ? "Change the image"
+                          : "Upload an image"}
+                      </p>
+                    </div>
                     <div
                       className="md:h-[350px] md:w-[350px] h-[200px] w-[200px] mt-5 mx-auto rounded-full bg-zinc-300 bg-cover bg-center"
                       style={{ backgroundImage: `url(${profilePreview})` }}
@@ -359,7 +367,7 @@ const Signup = () => {
                   <div className="grid gap-2 w-full">
                     <label className="font-bold">Enter your username:</label>
                     <div className="flex items-center gap-2 border-[0.1rem] shadow-md text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md ">
-                      <AtSignIcon className="h-6 w-6 text-zinc-400"/>
+                      <AtSignIcon className="h-6 w-6 text-zinc-400" />
                       <input
                         type="text"
                         className="w-full text-zinc-200"
