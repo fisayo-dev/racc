@@ -8,48 +8,45 @@ import { Loader2Icon } from "lucide-react";
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
-  const [createdVotes, setCreatedVotes] = useState([]);
-  const [participatedVotes, setParticipatedVotes] = useState([]);
+  const [createdVotes, setCreatedVotes] = useState(null); // null for loading
+  const [participatedVotes, setParticipatedVotes] = useState(null); // null for loading
 
   const getCreatedVotes = async () => {
     try {
-      const results = await db.votes.list([
-        Query.equal("creator_id", user.$id),
-      ]);
-      const data = results.documents;
-      setCreatedVotes(data);
+      const results = await db.votes.list([Query.equal("creator_id", user.$id)]);
+      setCreatedVotes(results.documents || []); // Default to empty array if no documents
     } catch (err) {
       console.log(err.message);
+      setCreatedVotes([]); // Handle errors gracefully
     }
   };
 
   const getParticipatedVotes = async () => {
     try {
-      // Fetch all votes
       const results = await db.votes.list();
       const votes = results.documents;
-  
-      // Filter votes where the user has participated
       const participatedVotes = votes.filter((vote) => {
-        const voters = JSON.parse(vote.voters); // Parse the voters JSON array
-        return voters.some((voter) => voter.voter_id === user.$id); // Check if user.$id is in the voters array
+        const voters = JSON.parse(vote.voters);
+        return voters.some((voter) => voter.voter_id === user.$id);
       });
-  
-      setParticipatedVotes(participatedVotes); // Update state with filtered votes
+      setParticipatedVotes(participatedVotes || []); // Default to empty array if no matches
     } catch (err) {
       console.log(err.message);
+      setParticipatedVotes([]); // Handle errors gracefully
     }
   };
+
   useEffect(() => {
-    getCreatedVotes()
-    getParticipatedVotes()
-  },[])
+    getCreatedVotes();
+    getParticipatedVotes();
+  }, []);
+
   return (
     <div>
       <Header />
       <div className="mt-[8rem] mb-[5rem]">
         <div className="app-container ">
-          <div className=" md:flex profile-grid">
+          <div className="md:flex profile-grid">
             <div className="bg-zinc-800 shadow-md rounded-lg p-6">
               <div className="grid gap-4">
                 <div
@@ -72,20 +69,45 @@ const Profile = () => {
               <div className="grid gap-2">
                 <h2 className="text-2xl font-bold">Your Activity</h2>
                 <div className="grid gap-5 my-5 grid-cols-1 md:grid-cols-3">
+                  {/* Participated Votes */}
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
-                    <h2 className="text-xl font-bold">Vote Participation </h2>
+                    <h2 className="text-xl font-bold">Vote Participation</h2>
                     <div className="grid gap-5 text-center justify-center">
-                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 ? participatedVotes.length: <Loader2Icon  className="animate-spin h-20 w-20"/>}</p>
-                      <p className="text-sm">{participatedVotes.length > 1 ? 'votes': 'vote'}</p>
+                      {participatedVotes === null ? (
+                        <Loader2Icon className="animate-spin h-20 w-20" />
+                      ) : (
+                        <p className="text-8xl font-bold">
+                          {participatedVotes.length}
+                        </p>
+                      )}
+                      <p className="text-sm">
+                        {participatedVotes && participatedVotes.length !== 1
+                          ? "votes"
+                          : "vote"}
+                      </p>
                     </div>
                   </div>
+
+                  {/* Created Votes */}
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid gap-5 text-center justify-center">
-                      <p className="text-8xl font-bold">{createdVotes.length !== 0 ? createdVotes.length: <Loader2Icon  className="animate-spin h-20 w-20"/>}</p>
-                      <p className="text-sm">{createdVotes.length > 1 ? 'votes': 'vote'}</p>
+                      {createdVotes === null ? (
+                        <Loader2Icon className="animate-spin h-20 w-20" />
+                      ) : (
+                        <p className="text-8xl font-bold">
+                          {createdVotes.length}
+                        </p>
+                      )}
+                      <p className="text-sm">
+                        {createdVotes && createdVotes.length !== 1
+                          ? "votes"
+                          : "vote"}
+                      </p>
                     </div>
                   </div>
+
+                  {/* Favoured Votes */}
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">Favoured Votes</h2>
                     <div className="grid gap-5 text-center justify-center">
