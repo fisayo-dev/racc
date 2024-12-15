@@ -1,4 +1,4 @@
-import { Building, Hashtag, Trash, Wallet } from "iconsax-react";
+import { Building, Hashtag, Image, Trash, Wallet } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
@@ -6,7 +6,7 @@ import {
   CalendarIcon,
   FingerPrintIcon,
 } from "@heroicons/react/24/outline";
-import { MegaphoneIcon, UploadIcon } from "lucide-react";
+import { ImageIcon, ImageUp, MegaphoneIcon, UploadIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useState } from "react";
@@ -56,6 +56,18 @@ const CreateVote = () => {
     }
   };
 
+  const handleImageUpload2 = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePicture(file);
+      console.log(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setProfilePreview(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const [options, setOptions] = useState([{ title: "", option_voters: [] }]);
 
   // Add a new option
@@ -95,21 +107,6 @@ const CreateVote = () => {
       creator_id: user.$id,
       franchise_policy: franchisePolicy,
     });
-
-    // console.log({
-    //   title,
-    //   description,
-    //   publicity,
-    //   start_date: date,
-    //   end_date: date2,
-    //   voters: JSON.stringify([]),
-    //   options: stringifiedOptions, // Store the options here
-    //   tags: jsonedTags,
-    //   restricted_gender: restrictedGender,
-    //   gender_restriction: genderRestriction,
-    //   creator_id: user.$id,
-    //   franchise_policy: franchisePolicy,
-    // });
   };
 
   return (
@@ -151,20 +148,31 @@ const CreateVote = () => {
                   </p>
                   <div
                     type="text"
-                    className="grid justify-items-center place-content-center border-[0.1rem] border-zinc-700 rounded-lg h-[350px]"
+                    className="grid justify-items-center place-content-center shadow-sm rounded-lg h-[400px] bg-cover bg-center"
                     placeholder="Tell us what your vote is all about"
+                    style={{ backgroundImage: `url(${backgroundImage})` }}
                   >
-                    <div className="hover:bg-zinc-700 bg-zinc-800 flex px-4 py-3 rounded-lg cursor-pointer items-center gap-2">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        id="image-upload"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                      <UploadIcon className="h-6 w-6" />
-                      <p>Upload an image</p>
-                    </div>
+                    {!backgroundImage && (
+                      <div className="grid gap-1 place-items-center">
+                        <ImageIcon className="h-[8rem] w-[8rem]"/>
+                        <p>No image yet</p>
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className={`relative overflow-hidden justify-center hover:bg-zinc-700 bg-zinc-800 flex px-4 py-3 rounded-lg cursor-pointer items-center gap-2 shadow-lg `}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="image-upload"
+                      onChange={handleImageUpload}
+                      className="absolute opacity-0 h-full w-full cursor-pointer"
+                    ></input>
+                    <ImageUp className="h-6 w-6 cursor-pointer" />
+                    <p>
+                      {backgroundImage ? "Change the image" : "Upload an image"}
+                    </p>
                   </div>
                 </div>
                 <div className="grid gap-4">
@@ -440,7 +448,7 @@ const CreateVote = () => {
                   </Select>
                 </div>
               </div>
-              <div className="grid gap-4">
+              {/* <div className="grid gap-4">
                 <div className="flex items-center gap-2">
                   <Wallet className="h-7 w-7" />
                   <h2 className="text-3xl font-bold">Payment and Voting fee</h2>
@@ -461,12 +469,12 @@ const CreateVote = () => {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
           <div onClick={createVote}>
-            <ButtonEl text="Submit" className="mx-auto my-5" />
+            <ButtonEl text="Submit" className="w-full text-md hover:bg-zinc-300 bg-zinc-100 text-zinc-800 mx-auto my-5" />
           </div>
         </div>
       </div>
