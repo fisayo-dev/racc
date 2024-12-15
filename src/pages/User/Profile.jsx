@@ -74,14 +74,14 @@ const Profile = () => {
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">Vote Participation </h2>
                     <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 && participatedVotes.length}</p>
+                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 ? participatedVotes.length: '0'}</p>
                       <p className="text-sm">{participatedVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">{createdVotes.length !== 0 && createdVotes.length}</p>
+                      <p className="text-8xl font-bold">{createdVotes.length !== 0 ? createdVotes.length: '0'}</p>
                       <p className="text-sm">{createdVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
