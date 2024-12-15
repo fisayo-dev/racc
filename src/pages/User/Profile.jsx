@@ -4,6 +4,7 @@ import image from "../../assets/samples/nextjs.png";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useState, useEffect } from "react";
+import { Loader2Icon } from "lucide-react";
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
@@ -73,21 +74,21 @@ const Profile = () => {
                 <div className="grid gap-5 my-5 grid-cols-1 md:grid-cols-3">
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">Vote Participation </h2>
-                    <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 ? participatedVotes.length: '0'}</p>
+                    <div className="grid gap-5 text-center justify-center">
+                      <p className="text-8xl font-bold">{participatedVotes.length !== 0 ? participatedVotes.length: <Loader2Icon  className="animate-spin h-20 w-20"/>}</p>
                       <p className="text-sm">{participatedVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">My Votes</h2>
-                    <div className="grid text-center justify-center">
-                      <p className="text-8xl font-bold">{createdVotes.length !== 0 ? createdVotes.length: '0'}</p>
+                    <div className="grid gap-5 text-center justify-center">
+                      <p className="text-8xl font-bold">{createdVotes.length !== 0 ? createdVotes.length: <Loader2Icon  className="animate-spin h-20 w-20"/>}</p>
                       <p className="text-sm">{createdVotes.length > 1 ? 'votes': 'vote'}</p>
                     </div>
                   </div>
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
                     <h2 className="text-xl font-bold">Favoured Votes</h2>
-                    <div className="grid text-center justify-center">
+                    <div className="grid gap-5 text-center justify-center">
                       <p className="text-8xl font-bold">0</p>
                       <p className="text-sm">votes</p>
                     </div>

@@ -1,4 +1,4 @@
-import { Building, Hashtag, Trash } from "iconsax-react";
+import { Building, Hashtag, Trash, Wallet } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
@@ -175,8 +175,7 @@ const CreateVote = () => {
                       <input
                         type="text"
                         className=""
-                        placeholder="Tag 
-                      1"
+                        placeholder="Tag 1"
                         value={tag1}
                         onChange={(e) => setTag1(e.target.value)}
                       />
@@ -423,6 +422,28 @@ const CreateVote = () => {
                 <div className="flex items-center gap-2">
                   <Building className="h-7 w-7" />
                   <h2 className="text-3xl font-bold">Voting Policy</h2>
+                </div>
+                <div className="grid gap-4">
+                  <h2 className="text-md">Do you want to enable franchise ?</h2>
+                  <Select
+                    value={franchisePolicy}
+                    onValueChange={(value) => setFranchisePolicy(value)}
+                    className="outline-none"
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose an option" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                <div className="flex items-center gap-2">
+                  <Wallet className="h-7 w-7" />
+                  <h2 className="text-3xl font-bold">Payment and Voting fee</h2>
                 </div>
                 <div className="grid gap-4">
                   <h2 className="text-md">Do you want to enable franchise ?</h2>
