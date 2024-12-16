@@ -1,6 +1,6 @@
 # Racc - Online voting platform
 
-Racc is a free online voting platform that aims to connect **vote creators** and **voters**. It is built with **_ React JS _**.
+Racc is a free online voting platform that aims to connect **vote creators** and **voters**. It is built with ***React JS***.
 
 <!-- Strikethrough -->
 
@@ -9,8 +9,6 @@ Racc is a free online voting platform that aims to connect **vote creators** and
 ## About
 
 ## Tech Stacks
-
----------------
 
 - JavaScript
 - React Js
@@ -71,15 +69,15 @@ This `code` is an **inline** code and it has _`backticks`_ around it.
 ```
 
 ## Tables
-Name | Job | Salary 
------ |: ----- | ------ : 
-Fisayo | Web Developer | $5000
-Samuel | Product Designer | $3400
-Henry | Game Developer | $3000
-Emmanuel | Full-Stack Web Developer | $4000
+ Name     | Job                      | Salary 
+ -------- |:----------------------  | ------:
+ Fisayo   | Web Developer            | $5000  
+ Samuel   | Product Designer         | $3400  
+ Henry    | Game Developer           | $3000  
+ Emmanuel | Full-Stack Web Developer | $4000  
 
 ## Task Lists
-- [ ] Wash the dishes
-- [ ] Sweep the house
+- [_] Wash the dishes
+- [_] Sweep the house
 - [X] Create Racc client-side validation
 - [X] Implement Picture Upload
