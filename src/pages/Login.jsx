@@ -57,7 +57,7 @@ const Login = () => {
             <form className="grid gap-2 w-full shadow-md">
               <label className="font-bold">Username / Email Address</label>
               <input
-                type="text"
+                type="email"
                 className="border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
                 placeholder="Place in your username or email"
                 value={emailUsername}
