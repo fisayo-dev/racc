@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
-  const { user, loginUser} = useAuth();
+  const { user, loginUser } = useAuth();
   // Input states
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +31,7 @@ const Login = () => {
         email: emailUsername,
         password,
       };
-      loginUser(userData)
+      loginUser(userData);
     }
   };
 
@@ -91,10 +91,10 @@ const Login = () => {
             >
               <p>Login</p>
             </Button>
-            <div className="text-sm flex justify-center items-center gap-1">
-              <p>Are you new here ? </p>
+            <div className="text-sm grid text-center items-center gap-2 ">
+              <p>New to Racc? </p>
               <Link
-                to="/signup"
+                to="/login"
                 className="text-zinc-300 hover:text-zinc-200 font-bold"
               >
                 Create an account
