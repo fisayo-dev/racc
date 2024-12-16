@@ -41,6 +41,8 @@ const Signup = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
 
+  const fakeTags = ["tech", "machinelearning", "sports", "football", "leadership", "gaming", "coding", "programming", "school", "ai"];
+
   // Error states
   const [errors, setErrors] = useState({});
 
@@ -138,6 +140,11 @@ const Signup = () => {
           <div
             className={`rounded-xl w-10 md:w-20 p-1 ${
               formStatus >= 2 ? "bg-gray-400" : "bg-gray-600"
+            }`}
+          ></div>
+          <div
+            className={`rounded-xl w-10 md:w-20 p-1 ${
+              formStatus >= 3 ? "bg-gray-400" : "bg-gray-600"
             }`}
           ></div>
         </div>
@@ -394,6 +401,43 @@ const Signup = () => {
                   </Button>
                   <Button
                     className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={handleNext}
+                    type="icon"
+                  >
+                    <p>Next</p>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {formStatus == 3 && (
+          <div className="grid my-3 gap-5">
+            <div className="grid gap-2">
+              <h2 className="text-center text-3xl font-bold">
+                Customize your feed
+              </h2>
+              <p className="text-center text-md ">Please choose your tag</p>
+            </div>
+            <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
+              <div className="grid gap-6 justify-center">
+                <div className="flex my-5 items-center flex-wrap gap-3 md:gap-5 justify-center md:w-5/6 mx-auto">
+                  {fakeTags.map((tag, index) => (
+                    <div key={index} className="bg-zinc-700 px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold hover:bg-zinc-500">
+                      #{tag}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                    onClick={handlePrevious}
+                    type="icon"
+                  >
+                    <p>Previous</p>
+                  </Button>
+                  <Button
+                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
                     onClick={submitForm}
                     type="icon"
                   >
@@ -405,7 +449,7 @@ const Signup = () => {
           </div>
         )}
       </div>
-      <div className="text-sm flex justify-center items-center gap-1">
+      <div className="text-sm grid text-center items-center gap-2 ">
         <p>Already have an account? </p>
         <Link
           to="/login"

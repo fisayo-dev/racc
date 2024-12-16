@@ -70,7 +70,7 @@ This `code` is an **inline** code and it has _`backticks`_ around it.
 
 ## Tables
  Name     | Job                      | Salary 
- -------- |:----------------------  | ------:
+ -------- |---------------------     | ------:
  Fisayo   | Web Developer            | $5000  
  Samuel   | Product Designer         | $3400  
  Henry    | Game Developer           | $3000  
@@ -79,5 +79,5 @@ This `code` is an **inline** code and it has _`backticks`_ around it.
 ## Task Lists
 - [_] Wash the dishes
 - [_] Sweep the house
-- [X] Create Racc client-side validation
-- [X] Implement Picture Upload
+- [_] Create Racc client-side validation
+- [_] Implement Picture Upload
