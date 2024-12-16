@@ -421,7 +421,7 @@ const Signup = () => {
             </div>
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6 justify-center">
-                <div className="flex my-5 items-center flex-wrap gap-3 md:gap-5 justify-center md:w-5/6 mx-auto">
+                <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center md:w-5/6 mx-auto">
                   {fakeTags.map((tag, index) => (
                     <div key={index} className="bg-zinc-700 px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold hover:bg-zinc-500">
                       #{tag}
