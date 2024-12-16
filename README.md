@@ -1,8 +1,85 @@
-# React + Vite
+# Racc - Online voting platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Racc is a free online voting platform that aims to connect **vote creators** and **voters**. It is built with **_ React JS _**.
 
-Currently, two official plugins are available:
+<!-- Strikethrough -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+~~ddsdklksl~~
+
+## About
+
+## Tech Stacks
+
+---------------
+
+- JavaScript
+- React Js
+- Appwrite
+- Git and Github
+- Shadcn
+- Tailwind Css
+- Vercel
+
+## Project Link
+
+-----------------------
+
+- [project](https://raccvoting.vercel.app)
+- [project](https://raccvoting.vercel.app "project")
+- <https://raccvoting.vercel.app>
+
+## Image
+
+![img](https://jsmasterypro.com/img.png)
+
+### Image serving as link
+
+[![img](https://jsmasterypro.com/img.png)](https://jsmasterypro.com/img.png)
+
+## Code
+
+### Inline code
+
+This `code` is an **inline** code and it has _`backticks`_ around it.
+
+### Block Code
+
+```
+    const fetchUserVotes = async () => {
+    const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+    const votes = results.documents;
+    const user_votes = votes.filter((vote) => vote.creator_id === userId);
+    setUserVotes(user_votes);
+  };
+
+```
+
+### Block code with highlighting
+
+```python
+    name = 'Fisayo'
+    def returnName (name):
+        return f'Your name is {name}'
+```
+```javascript
+    const fetchUserVotes = async () => {
+    const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+    const votes = results.documents;
+    const user_votes = votes.filter((vote) => vote.creator_id === userId);
+    setUserVotes(user_votes);
+  };
+```
+
+## Tables
+Name | Job | Salary 
+----- |: ----- | ------ : 
+Fisayo | Web Developer | $5000
+Samuel | Product Designer | $3400
+Henry | Game Developer | $3000
+Emmanuel | Full-Stack Web Developer | $4000
+
+## Task Lists
+- [ ] Wash the dishes
+- [ ] Sweep the house
+- [X] Create Racc client-side validation
+- [X] Implement Picture Upload
