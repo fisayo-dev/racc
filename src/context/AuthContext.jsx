@@ -1,5 +1,5 @@
 import { useContext, useState, createContext, useEffect } from "react";
-import { account } from "../appwrite/config";
+import { account, storage } from "../appwrite/config";
 import { ID } from "appwrite";
 import Swal from "sweetalert2";
 import BarLoader from "react-spinners/BarLoader";
@@ -61,23 +61,30 @@ export const AuthProvider = ({ children }) => {
       country,
       gender,
       profile_tags,
+      profile_picture,
       birth_date,
       username,
       voting_id,
     } = userInfo;
 
     try {
-      // Create the user account in Appwrite
-      await account.create(ID.unique(), email, password, username);
 
+      // Step 1: Save use profile picture to bucket (storage)
+      const profilePicture = await storage.createFile(
+        import.meta.env.VITE_IMAGES_BUCKET_ID, 
+        ID.unique(), // Generates a unique ID for the profile pictue
+        profile_picture,
+      );
+      const profileImageFileId = profilePicture.$id; // File ID for the uploaded image
+      
+      // Step 2: Create user account
+      await account.create(ID.unique(), email, password, username);
       // Logs user in after creating account
       await account.createEmailPasswordSession(email, password);
-
       // Fetch user account details after login
       const accountDetail = await account.get();
 
-      // Save additional user information to the database
-
+      // Step 3: Save additional user information to the database
       const payload = {
         first_name,
         last_name,
@@ -87,6 +94,7 @@ export const AuthProvider = ({ children }) => {
         gender,
         username,
         profile_tags,
+        profile_image: profileImageFileId,
         password,
         voting_id,
         user_id: accountDetail.$id, // Appwrite user ID
