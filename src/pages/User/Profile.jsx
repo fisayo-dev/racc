@@ -4,7 +4,7 @@ import image from "../../assets/samples/nextjs.png";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useState, useEffect } from "react";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, LoaderIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -12,14 +12,15 @@ const Profile = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [createdVotes, setCreatedVotes] = useState(null); // null for loading
   const [participatedVotes, setParticipatedVotes] = useState(null); // null for loading
+  const [thisUserProfileTags, setThisUserProfileTags] = useState([]);
 
   const getUser = async () => {
     try {
       const results = await db.users.list();
       const users = results.documents;
       const thisUser = users.filter((users) => users.user_id === user.$id);
-      console.log(thisUser);
       setLoggedInUser(thisUser[0]);
+      setThisUserProfileTags(JSON.parse(thisUser[0].profile_tags));
     } catch (err) {
       console.log(err.message);
     }
@@ -63,7 +64,7 @@ const Profile = () => {
       <Header />
       <div className="mt-[8rem] mb-[5rem]">
         <div className="app-container ">
-          <div className="grid md:flex profile-grid">
+          <div className="grid md:flex profile-grid items-start">
             <div className="md:w-4/12 bg-zinc-800 shadow-md rounded-lg p-6">
               {loggedInUser ? (
                 <div className="grid gap-4">
@@ -102,7 +103,7 @@ const Profile = () => {
                 </div>
               )}
             </div>
-            <div className="md:w-5/6 bg-zinc-800 shadow-md rounded-lg p-6">
+            <div className="md:w-5/6 grid gap-5 bg-zinc-800 shadow-md rounded-lg p-6">
               <div className="grid gap-2">
                 <h2 className="text-2xl font-bold">Your Activity</h2>
                 <div className="grid gap-5 my-5 grid-cols-1 md:grid-cols-3">
@@ -157,6 +158,23 @@ const Profile = () => {
                       <p className="text-sm">votes</p>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <h2 className="text-2xl font-bold">Your Tags</h2>
+                <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center mx-auto">
+                  {thisUserProfileTags.length === 0 && <div className="flex items-center gap-2 flex-col mx-auto">
+                    <Loader2Icon className="w-24 h-24 animate-spin"/>
+                  </div>}
+                  {thisUserProfileTags.length !== 0 &&
+                    thisUserProfileTags.map((tag, index) => (
+                      <div
+                        key={index}
+                        className=" bg-blue-400 px-4 py-3 rounded-lg  transition shadow-lg  font-bold text-zinc-900  cursor-pointer"
+                      >
+                        #{tag}
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
