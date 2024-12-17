@@ -24,7 +24,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
-  const [formStatus, setFormStatus] = useState(3);
+  const [formStatus, setFormStatus] = useState(0);
   const { user, registerUser } = useAuth();
   const navigate = useNavigate();
 
