@@ -104,8 +104,8 @@ const VoteCard = ({
           {title.length > 40 ? `${title.substr(0, 40)}...` : title}
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
-          {tags.map((tag) => (
-            <div className="px-3 text-[0.75rem] border border-zinc-700 hover:text-gray-300 text-gray-400 py-2 rounded-lg">
+          {tags.map((tag, index) => (
+            <div key={index} className="px-3 text-[0.75rem] border border-zinc-700 hover:text-gray-300 text-gray-400 py-2 rounded-lg">
               #{tag}
             </div>
           ))}
