@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
       );
 
       let accountDetail = await account.get();
-      console.log(accountDetail);
       setUser(accountDetail);
     } catch (err) {
       if (err.code == 401) {
