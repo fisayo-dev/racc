@@ -29,7 +29,7 @@ const Header = () => {
   }, []);
 
   const fetchUserImage = () => {
-    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}`
+    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}`
   }
 
   return (

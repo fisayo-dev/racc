@@ -72,7 +72,7 @@ const Profile = () => {
                 <div className="grid gap-4">
                   <div
                     className="h-40 w-40 mx-auto bg-cover bg-center overflow-hidden rounded-full bg-zinc-300"
-                    style={{ backgroundImage: `url(${`https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_IMAGES_BUCKET_ID}/files/${loggedInUser.profile_image}/view?project=${import.meta.env.VITE_PROJECT_ID}`})` }}
+                    style={{ backgroundImage: `url(${`https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${loggedInUser.profile_image}/view?project=${import.meta.env.VITE_PROJECT_ID}`})` }}
                   ></div>
                   <div className="text-center grid gap-1">
                     <p className="text-sm">@{user.name}</p>
