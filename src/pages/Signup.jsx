@@ -42,6 +42,7 @@ const Signup = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
   const [suggestedTagsForProfile, setSuggestedTagsForProfile] = useState([]);
+  const [selectedTagsForProfile,setSelectedTagsForProfile] = useState([]) 
 
   // Error states
   const [errors, setErrors] = useState({});
@@ -448,11 +449,12 @@ const Signup = () => {
                     <LoaderCircle className="h-28 w-28 animate-spin"/>
                   </div>
                 )}
-                <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center md:w-5/6 mx-auto">
+                <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center mx-auto">
                   {suggestedTagsForProfile.length !== 0 && suggestedTagsForProfile.map((tag, index) => (
                     <div
                       key={index}
-                      className="bg-zinc-700 px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold hover:bg-zinc-500"
+                      className={`${selectedTagsForProfile.includes(tag) ? 'bg-zinc-500' : 'bg-zinc-700 hover:bg-zinc-500'} px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold  cursor-pointer`}
+                      onClick={() => setSelectedTagsForProfile((prev) => [...prev, tag])}
                     >
                       #{tag}
                     </div>
