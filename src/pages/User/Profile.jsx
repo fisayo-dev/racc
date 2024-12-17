@@ -9,12 +9,26 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, logoutUser } = useAuth();
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [createdVotes, setCreatedVotes] = useState(null); // null for loading
   const [participatedVotes, setParticipatedVotes] = useState(null); // null for loading
 
+  const getUser = async () => {
+    try {
+      const results = await db.users.list();
+      const users = results.documents;
+      const thisUser = users.filter((user) => user.$id == user.$id);
+      setLoggedInUser(thisUser);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const getCreatedVotes = async () => {
     try {
-      const results = await db.votes.list([Query.equal("creator_id", user.$id)]);
+      const results = await db.votes.list([
+        Query.equal("creator_id", user.$id),
+      ]);
       setCreatedVotes(results.documents || []); // Default to empty array if no documents
     } catch (err) {
       console.log(err.message);
@@ -38,6 +52,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    getUser();
     getCreatedVotes();
     getParticipatedVotes();
   }, []);
@@ -47,32 +62,40 @@ const Profile = () => {
       <Header />
       <div className="mt-[8rem] mb-[5rem]">
         <div className="app-container ">
-          <div className="md:flex profile-grid">
-            <div className="bg-zinc-800 shadow-md rounded-lg p-6">
-              <div className="grid gap-4">
-                <div
-                  className="h-40 w-40 mx-auto bg-cover bg-center overflow-hidden rounded-full bg-zinc-300"
-                  style={{ backgroundImage: `url(${image})` }}
-                ></div>
-                <div className="text-center">
-                  <p>@{user.name}</p>
-                  <p className="text-sm">{user.email}</p>
+          <div className="grid md:flex profile-grid">
+            <div className="md:w-4/12 bg-zinc-800 shadow-md rounded-lg p-6">
+              {loggedInUser ? (
+                <div className="grid gap-4">
+                  <div
+                    className="h-40 w-40 mx-auto bg-cover bg-center overflow-hidden rounded-full bg-zinc-300"
+                    style={{ backgroundImage: `url(${image})` }}
+                  ></div>
+                  <div className="text-center">
+                    <p>@{user.name}</p>
+                    <p className="text-sm">{user.email}</p>
+                  </div>
+                  <div className="mx-auto" onClick={logoutUser}>
+                    <Button
+                      text="Logout"
+                      className="bg-red-500 border-none text-white hover:bg-red-600"
+                    />
+                  </div>
                 </div>
-                <div className="mx-auto" onClick={logoutUser}>
-                  <Button
-                    text="Logout"
-                    className="bg-red-500 border-none text-white hover:bg-red-600"
-                  />
+              ) : (
+                <div className="mx-20 my-20">
+                  <Loader2Icon className="w-24 h-24 animate-spin" />
                 </div>
-              </div>
+              )}
             </div>
-            <div className="w-full bg-zinc-800 shadow-md rounded-lg p-6">
+            <div className="md:w-5/6 bg-zinc-800 shadow-md rounded-lg p-6">
               <div className="grid gap-2">
                 <h2 className="text-2xl font-bold">Your Activity</h2>
                 <div className="grid gap-5 my-5 grid-cols-1 md:grid-cols-3">
                   {/* Participated Votes */}
                   <div className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
-                    <h2 className="text-xl font-bold">Vote Participation</h2>
+                    <h2 className="text-xl font-bold text-center">
+                      Vote Participation
+                    </h2>
                     <div className="grid gap-5 text-center justify-center">
                       {participatedVotes === null ? (
                         <Loader2Icon className="animate-spin h-20 w-20" />
@@ -90,7 +113,10 @@ const Profile = () => {
                   </div>
 
                   {/* Created Votes */}
-                  <Link to='/profile/my-votes' className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6">
+                  <Link
+                    to="/profile/my-votes"
+                    className="grid place-items-center items-center cursor-pointer hover:bg-zinc-600 bg-zinc-700 h-64 shadow rounded-lg p-6"
+                  >
                     <h2 className="text-xl font-bold">My Votes</h2>
                     <div className="grid gap-5 text-center justify-center">
                       {createdVotes === null ? (
