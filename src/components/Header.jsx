@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
-
+import image from '../assets/image.png'
 const Header = () => {
   const { user } = useAuth();
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
@@ -29,8 +29,7 @@ const Header = () => {
   }, []);
 
   const fetchUserImage = () => {
-    const image = '../assets/image.png'
-    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}` || image
+    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}` || image;
   }
 
   return (
