@@ -8,12 +8,36 @@ import {
 } from "iconsax-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import db from "../appwrite/databases";
+import { useEffect, useState } from "react";
 const Header = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const [userProfilePictureId, setUserProfilePictureId] = useState(null);
+
+  const fetchUserImageId = async () => {
+    const results = await db.users.list();
+    const users = await results.documents;
+    const loggedInUser = users.filter(
+      (thisUser) => thisUser.user_id == user.$id
+    );
+    const { profile_image } = loggedInUser[0];
+    setUserProfilePictureId(profile_image);
+  };
+
+  useEffect(() => {
+    fetchUserImageId();
+  }, []);
+
+  const fetchUserImage = () => {
+    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}`
+  }
+
   return (
     <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
       <div className="app-container flex gap-20 justify-between items-center">
-        <Link to="/" className="text-2xl text-blue-300 font-bold">Racc</Link>
+        <Link to="/" className="text-2xl text-blue-300 font-bold">
+          Racc
+        </Link>
         <div className="hidden md:flex items-center gap-4 bg-zinc-700 w-3/5 rounded-lg px-4 py-3">
           <Filter className="h-6 w-6" />
           <input
@@ -37,7 +61,7 @@ const Header = () => {
                 <PlusIcon className="h-6 w-6" />
               </Link>
               <Link to="/profile">
-                <ProfileCircle className="h-8 w-8" />
+                <div className="h-8 w-8 bg-cover bg-center bg-zinc-500 rounded-full hover:scale-110 transition" style={{ backgroundImage: `url(${fetchUserImage()})`}}></div>
               </Link>
             </div>
           )}
