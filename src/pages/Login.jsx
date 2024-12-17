@@ -94,7 +94,7 @@ const Login = () => {
             <div className="text-sm grid text-center items-center gap-2 ">
               <p>New to Racc? </p>
               <Link
-                to="/login"
+                to="/signup"
                 className="text-zinc-300 hover:text-zinc-200 font-bold"
               >
                 Create an account
