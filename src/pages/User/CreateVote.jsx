@@ -1,4 +1,4 @@
-import { Building, Hashtag, Image, Trash, Wallet } from "iconsax-react";
+import { Building, Hashtag, Trash } from "iconsax-react";
 import { Header } from "../../components";
 import {
   Cog8ToothIcon,
@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ID } from "appwrite";
 import {
   Popover,
   PopoverContent,
@@ -27,6 +28,9 @@ import { cn } from "@/lib/utils";
 import db from "../../appwrite/databases";
 import { useAuth } from "../../context/AuthContext";
 import ButtonEl from "../../components/Button";
+import { storage } from "../../appwrite/config";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CreateVote = () => {
   // User variable
@@ -35,6 +39,7 @@ const CreateVote = () => {
   const [date, setDate] = useState();
   const [date2, setDate2] = useState();
   const [backgroundImage, setBackgroundImage] = useState(null);
+  const [voteImageFile, setVoteImageFile] = useState(null);
 
   // Vote input states
   const [title, setTitle] = useState("");
@@ -46,28 +51,19 @@ const CreateVote = () => {
   const [tag1, setTag1] = useState("");
   const [tag2, setTag2] = useState("");
 
+  const navigate = useNavigate()
+
   // Getting the vote tag
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setVoteImageFile(file);
       const imageUrl = URL.createObjectURL(file);
       setBackgroundImage(imageUrl);
     }
   };
 
-  const handleImageUpload2 = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfilePicture(file);
-      console.log(file);
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setProfilePreview(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   const [options, setOptions] = useState([{ title: "", option_voters: [] }]);
 
   // Add a new option
@@ -93,20 +89,45 @@ const CreateVote = () => {
     const stringifiedOptions = JSON.stringify(options);
     const jsonedTags = JSON.stringify([tag1, tag2]);
 
-    await db.votes.create({
-      title,
-      description,
-      publicity,
-      start_date: date,
-      end_date: date2,
-      voters: JSON.stringify([]),
-      options: stringifiedOptions, // Store the options here
-      tags: jsonedTags,
-      restricted_gender: restrictedGender,
-      gender_restriction: genderRestriction,
-      creator_id: user.$id,
-      franchise_policy: franchisePolicy,
-    });
+    // Step1: Save the vote image
+
+    try {
+      const imageUploadResult = await storage.createFile(
+        import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID,
+        ID.unique(), // Generates a unique ID for the vote image
+        voteImageFile
+      );
+
+      const voteImageId = imageUploadResult.$id;
+
+      // Step2: Save the vote
+      const vote = await db.votes.create({
+        title,
+        description,
+        publicity,
+        start_date: date,
+        end_date: date2,
+        voters: JSON.stringify([]),
+        options: stringifiedOptions, // Store the options here
+        tags: jsonedTags,
+        restricted_gender: restrictedGender,
+        gender_restriction: genderRestriction,
+        creator_id: user.$id,
+        vote_img: voteImageId,
+        franchise_policy: franchisePolicy,
+      });
+      Swal.fire({
+        toast: true,
+        text: "Vote Creation successful!",
+        icon: "success",
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      navigate(`/vote/${vote.$id}`)
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (
@@ -148,14 +169,14 @@ const CreateVote = () => {
                   </p>
                   <div
                     type="text"
-                    className="grid justify-items-center place-content-center shadow-sm rounded-lg h-[400px] bg-cover bg-center"
+                    className="grid justify-items-center place-content-center shadow-sm rounded-lg h-[400px] bg-cover bg-center  bg-zinc-800"
                     placeholder="Tell us what your vote is all about"
                     style={{ backgroundImage: `url(${backgroundImage})` }}
                   >
                     {!backgroundImage && (
                       <div className="grid gap-1 place-items-center">
-                        <ImageIcon className="h-[8rem] w-[8rem]"/>
-                        <p>No image yet</p>
+                        <ImageIcon className="h-[8rem] w-[8rem]" />
+                        <p>No image uploaded</p>
                       </div>
                     )}
                   </div>
@@ -474,7 +495,10 @@ const CreateVote = () => {
           </div>
 
           <div onClick={createVote}>
-            <ButtonEl text="Submit" className="w-full text-md hover:bg-zinc-300 bg-zinc-100 text-zinc-800 mx-auto my-5" />
+            <ButtonEl
+              text="Submit"
+              className="w-full text-md hover:bg-zinc-300 bg-zinc-100 text-zinc-800 mx-auto my-5"
+            />
           </div>
         </div>
       </div>
