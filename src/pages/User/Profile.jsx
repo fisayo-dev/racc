@@ -78,6 +78,9 @@ const Profile = () => {
                       {loggedInUser.first_name} {loggedInUser.last_name}{" "}
                     </p>
                   </div>
+                  <p className="text-center text-sm">
+                    <b>Country:</b> {loggedInUser.country}
+                  </p>
                   <div className="mx-auto gap-5 flex items-center">
                     <div onClick={logoutUser}>
                       <Button
