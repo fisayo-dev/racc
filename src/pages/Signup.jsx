@@ -43,6 +43,7 @@ const Signup = () => {
   const [profilePreview, setProfilePreview] = useState(null);
   const [suggestedTagsForProfile, setSuggestedTagsForProfile] = useState([]);
   const [selectedTagsForProfile, setSelectedTagsForProfile] = useState([]);
+  const [showFinishBtn, setShowFinishBtn] = useState(false);
 
   // Error states
   const [errors, setErrors] = useState({});
@@ -74,9 +75,11 @@ const Signup = () => {
 
   const handleSelectingTag = (tagName) => {
     if (selectedTagsForProfile.includes(tagName)) {
-      setSelectedTagsForProfile((prev) => prev.filter(tag => tag !== tagName));
+      setSelectedTagsForProfile((prev) =>
+        prev.filter((tag) => tag !== tagName)
+      );
     } else {
-      setSelectedTagsForProfile((prev) => [...prev, prev.push(tagName)]);
+      setSelectedTagsForProfile((prev) => [...prev, tagName]);
     }
   };
 
@@ -485,13 +488,15 @@ const Signup = () => {
                   >
                     <p>Previous</p>
                   </Button>
-                  <Button
-                    className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
-                    onClick={submitForm}
-                    type="icon"
-                  >
-                    <p>Finish Account</p>
-                  </Button>
+                  <div className={`${selectedTagsForProfile.length < 2 && 'opacity-60 pointer-events-none cursor-not-allowed'}`}>
+                    <Button
+                      className="bg-zinc-700 hover:bg-zinc-600 text-[1rem]"
+                      onClick={submitForm}
+                      type="icon"
+                    >
+                      <p>Finish Account</p>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
