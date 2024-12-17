@@ -444,7 +444,7 @@ const Signup = () => {
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6 justify-center">
                 {suggestedTagsForProfile.length == 0 && (
-                  <div className="my-6">
+                  <div className="my-6 mx-auto grid justify-center">
                     <LoaderCircle className="h-28 w-28 animate-spin"/>
                   </div>
                 )}

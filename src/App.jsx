@@ -22,7 +22,7 @@ function App() {
           <Route path="/create-vote" element={<CreateVote />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/my-votes" element={<UserVotes />} />
+          <Route path="w" element={<UserVotes />} />
         </Route>
       </>
     )
