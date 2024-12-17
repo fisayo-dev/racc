@@ -451,7 +451,7 @@ const Signup = () => {
                 Customize your feed
               </h2>
               <p className="text-center text-md ">
-                Please choose tags to customize your feed.
+                Please choose at least two(2) tags.
               </p>
             </div>
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
@@ -468,9 +468,9 @@ const Signup = () => {
                         key={index}
                         className={`${
                           selectedTagsForProfile.includes(tag)
-                            ? "bg-zinc-500"
-                            : "bg-zinc-700 hover:bg-zinc-500"
-                        } px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold  cursor-pointer`}
+                            ? "bg-blue-400 border-blue-400 text-zinc-900"
+                            : "   hover:bg-blue-200 hover:text-zinc-900 border-zinc-700"
+                        } px-4 py-3 rounded-lg border-[0.1rem] transition shadow-lg  font-bold  cursor-pointer`}
                         onClick={handleSelectingTag.bind(this, tag)}
                       >
                         #{tag}
