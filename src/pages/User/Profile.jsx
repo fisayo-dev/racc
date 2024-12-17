@@ -4,7 +4,7 @@ import image from "../../assets/samples/nextjs.png";
 import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useState, useEffect } from "react";
-import { Loader2Icon, LoaderIcon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
@@ -20,9 +20,12 @@ const Profile = () => {
       const users = results.documents;
       const thisUser = users.filter((users) => users.user_id === user.$id);
       setLoggedInUser(thisUser[0]);
-      setThisUserProfileTags(JSON.parse(thisUser[0].profile_tags));
+      setThisUserProfileTags(
+        thisUser[0]?.profile_tags ? JSON.parse(thisUser[0].profile_tags) : []
+      ); // Default to an empty array if no tags exist
     } catch (err) {
       console.log(err.message);
+      setThisUserProfileTags([]); // Gracefully handle errors
     }
   };
 
@@ -163,14 +166,22 @@ const Profile = () => {
               <div className="grid gap-2">
                 <h2 className="text-2xl font-bold">Your Tags</h2>
                 <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center mx-auto">
-                  {thisUserProfileTags.length === 0 && <div className="flex items-center gap-2 flex-col mx-auto">
-                    <Loader2Icon className="w-24 h-24 animate-spin"/>
-                  </div>}
-                  {thisUserProfileTags.length !== 0 &&
+                  {thisUserProfileTags === null && (
+                    <div className="flex items-center gap-2 flex-col mx-auto">
+                      <Loader2Icon className="w-24 h-24 animate-spin" />
+                    </div>
+                  )}
+                  {thisUserProfileTags?.length === 0 &&
+                    thisUserProfileTags !== null && (
+                      <div className="text-center text-gray-400 font-medium text-lg">
+                        No tags exist for this user.
+                      </div>
+                    )}
+                  {thisUserProfileTags?.length > 0 &&
                     thisUserProfileTags.map((tag, index) => (
                       <div
                         key={index}
-                        className=" bg-blue-400 px-4 py-3 rounded-lg  transition shadow-lg  font-bold text-zinc-900  cursor-pointer"
+                        className="bg-blue-400 px-4 py-3 rounded-lg transition shadow-lg font-bold text-zinc-900 cursor-pointer"
                       >
                         #{tag}
                       </div>
