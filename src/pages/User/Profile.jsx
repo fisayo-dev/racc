@@ -17,8 +17,9 @@ const Profile = () => {
     try {
       const results = await db.users.list();
       const users = results.documents;
-      const thisUser = users.filter((user) => user.$id == user.$id);
-      setLoggedInUser(thisUser);
+      const thisUser = users.filter((users) => users.user_id === user.$id);
+      console.log(thisUser);
+      setLoggedInUser(thisUser[0]);
     } catch (err) {
       console.log(err.message);
     }
@@ -70,15 +71,26 @@ const Profile = () => {
                     className="h-40 w-40 mx-auto bg-cover bg-center overflow-hidden rounded-full bg-zinc-300"
                     style={{ backgroundImage: `url(${image})` }}
                   ></div>
-                  <div className="text-center">
-                    <p>@{user.name}</p>
+                  <div className="text-center grid gap-1">
+                    <p className="text-sm">@{user.name}</p>
                     <p className="text-sm">{user.email}</p>
+                    <p className="font-bold text-xl">
+                      {loggedInUser.first_name} {loggedInUser.last_name}{" "}
+                    </p>
                   </div>
-                  <div className="mx-auto" onClick={logoutUser}>
-                    <Button
-                      text="Logout"
-                      className="bg-red-500 border-none text-white hover:bg-red-600"
-                    />
+                  <div className="mx-auto gap-5 flex items-center">
+                    <div onClick={logoutUser}>
+                      <Button
+                        text="Logout"
+                        className="bg-red-500 border-none text-white hover:bg-red-600"
+                      />
+                    </div>
+                    <div>
+                      <Button
+                        text="Edit"
+                        className="bg-zinc-600 border-none text-white hover:bg-zinc-500"
+                      />
+                    </div>
                   </div>
                 </div>
               ) : (
