@@ -3,13 +3,13 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   Filter,
   Notification,
-  ProfileCircle,
   SearchNormal1,
 } from "iconsax-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
+
 const Header = () => {
   const { user } = useAuth();
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
@@ -29,7 +29,8 @@ const Header = () => {
   }, []);
 
   const fetchUserImage = () => {
-    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}`
+    const image = '../assets/image.png'
+    return `https://cloud.appwrite.io/v1/storage/buckets/${import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID}/files/${userProfilePictureId}/view?project=${import.meta.env.VITE_PROJECT_ID}` || image
   }
 
   return (

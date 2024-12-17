@@ -78,11 +78,9 @@ const VoteCard = ({
   };
 
   const getCreatorProfile = async () => {
-    console.log(creatorId);
     try {
       const results = await db.users.list([Query.equal("user_id", creatorId)]);
       const data = results.documents[0];
-      console.log(data);
       setVoteCreator(data);
     } catch (err) {
       console.log(err.message);
