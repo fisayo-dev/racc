@@ -92,7 +92,7 @@ const Profile = () => {
                     <div>
                       <Button
                         text="Edit"
-                        className="bg-zinc-600 border-none text-white hover:bg-zinc-500"
+                        className="bg-blue-400 text-zinc-900 border-none hover:bg-blue-500"
                       />
                     </div>
                   </div>
