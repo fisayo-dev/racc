@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 
       // Step 1: Save use profile picture to bucket (storage)
       const profilePicture = await storage.createFile(
-        import.meta.env.VITE_IMAGES_BUCKET_ID, 
+        import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID, 
         ID.unique(), // Generates a unique ID for the profile pictue
         profile_picture,
       );
