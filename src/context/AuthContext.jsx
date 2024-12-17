@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
       password,
       country,
       gender,
+      profile_tags,
       birth_date,
       username,
       voting_id,
@@ -76,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       const accountDetail = await account.get();
 
       // Save additional user information to the database
-      
+
       const payload = {
         first_name,
         last_name,
@@ -85,6 +86,7 @@ export const AuthProvider = ({ children }) => {
         birth_date,
         gender,
         username,
+        profile_tags,
         password,
         voting_id,
         user_id: accountDetail.$id, // Appwrite user ID
@@ -124,7 +126,7 @@ export const AuthProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 2000,
         });
-        console.log(err.message)
+        console.log(err.message);
       }
     }
 
@@ -163,7 +165,7 @@ export const AuthProvider = ({ children }) => {
       let accountDetail = await account.get();
       setUser(accountDetail);
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
     setLoading(false);
   };
