@@ -439,7 +439,7 @@ const Signup = () => {
               <h2 className="text-center text-3xl font-bold">
                 Customize your feed
               </h2>
-              <p className="text-center text-md ">Please choose your tag</p>
+              <p className="text-center text-md ">Please choose tags to customize your feed.</p>
             </div>
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6 justify-center">
