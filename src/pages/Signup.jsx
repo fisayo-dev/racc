@@ -24,7 +24,7 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const Signup = () => {
-  const [formStatus, setFormStatus] = useState(0);
+  const [formStatus, setFormStatus] = useState(3);
   const { user, registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const Signup = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
   const [suggestedTagsForProfile, setSuggestedTagsForProfile] = useState([]);
-  const [selectedTagsForProfile,setSelectedTagsForProfile] = useState([]) 
+  const [selectedTagsForProfile, setSelectedTagsForProfile] = useState([]);
 
   // Error states
   const [errors, setErrors] = useState({});
@@ -63,12 +63,21 @@ const Signup = () => {
     // Looping through votes
     votes.map((vote) => {
       const tagsArrayForVote = JSON.parse(vote.tags); // Get each vote tags array
-      tagsArrayForVote.map((tag) => { // Loop through each vote tag
+      tagsArrayForVote.map((tag) => {
+        // Loop through each vote tag
         fetchedTags.add(tag); // Sotre each vote tag in a set
       });
     });
 
     setSuggestedTagsForProfile(Array.from(fetchedTags)); // store it later in an array
+  };
+
+  const handleSelectingTag = (tagName) => {
+    if (selectedTagsForProfile.includes(tagName)) {
+      setSelectedTagsForProfile((prev) => prev.filter(tag => tag !== tagName));
+    } else {
+      setSelectedTagsForProfile((prev) => [...prev, prev.push(tagName)]);
+    }
   };
 
   const validateStep = () => {
@@ -441,25 +450,32 @@ const Signup = () => {
               <h2 className="text-center text-3xl font-bold">
                 Customize your feed
               </h2>
-              <p className="text-center text-md ">Please choose tags to customize your feed.</p>
+              <p className="text-center text-md ">
+                Please choose tags to customize your feed.
+              </p>
             </div>
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6 justify-center">
                 {suggestedTagsForProfile.length == 0 && (
                   <div className="my-6 mx-auto grid justify-center">
-                    <LoaderCircle className="h-28 w-28 animate-spin"/>
+                    <LoaderCircle className="h-28 w-28 animate-spin" />
                   </div>
                 )}
                 <div className="flex my-5 text-sm md:text-md items-center flex-wrap gap-3 md:gap-5 justify-center mx-auto">
-                  {suggestedTagsForProfile.length !== 0 && suggestedTagsForProfile.map((tag, index) => (
-                    <div
-                      key={index}
-                      className={`${selectedTagsForProfile.includes(tag) ? 'bg-zinc-500' : 'bg-zinc-700 hover:bg-zinc-500'} px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold  cursor-pointer`}
-                      onClick={() => setSelectedTagsForProfile((prev) => [...prev, tag])}
-                    >
-                      #{tag}
-                    </div>
-                  ))}
+                  {suggestedTagsForProfile.length !== 0 &&
+                    suggestedTagsForProfile.map((tag, index) => (
+                      <div
+                        key={index}
+                        className={`${
+                          selectedTagsForProfile.includes(tag)
+                            ? "bg-zinc-500"
+                            : "bg-zinc-700 hover:bg-zinc-500"
+                        } px-4 py-3 rounded-lg shadow-lg text-zinc-200 font-bold  cursor-pointer`}
+                        onClick={handleSelectingTag.bind(this, tag)}
+                      >
+                        #{tag}
+                      </div>
+                    ))}
                 </div>
                 <div className="flex items-center gap-2 justify-center">
                   <Button
