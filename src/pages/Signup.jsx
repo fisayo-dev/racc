@@ -43,19 +43,6 @@ const Signup = () => {
   const [profilePreview, setProfilePreview] = useState(null);
   const [suggestedTagsForProfile, setSuggestedTagsForProfile] = useState([]);
 
-  const fakeTags = [
-    "tech",
-    "machinelearning",
-    "sports",
-    "football",
-    "leadership",
-    "gaming",
-    "coding",
-    "programming",
-    "school",
-    "ai",
-  ];
-
   // Error states
   const [errors, setErrors] = useState({});
 
@@ -75,12 +62,12 @@ const Signup = () => {
     // Looping through votes
     votes.map((vote) => {
       const tagsArrayForVote = JSON.parse(vote.tags); // Get each vote tags array
-      tagsArrayForVote.map((tag) => {
-        fetchedTags.add(tag);
+      tagsArrayForVote.map((tag) => { // Loop through each vote tag
+        fetchedTags.add(tag); // Sotre each vote tag in a set
       });
     });
 
-    setSuggestedTagsForProfile(Array.from(fetchedTags));
+    setSuggestedTagsForProfile(Array.from(fetchedTags)); // store it later in an array
   };
 
   const validateStep = () => {
