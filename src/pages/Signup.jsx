@@ -194,11 +194,11 @@ const Signup = () => {
               <div className="grid gap-6">
                 <div className="grid gap-3">
                   <div className="grid md:flex items-center md:gap-10 gap-3">
-                    <div className="grid gap-2 w-full shadow-md">
+                    <div className="grid gap-2 w-full ">
                       <label className="font-bold">First Name:</label>
                       <input
                         type="text"
-                        className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
+                        className="border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full shadow-md"
                         placeholder="Ex. John "
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
@@ -207,11 +207,11 @@ const Signup = () => {
                         <p className="text-red-400">{errors.firstName}</p>
                       )}
                     </div>
-                    <div className="grid gap-2 w-full shadow-md">
+                    <div className="grid gap-2 w-full ">
                       <label className="font-bold">Last Name:</label>
                       <input
                         type="text"
-                        className="border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
+                        className="border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full shadow-md"
                         placeholder="Ex. Doe "
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
