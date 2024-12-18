@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { EyeSlash, Eye } from "iconsax-react";
 const Login = () => {
   const navigate = useNavigate();
   const { user, loginUser } = useAuth();
@@ -13,6 +14,8 @@ const Login = () => {
   const [emailUsernameError, setEmailUsernameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
+  // Toogle password display btn
+  const [showPassword,setShowPassword] = useState(false)
   const handleSubmit = () => {
     if (password.trim() != "") {
       setPasswordError(false);
@@ -71,13 +74,26 @@ const Login = () => {
             </form>
             <div className="grid gap-2 w-full shadow-md">
               <label className="font-bold">Password:</label>
+              <div className="flex items-center gap-3 border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md">
+
               <input
-                type="password"
-                className="border-[0.1rem]  text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md w-full"
+                type={showPassword ? 'text': 'password'}
+                className=" w-full"
                 placeholder="Place in your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              />
+                />
+                 <div
+                        className="cursor-pointer hover:text-white"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? (
+                          <EyeSlash className="h-6 w-6" />
+                        ) : (
+                          <Eye className="h-6 w-6" />
+                        )}
+                      </div>
+                </div>
               {passwordError && (
                 <label htmlFor="" className="text-sm text-red-400">
                   This field cannot be empty
