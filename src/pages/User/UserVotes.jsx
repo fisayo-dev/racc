@@ -62,11 +62,11 @@ const UserVotes = () => {
                   />
                 </Link>
                 <div className="flex items-center gap-3">
-                  <div
-                    className="w-full bg-green-600 hover:bg-green-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4"
-                  >
-                    <Pencil className="text-zinc-200 h-6 w-6" />
-                  </div>
+                  <Link to={`/profile/my-votes/edit/${vote.$id}`}>
+                    <div className="w-full bg-green-600 hover:bg-green-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4">
+                      <Pencil className="text-zinc-200 h-6 w-6" />
+                    </div>
+                  </Link>
                   <div
                     onClick={handleDelete}
                     className="w-full bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4"

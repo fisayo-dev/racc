@@ -32,15 +32,6 @@ import { storage } from "../../appwrite/config";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    setVoteImageFile(file);
-    const imageUrl = URL.createObjectURL(file);
-    setBackgroundImage(imageUrl);
-  }
-};
-
 const CreateVote = () => {
   // User variable
   const { user } = useAuth();
@@ -49,7 +40,7 @@ const CreateVote = () => {
   const [date2, setDate2] = useState();
   const [backgroundImage, setBackgroundImage] = useState(null);
   const [voteImageFile, setVoteImageFile] = useState(null);
-
+  
   // Vote input states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -59,14 +50,21 @@ const CreateVote = () => {
   const [franchisePolicy, setFranchisePolicy] = useState(true);
   const [tag1, setTag1] = useState("");
   const [tag2, setTag2] = useState("");
+  const [options, setOptions] = useState([{ title: "", option_voters: [] }]);
 
   const navigate = useNavigate()
 
   // Getting the vote tag
 
- 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setVoteImageFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setBackgroundImage(imageUrl);
+    }
+  };
 
-  const [options, setOptions] = useState([{ title: "", option_voters: [] }]);
 
   // Add a new option
   const addOption = () => {
