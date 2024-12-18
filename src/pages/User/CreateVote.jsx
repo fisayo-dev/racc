@@ -32,7 +32,7 @@ import { storage } from "../../appwrite/config";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-export const handleImageUpload = (event) => {
+const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     setVoteImageFile(file);
