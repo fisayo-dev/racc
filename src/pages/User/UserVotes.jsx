@@ -31,7 +31,7 @@ const UserVotes = () => {
   return (
     <div className="h-screen flex flex-col">
       <Header />
-      <div className="app-container my-[8rem] grid gap-7">
+      <div className="app-container my-[8rem] grid gap-10">
         {userVotes.length === 0 && (
           <div className="grid gap-3 mt-[5rem] text-blue-300">
             <InfoCircle className="mx-auto h-24 w-24 " />
