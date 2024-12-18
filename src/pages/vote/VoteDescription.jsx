@@ -25,6 +25,7 @@ const VoteDescription = () => {
   const { id } = useParams(); // Extract the vote ID from the route parameters
   const { user } = useAuth();
   const [particularVote, setParticularVote] = useState(null);
+  const [voteImgId, setVoteImgId] = useState(null)
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
@@ -36,30 +37,31 @@ const VoteDescription = () => {
     try {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
+  
       const index_vote = votes.find((vote) => vote.$id === id);
-
+  
       if (!index_vote) {
-        navigate("/home"); // Redirect if the vote is not found
-        return;
+        console.error("Vote not found, redirecting to home.");
+        return navigate("/home");
       }
-
-      // Check if the vote is private and the user is not logged in
+  
       if (!user && index_vote.publicity === "No") {
-        navigate("/login"); // Redirect guest users to the login page for private votes
-        return;
+        console.error("User not logged in, redirecting to login.");
+        return navigate("/login");
       }
-
+  
       setParticularVote(index_vote);
-
-      // Parse the JSON fields for tags, options, and voters
-      setVoteTags(JSON.parse(index_vote.tags));
-      setVoteOptions(JSON.parse(index_vote.options));
-      setVoters(JSON.parse(index_vote.voters));
+      setVoteImgId(index_vote.vote_img);
+  
+      setVoteTags(index_vote.tags ? JSON.parse(index_vote.tags) : []);
+      setVoteOptions(index_vote.options ? JSON.parse(index_vote.options) : []);
+      setVoters(index_vote.voters ? JSON.parse(index_vote.voters) : []);
     } catch (error) {
       console.error("Error fetching the vote details:", error);
-      navigate("/home"); // Redirect in case of an error
+      navigate("/home");
     }
   };
+  
 
   // Function to handle voting on an option
   const handleVote = async (option) => {
@@ -116,7 +118,7 @@ const VoteDescription = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       getParticularVote();
-    }, 5000);
+    }, 50000);
 
     return () => clearInterval(interval);
   }, []);
@@ -125,14 +127,13 @@ const VoteDescription = () => {
     if (user) {
       setUserId(user.$id);
     }
-    getParticularVote();
-  }, []);
+    if(id) getParticularVote();
+  }, [user,id]);
 
   return (
     <div className="grid gap-2 text-zinc-200">
       <Header />
       <div className="app-container my-[8rem]">
-       
         <div className="grid gap-5">
           <Link to="/">
             <button className="my-1 rounded-lg text-zinc-800 flex items-center gap-1 hover:bg-zinc-200 bg-zinc-300 px-4 py-3">
@@ -141,11 +142,11 @@ const VoteDescription = () => {
             </button>
           </Link>
           {!particularVote && (
-          <div className="mx-auto justify-center grid gap-5 text-center my-10">
-            <LoadingIcon />
-            <p className="text-lg">Fetching vote description</p>
-          </div>
-        )}
+            <div className="mx-auto justify-center grid gap-5 text-center my-10">
+              <LoadingIcon />
+              <p className="text-lg">Fetching vote description</p>
+            </div>
+          )}
           {particularVote && (
             <div className="grid gap-10 items-start md:grid-cols-2">
               <div className="grid gap-8">
@@ -186,7 +187,13 @@ const VoteDescription = () => {
                 {/* Background image for the vote */}
                 <div
                   className="rounded-lg bg-zinc-700 shadow-md h-64 w-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(../${randomImage()})` }}
+                  style={{
+                    backgroundImage: `url(https://cloud.appwrite.io/v1/storage/buckets/${
+                      import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID
+                    }/files/${voteImgId}/view?project=${
+                      import.meta.env.VITE_PROJECT_ID
+                    })`,
+                  }}
                 ></div>
 
                 {/* Display number of users voting or voted */}
