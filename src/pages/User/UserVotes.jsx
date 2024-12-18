@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import VoteCard from "../../components/VoteCard";
 import { randomImage } from "../../components/VoteLists";
+import { Pencil } from "lucide-react";
 
 const UserVotes = () => {
   const { user } = useAuth();
@@ -60,8 +61,18 @@ const UserVotes = () => {
                     creatorId={vote.creator_id}
                   />
                 </Link>
-                <div onClick={handleDelete}>
-                  <Trash className="text-red-400 hover:text-red-500 h-6 w-6" />
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-full bg-green-600 hover:bg-green-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4"
+                  >
+                    <Pencil className="text-zinc-200 h-6 w-6" />
+                  </div>
+                  <div
+                    onClick={handleDelete}
+                    className="w-full bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4"
+                  >
+                    <Trash className="text-zinc-200 h-6 w-6" />
+                  </div>
                 </div>
               </div>
               // <p>Hi</p>
