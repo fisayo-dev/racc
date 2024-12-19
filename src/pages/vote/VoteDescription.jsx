@@ -142,6 +142,9 @@ const VoteDescription = () => {
         from: user.$id,
         to: particularVote.creator_id,
       });
+      await db.users.update(particularVote.creator_id, {
+        notification_seen: false,
+      })
       console.log('success')
     } catch (err) {
       console.log(err.message);
