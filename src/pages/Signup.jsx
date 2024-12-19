@@ -25,7 +25,7 @@ import { useAuth } from "../context/AuthContext";
 import { Eye, EyeSlash } from "iconsax-react";
 
 const Signup = () => {
-  const [formStatus, setFormStatus] = useState(0);
+  const [formStatus, setFormStatus] = useState(1);
   const { user, registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -47,8 +47,12 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
+  const [countries, setCountries] = useState([]);
+  const [loadingCountries, setLoadingCountries] = useState(false);
+
   // Error states
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -155,6 +159,28 @@ const Signup = () => {
       registerUser(userInfo);
     }
   };
+
+  useEffect(() => {
+    // Fetch country data
+    const fetchCountries = async () => {
+      setLoadingCountries(true);
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        if (!response.ok) {
+          throw new Error("Failed to fetch countries");
+        }
+        const data = await response.json();
+        const countryNames = data.map((country) => country.name.common).sort();
+        setCountries(countryNames);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
 
   useEffect(() => {
     fetchTags();
@@ -308,26 +334,29 @@ const Signup = () => {
             <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
               <div className="grid gap-6">
                 <div className="grid gap-3">
-                  <div className="grid gap-2 w-full ">
+                  <div className="grid gap-2 w-full">
                     <label className="font-bold">Where do you live?</label>
-                    <Select
-                      className="outline-none shadow-md"
-                      value={country}
-                      onValueChange={(value) => setCountry(value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your country" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Nigeria">Nigeria</SelectItem>
-                        <SelectItem value="South America">
-                          South America
-                        </SelectItem>
-                        <SelectItem value="China">China</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {errors.country && (
-                      <p className="text-red-400">{errors.country}</p>
+                    {loadingCountries ? (
+                      <p>Loading countries...</p>
+                    ) : error ? (
+                      <p className="text-red-400">{error}</p>
+                    ) : (
+                      <Select
+                        className="outline-none shadow-md"
+                        value={country}
+                        onValueChange={(value) => setCountry(value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {countries.map((countryName) => (
+                            <SelectItem key={countryName} value={countryName}>
+                              {countryName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     )}
                   </div>
                   <div className="grid gap-2 w-full ">
