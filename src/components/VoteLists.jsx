@@ -265,8 +265,8 @@ const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
   const { user } = useAuth();
-
   const [listOfVotes, setListOfVotes] = useState([]);
+  const [activeTab, setActiveTab] = useState("for you");
 
   const fetchVotes = async () => {
     try {
@@ -301,6 +301,30 @@ const VoteLists = () => {
           </div>
         )}
 
+        {!user && (
+          <div className="flex items-center gap-6 my-5 text-[1rem]">
+            <div
+              onClick={() => setActiveTab("for you")}
+              className={`border-b-[0.2rem] ${
+                activeTab === "for you"
+                  ? "border-zinc-200 text-zinc-200"
+                  : "text-zinc-400 border-transparent"
+              } cursor-pointer py-1`}
+            >
+              For You
+            </div>
+            <div
+              onClick={() => setActiveTab("others")}
+              className={`border-b-[0.2rem]  ${
+                activeTab === "others"
+                  ? "border-zinc-200 text-zinc-200"
+                  : "text-zinc-400 border-transparent"
+              } cursor-pointer py-1`}
+            >
+              Others
+            </div>
+          </div>
+        )}
         {listOfVotes.length == 0 && (
           <div className="mx-auto justify-center grid gap-5 text-center my-10">
             <LoadingIcon />
