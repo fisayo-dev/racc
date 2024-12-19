@@ -20,6 +20,7 @@ const VoteCard = ({
 }) => {
   // Vote creator state
   const [voteCreator, setVoteCreator] = useState(null);
+  const [voteCreatorProfileImage, setVoteCreatorProfileImage] = useState(null);
 
   const gettingVoteStatus = () => {
     if (getVoteStatus(start_date, end_date) == "ongoing") {
@@ -82,6 +83,7 @@ const VoteCard = ({
       const results = await db.users.list([Query.equal("user_id", creatorId)]);
       const data = results.documents[0];
       setVoteCreator(data);
+      setVoteCreatorProfileImage(data.profile_image);
     } catch (err) {
       console.log(err.message);
     }
@@ -94,10 +96,25 @@ const VoteCard = ({
     <div className="bg-zinc-800 h-[500px] md:h-[440px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4 md:gap-3">
         {voteCreator && (
-          <div className=" text-zinc-200 ">
-            <p className="md:text-[0.9rem] my-1 text-md">
-              @{voteCreator.username}
-            </p>
+          <div className=" text-zinc-200 flex items-center gap-2">
+            <div
+              className="h-8 w-8 rounded-full bg-zinc-700 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(https://cloud.appwrite.io/v1/storage/buckets/${
+                  import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID
+                }/files/${voteCreatorProfileImage}/view?project=${
+                  import.meta.env.VITE_PROJECT_ID
+                })`,
+              }}
+            />
+            <div >
+              <h2 className="font-bold">
+                {voteCreator.first_name} {voteCreator.last_name}
+              </h2>
+              <p className="md:sm my-1 text-md">
+                @{voteCreator.username}
+              </p>
+            </div>
           </div>
         )}
         <h2 className="md:text-[1.1rem] text-[1.4rem] text-zinc-200 font-bold">
@@ -105,7 +122,10 @@ const VoteCard = ({
         </h2>
         <div className="flex items-center gap-2 flex-wrap">
           {tags.map((tag, index) => (
-            <div key={index} className="px-3 text-[0.75rem] border border-zinc-700 hover:text-gray-300 text-gray-400 py-2 rounded-lg">
+            <div
+              key={index}
+              className="px-3 text-[0.75rem] border border-zinc-700 hover:text-gray-300 text-gray-400 py-2 rounded-lg"
+            >
               #{tag}
             </div>
           ))}
