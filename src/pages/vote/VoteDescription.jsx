@@ -2,7 +2,6 @@ import { ArrowLeft, Check, Clock, Hashtag, Lock } from "iconsax-react";
 import { Header } from "../../components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
-import { randomImage } from "../../components/VoteLists";
 import { Megaphone } from "lucide-react";
 import { useEffect, useState } from "react";
 import db from "../../appwrite/databases";

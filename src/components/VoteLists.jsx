@@ -267,20 +267,63 @@ const VoteLists = () => {
   const { user } = useAuth();
   const [listOfVotes, setListOfVotes] = useState([]);
   const [activeTab, setActiveTab] = useState("for you");
+  const [loading, setLoading] = useState(false);
 
   const fetchVotes = async () => {
+    setLoading(true);
     try {
+      // Step 1 : Get votes
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
-      setListOfVotes(votes);
+      const userTags = JSON.parse(user.tags);
+      //Step 2 : Loop through each vote
+      // votes.map((vote) => {
+      //   const voteTags = JSON.parse(vote.tags);
+      //   const userTags = JSON.parse(user.tags);
+      //   const forYouVotes = voteTags.filter((voteTag) =>
+      //     userTags.includes(voteTag)
+      //   );
+      //   const othersVotes = voteTags.map((voteTag) =>
+      //     !userTags.includes(voteTag)
+      //   );
+      //   if (activeTab == "for you") {
+      //     setListOfVotes([forYouVotes]);
+      //     return;
+      //   }
+      //   if (activeTab == "others" && !voteTags.includes(userTags)) {
+      //     setListOfVotes([othersVotes]);
+      //     return;
+      //   }
+      // });
+      const forYouVotes = userTags.map((userTag) => {
+        votes.filter((vote) => {
+          const voteTags = JSON.parse(vote.tags);
+          return voteTags.includes(userTag);
+        });
+      });
+      const othersVotes = userTags.map((userTag) => {
+        votes.filter((vote) => {
+          const voteTags = JSON.parse(vote.tags);
+          return !voteTags.includes(userTag);
+        });
+      });
+      if (activeTab == "for you") {
+        setListOfVotes([forYouVotes]);
+        return;
+      }
+      if (activeTab == "others") {
+        setListOfVotes([othersVotes]);
+        return;
+      }
     } catch (err) {
       console.log(err.message);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchVotes();
-  }, []);
+  }, [activeTab]);
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
@@ -302,7 +345,7 @@ const VoteLists = () => {
         )}
 
         {!user && (
-          <div className="flex items-center gap-6 my-5 text-[1rem]">
+          <div className="flex justify-center items-center gap-6 my-5 text-[1rem]">
             <div
               onClick={() => setActiveTab("for you")}
               className={`border-b-[0.2rem] ${
@@ -325,7 +368,7 @@ const VoteLists = () => {
             </div>
           </div>
         )}
-        {listOfVotes.length == 0 && (
+        {loading && listOfVotes.length === 0 && (
           <div className="mx-auto justify-center grid gap-5 text-center my-10">
             <LoadingIcon />
             <p className="text-lg">Fetching votes</p>
@@ -333,7 +376,8 @@ const VoteLists = () => {
         )}
 
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {listOfVotes.length !== 0 &&
+          {!loading &&
+            listOfVotes.length !== 0 &&
             listOfVotes.map((vote, index) => (
               <Link key={index} to={`/vote/${vote.$id}`}>
                 <VoteCard
