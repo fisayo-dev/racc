@@ -6,7 +6,7 @@ import db from "../appwrite/databases";
 import { Query } from "appwrite";
 
 const VoteCard = ({
-  image,
+  vote_img,
   options,
   title,
   tags,
@@ -107,13 +107,11 @@ const VoteCard = ({
                 })`,
               }}
             />
-            <div >
+            <div>
               <h2 className="font-bold">
                 {voteCreator.first_name} {voteCreator.last_name}
               </h2>
-              <p className="md:sm my-1 text-md">
-                @{voteCreator.username}
-              </p>
+              <p className="md:sm my-1 text-md">@{voteCreator.username}</p>
             </div>
           </div>
         )}
@@ -132,7 +130,13 @@ const VoteCard = ({
         </div>
         <div
           className={`rounded-lg bg-zinc-700 shadow-md h-56 md:h-52 w-full bg-cover bg-center`}
-          style={{ backgroundImage: `url(${image})` }}
+          style={{
+            backgroundImage: `url(https://cloud.appwrite.io/v1/storage/buckets/${
+              import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID
+            }/files/${vote_img}/view?project=${
+              import.meta.env.VITE_PROJECT_ID
+            })`,
+          }}
         ></div>
         {/* <div className="grid gap-[0.4rem]">
           {options.map((opt) => (

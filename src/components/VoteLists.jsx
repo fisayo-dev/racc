@@ -166,7 +166,7 @@ const VoteLists = () => {
             listOfVotes.map((vote, index) => (
               <Link key={index} to={`/vote/${vote.$id}`}>
                 <VoteCard
-                  image={randomImage()}
+                  vote_img={vote.vote_img}
                   id={vote.$id}
                   title={vote.title}
                   description={vote.description}

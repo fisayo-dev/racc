@@ -69,19 +69,19 @@ const UserVotes = () => {
             userVotes.map((vote, index) => (
               <div className="grid gap-4 items-end">
                 <Link key={index} to={`/vote/${vote.$id}`}>
-                  <VoteCard
-                    image={randomImage()}
-                    id={vote.$id}
-                    title={vote.title}
-                    description={vote.description}
-                    options={vote.options}
-                    status="ongoing"
-                    tags={JSON.parse(vote.tags)}
-                    start_date={vote.start_date}
-                    end_date={vote.end_date}
-                    voters={vote.voters}
-                    creatorId={vote.creator_id}
-                  />
+                <VoteCard
+                  vote_img={vote.vote_img}
+                  id={vote.$id}
+                  title={vote.title}
+                  description={vote.description}
+                  options={vote.options}
+                  status="ongoing"
+                  tags={JSON.parse(vote.tags)}
+                  start_date={vote.start_date}
+                  end_date={vote.end_date}
+                  voters={vote.voters}
+                  creatorId={vote.creator_id}
+                />
                 </Link>
                 <div className="flex items-center gap-3">
                   {getVoteStatus(vote.start_date, vote.end_date) ==
