@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import VoteCard from "../../components/VoteCard";
 import { randomImage } from "../../components/VoteLists";
 import { Pencil } from "lucide-react";
+import Swal from "sweetalert2";
 
 const UserVotes = () => {
   const { user } = useAuth();
@@ -21,8 +22,30 @@ const UserVotes = () => {
     setUserVotes(user_votes);
   };
 
-  const handleDelete = async () => {
-    console.log("deleted");
+  const handleDelete = async (voteId) => {
+    await Swal.fire({
+      icon: "warning",
+      title: "Delete file ?",
+      text: "Are you sure you want to delete the file",
+      confirmButtonText: "Yes, delete it",
+      confirmButtonColor: "#2563eb",
+      cancelButtonText: "No",
+      cancelButtonColor: "#d33",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        db.votes.delete(voteId);
+        setUserVotes((userVotes) =>
+          userVotes.filter((i) => i.$id !== voteId)
+        );
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+          confirmButtonColor: "#2563eb",
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -68,7 +91,7 @@ const UserVotes = () => {
                     </div>
                   </Link>
                   <div
-                    onClick={handleDelete}
+                    onClick={handleDelete.bind(this, vote.$id)}
                     className="w-full bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg flex items-center justify-center gap-4"
                   >
                     <Trash className="text-zinc-200 h-6 w-6" />

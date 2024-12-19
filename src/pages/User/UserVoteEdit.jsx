@@ -109,7 +109,7 @@ const UserVoteEdit = () => {
         tags: JSON.stringify([tag1, tag2]), // Stringified tags
         start_date: date,
         end_date: date2,
-        voters: [], // Directly store an empty array
+        voters: JSON.stringify([]), // Directly store an empty array
         options: JSON.stringify(options), // Stringify options for storage
         creator_id: user.$id,
       });
