@@ -8,23 +8,26 @@ import db from "../../appwrite/databases";
 import { Query } from "appwrite";
 import { useAuth } from "../../context/AuthContext";
 import { LoadingIcon } from "../../components";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 // Function to determine the status of the vote
 export const getVoteStatus = (startDate, endDate) => {
   const currentDate = new Date();
   const start = new Date(startDate);
   const end = new Date(endDate);
-
+  
   if (currentDate < start) return "upcoming";
   if (currentDate > end) return "ended";
   return "ongoing";
 };
+const MySwal = withReactContent(Swal);
 
 const VoteDescription = () => {
   const { id } = useParams(); // Extract the vote ID from the route parameters
   const { user } = useAuth();
   const [particularVote, setParticularVote] = useState(null);
-  const [voteImgId, setVoteImgId] = useState(null)
+  const [voteImgId, setVoteImgId] = useState(null);
   const [voteTags, setVoteTags] = useState(null);
   const [voteOptions, setVoteOptions] = useState(null);
   const [voters, setVoters] = useState(null);
@@ -36,22 +39,22 @@ const VoteDescription = () => {
     try {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
-  
+
       const index_vote = votes.find((vote) => vote.$id === id);
-  
+
       if (!index_vote) {
         console.error("Vote not found, redirecting to home.");
         return navigate("/home");
       }
-  
+
       if (!user && index_vote.publicity === "No") {
         console.error("User not logged in, redirecting to login.");
         return navigate("/login");
       }
-  
+
       setParticularVote(index_vote);
       setVoteImgId(index_vote.vote_img);
-  
+
       setVoteTags(index_vote.tags ? JSON.parse(index_vote.tags) : []);
       setVoteOptions(index_vote.options ? JSON.parse(index_vote.options) : []);
       setVoters(index_vote.voters ? JSON.parse(index_vote.voters) : []);
@@ -60,7 +63,6 @@ const VoteDescription = () => {
       navigate("/home");
     }
   };
-  
 
   // Function to handle voting on an option
   const handleVote = async (option) => {
@@ -68,18 +70,42 @@ const VoteDescription = () => {
       getVoteStatus(particularVote.start_date, particularVote.end_date) !==
       "ongoing"
     ) {
-      alert("This vote is not currently ongoing.");
+      MySwal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "warning",
+        title: "This vote is not currently ongoing.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     // Check if user has already voted
     if (voters.some((voter) => voter.voter_id === userId)) {
-      alert("You have already voted.");
+      MySwal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "info",
+        title: "You have already voted.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     if (!user) {
-      alert("You cannot vote. Please sign in");
+      MySwal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "error",
+        title: "You cannot vote. Please sign in.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
@@ -110,7 +136,15 @@ const VoteDescription = () => {
       options: JSON.stringify(updatedOptions),
     });
 
-    alert(`You voted for: ${option.title}`);
+    MySwal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "success",
+      title: `You voted for: ${option.title}`,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   // Live update of votes every 5 seconds
@@ -126,8 +160,8 @@ const VoteDescription = () => {
     if (user) {
       setUserId(user.$id);
     }
-    if(id) getParticularVote();
-  }, [user,id]);
+    if (id) getParticularVote();
+  }, [user, id]);
 
   return (
     <div className="grid gap-2 text-zinc-200">
