@@ -54,6 +54,16 @@ const VoteLists = () => {
     }
   };
 
+  const fetchAllVotes = async () => {
+    try {
+      const results = db.votes.list([Query.orderDesc("$createdAt")]);
+      const votes = results.documents;
+      setListOfVotes(votes);
+    } catch (err) {
+      console.error("Error:", err.message);
+    }
+  };
+
   const fetchVotes = async () => {
     setLoading(true);
     try {
@@ -93,6 +103,8 @@ const VoteLists = () => {
   useEffect(() => {
     if (loggedInUser) {
       fetchVotes();
+    } else {
+      fetchAllVotes()
     }
   }, [loggedInUser, activeTab]);
 
