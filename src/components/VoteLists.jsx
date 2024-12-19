@@ -43,13 +43,11 @@ const VoteLists = () => {
     try {
       const results = await db.users.list();
       const users = results.documents;
-      console.log("Fetched users:", users);
 
       if (user?.$id) {
         const currentUser = users.find((u) => u.user_id === user.$id);
         setLoggedInUser(currentUser || null);
       } else {
-        console.error("User ID not found in 'user':", user);
       }
     } catch (err) {
       console.error("Error fetching logged-in user:", err.message);
