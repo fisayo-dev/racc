@@ -141,6 +141,7 @@ const VoteDescription = () => {
       await db.notifications.create({
         from: user.$id,
         to: particularVote.creator_id,
+        vote_id: particularVote.$id
       });
       await db.users.update(particularVote.creator_id, {
         notification_seen: false,

@@ -5,6 +5,7 @@ import { Query } from "appwrite";
 import { Loader2Icon } from "lucide-react";
 import { InfoCircle } from "iconsax-react";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Notifications = () => {
   const { user } = useAuth();
@@ -90,7 +91,8 @@ const Notifications = () => {
             {notifications && notifications.length !== 0 && (
               <div className="grid gap-4">
                 {notifications.map((notification) => (
-                  <div
+                  <Link
+                    to={`/vote/${notification.vote_id}`}
                     key={notification.$id}
                     className="bg-zinc-700 rounded-xl flex items-center px-5 hover:bg-zinc-600 cursor-pointer hover:shadow-md h-[4rem]"
                   >
@@ -106,17 +108,14 @@ const Notifications = () => {
                         }}
                       />
                       {notification.from == user.$id ? (
-                        
+                        <h2>You participated in your vote</h2>
+                      ) : (
                         <h2>
-                        You participated in your vote
-                        </h2>) : (
-                          <h2>
-                        {notification.fromFullName} participated in your vote
+                          {notification.fromFullName} participated in your vote
                         </h2>
-                        )
-                      }
+                      )}
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
