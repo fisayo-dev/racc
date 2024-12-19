@@ -16,7 +16,7 @@ export const getVoteStatus = (startDate, endDate) => {
   const currentDate = new Date();
   const start = new Date(startDate);
   const end = new Date(endDate);
-  
+
   if (currentDate < start) return "upcoming";
   if (currentDate > end) return "ended";
   return "ongoing";
@@ -135,6 +135,17 @@ const VoteDescription = () => {
       voters: JSON.stringify(updatedVoters),
       options: JSON.stringify(updatedOptions),
     });
+
+    // Send/Create notification
+    try {
+      await db.notifications.create({
+        from: user.$id,
+        to: particularVote.creator_id,
+      });
+      console.log('success')
+    } catch (err) {
+      console.log(err.message);
+    }
 
     MySwal.fire({
       toast: true,

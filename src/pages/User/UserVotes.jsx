@@ -6,7 +6,6 @@ import { InfoCircle, Trash } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import VoteCard from "../../components/VoteCard";
-import { randomImage } from "../../components/VoteLists";
 import { Pencil } from "lucide-react";
 import Swal from "sweetalert2";
 import { getVoteStatus } from "../vote/VoteDescription";
