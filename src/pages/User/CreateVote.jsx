@@ -44,8 +44,6 @@ const CreateVote = () => {
   // Vote input states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [genderRestriction, setGenderRestriction] = useState("");
-  const [restrictedGender, setRestrictedGender] = useState("");
   const [publicity, setPublicity] = useState(true);
   const [franchisePolicy, setFranchisePolicy] = useState(true);
   const [tag1, setTag1] = useState("");
@@ -110,8 +108,6 @@ const CreateVote = () => {
         voters: JSON.stringify([]),
         options: stringifiedOptions, // Store the options here
         tags: jsonedTags,
-        restricted_gender: restrictedGender,
-        gender_restriction: genderRestriction,
         creator_id: user.$id,
         vote_img: voteImageId,
         franchise_policy: franchisePolicy,
