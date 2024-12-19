@@ -265,7 +265,7 @@ const Signup = () => {
                     <label className="font-bold">Repeat password:</label>
                     <div className="flex items-center gap-3 border-[0.1rem] text-[0.9rem] border-zinc-400 py-3 px-3 rounded-md">
                       <input
-                        type={showRepeatPassword ? 'text': 'password'}
+                        type={showRepeatPassword ? "text" : "password"}
                         className="w-full"
                         placeholder="Re-enter your password"
                         value={repeatPassword}
@@ -343,7 +343,9 @@ const Signup = () => {
                       <SelectContent>
                         <SelectItem value="Male">Male</SelectItem>
                         <SelectItem value="Female">Female</SelectItem>
-                        <SelectItem value="Others">Others</SelectItem>
+                        <SelectItem value="I prefer to remain anonymous">
+                          I prefer to remain anonymous
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     {errors.gender && (

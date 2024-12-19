@@ -393,44 +393,6 @@ const CreateVote = () => {
                   <h2 className="text-3xl font-bold">Publicity & Audience</h2>
                 </div>
                 <div className="grid gap-4">
-                  <h2 className="text-md">
-                    Do you want any gender restriction ?
-                  </h2>
-                  <Select
-                    value={genderRestriction}
-                    onValueChange={(value) => setGenderRestriction(value)}
-                    className="outline-none"
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose an option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Yes">Yes</SelectItem>
-                      <SelectItem value="No">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-4">
-                  <h2 className="text-md">
-                    Which gender so you want to restrict?
-                  </h2>
-                  <Select
-                    value={restrictedGender}
-                    onValueChange={(value) => setRestrictedGender(value)}
-                    className="outline-none"
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Pick a gender" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Male">Male</SelectItem>
-                      <SelectItem value="Female">Female</SelectItem>
-                      <SelectItem value="Others">Others</SelectItem>
-                      <SelectItem value="None">None</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-4">
                   <h2 className="text-md">Do you want the vote to be public</h2>
                   <Select
                     value={publicity}

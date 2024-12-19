@@ -54,16 +54,6 @@ const VoteLists = () => {
     }
   };
 
-  const fetchAllVotes = async () => {
-    try {
-      const results = db.votes.list([Query.orderDesc("$createdAt")]);
-      const votes = results.documents;
-      setListOfVotes(votes);
-    } catch (err) {
-      console.error("Error:", err.message);
-    }
-  };
-
   const fetchVotes = async () => {
     setLoading(true);
     try {
@@ -71,28 +61,31 @@ const VoteLists = () => {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
 
-      // Check if user profile tags exist and parse them safely
-      const userTags = loggedInUser?.profile_tags
-        ? JSON.parse(loggedInUser.profile_tags || "[]")
-        : [];
-
-      // Step 2: Filter votes based on the active tab
+      // Step 2: Filter votes based on the active tab (only for logged-in users)
       let filteredVotes = [];
-      if (activeTab === "for you") {
+      if (loggedInUser && activeTab === "for you") {
+        const userTags = loggedInUser?.profile_tags
+          ? JSON.parse(loggedInUser.profile_tags || "[]")
+          : [];
         filteredVotes = votes.filter((vote) => {
           const voteTags = vote.tags ? JSON.parse(vote.tags) : [];
           return voteTags.some((tag) => userTags.includes(tag));
         });
-      } else if (activeTab === "others") {
+      } else if (loggedInUser && activeTab === "others") {
+        const userTags = loggedInUser?.profile_tags
+          ? JSON.parse(loggedInUser.profile_tags || "[]")
+          : [];
         filteredVotes = votes.filter((vote) => {
           const voteTags = vote.tags ? JSON.parse(vote.tags) : [];
           return !voteTags.some((tag) => userTags.includes(tag));
         });
+      } else {
+        // No filters for unauthenticated users
+        filteredVotes = votes;
       }
 
       // Step 3: Update state
       setListOfVotes(filteredVotes);
-      console.log(filteredVotes);
     } catch (err) {
       console.log("Error:", err.message);
     } finally {
@@ -103,8 +96,6 @@ const VoteLists = () => {
   useEffect(() => {
     if (loggedInUser) {
       fetchVotes();
-    } else {
-      fetchAllVotes()
     }
   }, [loggedInUser, activeTab]);
 
@@ -112,10 +103,12 @@ const VoteLists = () => {
     const fetchAllData = async () => {
       if (user) {
         await fetchLoggedInUser();
+      } else {
+        fetchVotes(); // Fetch all votes for unauthenticated users
       }
     };
     fetchAllData();
-  }, []);
+  }, [user, activeTab]);
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
@@ -186,7 +179,6 @@ const VoteLists = () => {
                   creatorId={vote.creator_id}
                 />
               </Link>
-              // <p>Hi</p>
             ))}
         </div>
       </div>
