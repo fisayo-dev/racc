@@ -7,7 +7,7 @@ import { Loader2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, deleteUser } = useAuth();
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [createdVotes, setCreatedVotes] = useState(null); // null for loading
   const [participatedVotes, setParticipatedVotes] = useState(null); // null for loading
@@ -91,6 +91,12 @@ const Profile = () => {
                         className="bg-red-500 border-none text-white hover:bg-red-600"
                       />
                     </div>
+                    {/* <div onClick={deleteUser}>
+                      <Button
+                        text="Delete Account"
+                        className="bg-red-500 border-none text-white hover:bg-red-600"
+                      />
+                    </div> */}
                     <div>
                       <Button
                         text="Edit"
