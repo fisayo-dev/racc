@@ -84,37 +84,53 @@ const UserVoteEdit = () => {
   };
 
   const editVote = async () => {
+    setLoading(true);
     try {
-      // Step 1: Handle file upload (if applicable)
-      let newImageUpdateId = fetchedImageId; // Default to the previous image ID
+      let newImageUpdateId = fetchedImageId; // Default to the current image ID
+
       if (voteImageFile) {
-        // Delete the old file if you need to replace it
-        await storage.deleteFile(
-          import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID,
-          fetchedImageId
-        );
-        const newImageUpload = await storage.createFile(
-          import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID,
-          ID.unique(), // Generate a new unique ID
-          voteImageFile
-        );
-        newImageUpdateId = newImageUpload.$id;
+        try {
+          // Step 1: Delete old image if it exists
+          if (fetchedImageId) {
+            await storage.deleteFile(
+              import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID,
+              fetchedImageId
+            );
+          }
+        } catch (deleteError) {
+          console.warn(
+            "Warning: Old image could not be deleted. Proceeding with the new image upload.",
+            deleteError
+          );
+        }
+
+        try {
+          // Step 2: Upload the new image
+          const newImageUpload = await storage.createFile(
+            import.meta.env.VITE_VOTE_IMAGES_BUCKET_ID,
+            ID.unique(), // Generate a new unique ID
+            voteImageFile
+          );
+          newImageUpdateId = newImageUpload.$id;
+        } catch (uploadError) {
+          throw new Error("New image upload failed: " + uploadError.message);
+        }
       }
 
-      // Step 2: Update vote details
+      // Step 3: Update the vote details in the database
       await db.votes.update(vote_id, {
         title,
         description,
         vote_img: newImageUpdateId,
-        tags: JSON.stringify([tag1, tag2]), // Stringified tags
+        tags: JSON.stringify([tag1, tag2]),
         start_date: date,
         end_date: date2,
-        voters: JSON.stringify([]), // Directly store an empty array
-        options: JSON.stringify(options), // Stringify options for storage
+        voters: JSON.stringify([]),
+        options: JSON.stringify(options),
         creator_id: user.$id,
       });
 
-      // Step 3: Show success message and navigate
+      // Step 4: Notify the user of success
       Swal.fire({
         toast: true,
         text: "Your vote was updated successfully!",
@@ -135,6 +151,7 @@ const UserVoteEdit = () => {
         timer: 3000,
       });
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -173,7 +190,7 @@ const UserVoteEdit = () => {
       <Header />
       <div className="app-container my-[8rem]">
         {loading && (
-          <Loader2Icon className="mx-auto h-24 w-24 md:h-28 md:w-28 animate-spin my-10"/>
+          <Loader2Icon className="mx-auto h-24 w-24 md:h-28 md:w-28 animate-spin my-10" />
         )}
         {!loading && (
           <div className="grid gap-10">
