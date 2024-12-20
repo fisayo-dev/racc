@@ -6,8 +6,10 @@ import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
 import image from "../assets/image.png";
-import { XIcon } from "lucide-react";
+import { Loader2Icon, XIcon } from "lucide-react";
 import Swal from "sweetalert2";
+import VoteCard from "../components/VoteCard";
+
 const Search = () => {
   const { user } = useAuth();
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
@@ -16,10 +18,50 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [addTagValue, setAddTagValue] = useState("");
 
+  // Vote States
+  const [listOfVotes, setListOfVotes] = useState([]);
+  const [loadingVotes, setLoadingVotes] = useState(true);
+
   // Tags states
   const [tagsList, setTagsList] = useState([]);
-  const [hideTags, setHideTags] = useState(true);
+  const [hideTags, setHideTags] = useState(false);
 
+  // Search functions
+  const fetchVotes = async (e) => {
+    //   Prevent default form submit
+    e.preventDefault();
+    //   Set loader to true
+    setLoadingVotes(true);
+    //   Fetch votes
+    try {
+      const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+      const votes = results.documents;
+      // Define filtered vots
+      let filteredVotes = [];
+      // If no tags, show all votes that match the search value
+      if (tagsList.length == 0) {
+        filteredVotes = votes.filter((vote) =>
+          vote.title.toLowerCase().contains(searchValue.toLocaleLowerCase())
+        );
+        setListOfVotes(filteredVotes);
+      } else {
+        // If tags, show all votes that match search vakue and have tags
+        filteredVotes = votes
+          .filter((vote) => {
+            const voteTags = vote.tags ? JSON.parse(vote.tags) : [];
+            return voteTags.some((tag) => tagsList.includes(tag));
+          })
+          .filter((vote) =>
+            vote.title.toLowerCase().contains(searchValue.toLocaleLowerCase())
+          );
+      }
+    } catch (err) {
+      console.error("Error:", err.message);
+    }
+    setLoadingVotes(false);
+  };
+
+  // Tag functions
   const addTag = (e) => {
     e.preventDefault();
     if (tagsList.length == 7) {
@@ -118,7 +160,7 @@ const Search = () => {
           <div className="div grid gap-4">
             <form
               action=""
-              className="flex items-center bg-zinc-800 rounded-lg md:px-6 md:py-5 px-4 py-3 shadow-lg"
+              className="flex items-center bg-zinc-800 rounded-lg md:px-5 md:py-4 px-4 py-3 shadow-lg"
             >
               <input
                 type="text"
@@ -127,7 +169,7 @@ const Search = () => {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-              <SearchNormal1 className="h-6 w-6" />
+              <SearchNormal1 className="h-5 w-5" />
             </form>
             <div className="grid gap-2">
               <div className="flex justify-between items-center">
@@ -168,6 +210,32 @@ const Search = () => {
                 </div>
               )}
             </div>
+          </div>
+          {loadingVotes && (
+            <div className="grid mx-auto mt-[1rem] ">
+              <Loader2Icon className="h-28 w-28 animate-spin" />
+            </div>
+          )}
+          <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+            {!loadingVotes &&
+              listOfVotes.length !== 0 &&
+              listOfVotes.map((vote, index) => (
+                <Link key={index} to={`/vote/${vote.$id}`}>
+                  <VoteCard
+                    vote_img={vote.vote_img}
+                    id={vote.$id}
+                    title={vote.title}
+                    description={vote.description}
+                    options={vote.options}
+                    status="ongoing"
+                    tags={JSON.parse(vote.tags)}
+                    start_date={vote.start_date}
+                    end_date={vote.end_date}
+                    voters={vote.voters}
+                    creatorId={vote.creator_id}
+                  />
+                </Link>
+              ))}
           </div>
         </div>
       </div>
