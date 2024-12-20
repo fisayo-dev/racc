@@ -158,7 +158,6 @@ const Notifications = () => {
                         <Link
                           to={`/vote/${notification.vote_id}`}
                           className="grid place-items-center justify-center"
-                          onClick={() => deleteNotification(notification.$id)}
                         >
                           <ExternalLinkIcon className="h-6 w-6 text-blue-600 hover:text-blue-500" />
                         </Link>
