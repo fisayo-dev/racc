@@ -68,7 +68,7 @@ const Header = () => {
                 {notificationSeen ? (
                   <Notification className="h-6 w-6" />
                 ) : (
-                  <NotificationBing className="text-red-200 h-6 w-6" />
+                  <NotificationBing className="text-red-400 h-6 w-6" />
                 )}
               </Link>
               <Link

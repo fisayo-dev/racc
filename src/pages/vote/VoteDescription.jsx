@@ -150,7 +150,6 @@ const VoteDescription = () => {
       await db.users.update(theUser.$id, {
         notification_seen: false,
       });
-      console.log("success");
     } catch (err) {
       console.log(err.message);
     }
