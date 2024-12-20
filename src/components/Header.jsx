@@ -77,9 +77,9 @@ const Header = () => {
               >
                 <PlusIcon className="h-6 w-6" />
               </Link>
-              <Link to="/profile">
+              <Link to="/profile"className="shadow-lg">
                 <div
-                  className="h-8 w-8 bg-cover bg-center bg-zinc-500 rounded-full hover:scale-110 transition"
+                  className="h-8 w-8 bg-cover  bg-center bg-zinc-500 rounded-full hover:scale-110 transition"
                   style={{ backgroundImage: `url(${fetchUserImage()})` }}
                 ></div>
               </Link>
