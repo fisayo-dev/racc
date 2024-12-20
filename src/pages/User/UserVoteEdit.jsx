@@ -195,7 +195,7 @@ const UserVoteEdit = () => {
         {!loading && (
           <div className="grid gap-10">
             <h2 className="text-center font-bold text-4xl">Edit Vote</h2>
-            <div className="grid gap-3 mx-auto 2xl:w-3/5 md:w-4/6">
+            <div className="grid gap-3 mx-auto 2xl:w-3/5 md:w-4/6 w-full">
               <div className="grid gap-4">
                 <label>Vote Title</label>
                 <input
