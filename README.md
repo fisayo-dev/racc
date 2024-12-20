@@ -93,6 +93,10 @@ npm run dev
 5. Create two storage buckets for vote image and profile images.
 6. Insert the ids of all the collections and bucket following the format in the env.example file
 
+------
+![An_env_example_file](/public/ENV_EXAMPLE.jpg)
+------
+
 ## Contributions
 
 This projet is an open-source project and we are glad to accept contribution. You can submit issues, fork the repository, and create pull requests.
