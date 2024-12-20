@@ -1,6 +1,6 @@
 # Racc - Online Voting Platform
 
-[![Racc Voting Image](public/RACC2.jpg)](https://raccvoting.vercel.app)
+[![Racc Voting Image](public/Lates.jpg)](https://raccvoting.vercel.app)
 
 ## Overview
 
