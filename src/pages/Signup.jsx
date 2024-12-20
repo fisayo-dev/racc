@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { AtSignIcon, CalendarIcon, LoaderCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { ImageUp } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
@@ -25,7 +27,7 @@ import { useAuth } from "../context/AuthContext";
 import { Eye, EyeSlash } from "iconsax-react";
 
 const Signup = () => {
-  const [formStatus, setFormStatus] = useState(0);
+  const [formStatus, setFormStatus] = useState(1);
   const { user, registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -401,11 +403,14 @@ const Signup = () => {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
+                        <DatePicker
                           selected={date}
-                          onSelect={setDate}
-                          initialFocus
+                          onChange={(selectedDate) => setDate(selectedDate)}
+                          dateFormat="dd/MM/yyyy"
+                          showYearDropdown
+                          showMonthDropdown
+                          dropdownMode="select"
+                          inline
                         />
                       </PopoverContent>
                     </Popover>

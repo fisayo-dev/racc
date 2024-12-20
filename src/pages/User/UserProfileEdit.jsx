@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Header } from "../../components";
 import { Loader2Icon, CalendarIcon } from "lucide-react";
 import { ImageUp } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import db from "../../appwrite/databases";
 import { storage } from "../../appwrite/config";
 import { Query, ID } from "appwrite";
@@ -363,11 +365,14 @@ const UserProfileEdit = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
+                    <DatePicker
                       selected={date}
-                      onSelect={setDate}
-                      initialFocus
+                      onChange={(selectedDate) => setDate(selectedDate)}
+                      dateFormat="dd/MM/yyyy"
+                      showYearDropdown
+                      showMonthDropdown
+                      dropdownMode="select"
+                      inline
                     />
                   </PopoverContent>
                 </Popover>

@@ -3,6 +3,8 @@ import { Header } from "../../components";
 import { useEffect, useState } from "react";
 import { ImageIcon, ImageUp, Loader2Icon } from "lucide-react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Edit2, Trash } from "iconsax-react";
 import { storage } from "../../appwrite/config";
 import {
@@ -293,11 +295,14 @@ const UserVoteEdit = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
+                    <DatePicker
                       selected={date}
-                      onSelect={setDate}
-                      initialFocus
+                      onChange={(selectedDate) => setDate(selectedDate)}
+                      dateFormat="dd/MM/yyyy"
+                      showYearDropdown
+                      showMonthDropdown
+                      dropdownMode="select"
+                      inline
                     />
                   </PopoverContent>
                 </Popover>
@@ -320,11 +325,14 @@ const UserVoteEdit = () => {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
+                    <DatePicker
                       selected={date2}
-                      onSelect={setDate2}
-                      initialFocus
+                      onChange={(selectedDate) => setDate2(selectedDate)}
+                      dateFormat="dd/MM/yyyy"
+                      showYearDropdown
+                      showMonthDropdown
+                      dropdownMode="select"
+                      inline
                     />
                   </PopoverContent>
                 </Popover>

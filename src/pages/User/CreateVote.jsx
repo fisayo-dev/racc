@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import {
   Select,
@@ -300,11 +302,14 @@ const CreateVote = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
+                          <DatePicker
                             selected={date}
-                            onSelect={setDate}
-                            initialFocus
+                            onChange={(selectedDate) => setDate(selectedDate)}
+                            dateFormat="dd/MM/yyyy"
+                            showYearDropdown
+                            showMonthDropdown
+                            dropdownMode="select"
+                            inline
                           />
                         </PopoverContent>
                       </Popover>
@@ -362,11 +367,14 @@ const CreateVote = () => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
+                          <DatePicker
                             selected={date2}
-                            onSelect={setDate2}
-                            initialFocus
+                            onChange={(selectedDate) => setDate2(selectedDate)}
+                            dateFormat="dd/MM/yyyy"
+                            showYearDropdown
+                            showMonthDropdown
+                            dropdownMode="select"
+                            inline
                           />
                         </PopoverContent>
                       </Popover>
