@@ -21,9 +21,9 @@ const Search = () => {
 
   const addTag = (e) => {
     e.preventDefault();
-    if (tagsList.length == 5) {
+    if (tagsList.length == 7) {
       Swal.fire({
-        text: "You cannot add more than 6 tag for a vote",
+        text: "You cannot add more than 7 tags for a vote",
         icon: "warning",
         toast: true,
         position: "bottom-right",
@@ -41,7 +41,7 @@ const Search = () => {
   };
 
   const deleteTag = (position) => {
-    setTagsList((prev) => prev.filter((__,index)=>  index !== position));
+    setTagsList((prev) => prev.filter((__, index) => index !== position));
   };
 
   // Fetching image if user is logged in
@@ -130,7 +130,7 @@ const Search = () => {
             </form>
             <div className="grid gap-2">
               <h2 className="text-[0.98rem] font-bold">Filters:</h2>
-              <div className="add-tag-field flex gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full overflow-scroll">
+              <div className="add-tag-field grid gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full overflow-scroll">
                 {/* The arent element for the tags to filter search */}
                 <div className="reletive flex flex-wrap items-center gap-3 ">
                   {tagsList.map((tag, index) => (
@@ -145,7 +145,7 @@ const Search = () => {
                     </div>
                   ))}
                 </div>
-                <form className="" onSubmit={addTag}>
+                <form className="w-full" onSubmit={addTag}>
                   <input
                     type="text"
                     className="w-full py-2"
