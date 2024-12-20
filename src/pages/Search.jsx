@@ -130,11 +130,11 @@ const Search = () => {
             </form>
             <div className="grid gap-2">
               <h2 className="text-[0.98rem] font-bold">Filters:</h2>
-              <div className="add-tag-field grid gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full overflow-scroll">
+              <div className="grid items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full ">
                 {/* The arent element for the tags to filter search */}
-                <div className="reletive flex flex-wrap items-center gap-3 ">
+                <div className="add-tag-field py-2 overflow-scroll flex flex-nowrap items-center gap-3 ">
                   {tagsList.map((tag, index) => (
-                    <div className="relative bg-zinc-800 px-3 py-2 rounded-lg flex">
+                    <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex">
                       <div
                         onClick={deleteTag.bind(this, index)}
                         className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"
@@ -145,6 +145,7 @@ const Search = () => {
                     </div>
                   ))}
                 </div>
+                {/* Add Tag form */}
                 <form className="w-full" onSubmit={addTag}>
                   <input
                     type="text"

@@ -104,5 +104,5 @@ input,button,select,textarea {
 }
 
 .add-tag-field::-webkit-scrollbar {
-  height: 2px;
+  height: 1.5px;
 }
