@@ -96,7 +96,24 @@ const VoteDescription = () => {
       return;
     }
 
+    // Checks voting policy check
+    if (
+      particularVote.franchise_policy === "No" &&
+      particularVote.creator_id === user.$id
+    ) {
+      MySwal.fire({
+        toast: true,
+        position: "bottom-end",
+        icon: "warning",
+        title: "This vote restricts you as the user from voting.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      return;
+    }
     if (!user) {
+      // Check is guest want to vote
       MySwal.fire({
         toast: true,
         position: "bottom-end",
@@ -146,7 +163,7 @@ const VoteDescription = () => {
       const result = await db.users.list([
         Query.equal("user_id", particularVote.creator_id),
       ]);
-      const theUser = result.documents[0]
+      const theUser = result.documents[0];
       await db.users.update(theUser.$id, {
         notification_seen: false,
       });
@@ -339,6 +356,19 @@ const VoteDescription = () => {
                         </div>
                       );
                     })}
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-bold">Franchise Policy</h2>
+                    <p
+                      className={`${
+                        particularVote.franchise_policy == "No"
+                          ? "text-red-500"
+                          : "text-green-500"
+                      } `}
+                    >
+                      {particularVote.franchise_policy == "No" ? "Off" : "On"}
+                    </p>
                   </div>
                 </div>
               </div>
