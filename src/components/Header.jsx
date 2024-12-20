@@ -1,23 +1,33 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Filter, Notification, SearchNormal1 } from "iconsax-react";
+import {
+  Filter,
+  Notification,
+  NotificationBing,
+  SearchNormal1,
+} from "iconsax-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
 import image from "../assets/image.png";
 const Header = () => {
-  const { user } = useAuth();
+  const { user, notificationSeen, setNotificationSeen } = useAuth();
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
 
   const fetchUserImageId = async () => {
-    const results = await db.users.list();
-    const users = await results.documents;
-    const loggedInUser = users.filter(
-      (thisUser) => thisUser.user_id == user.$id
-    );
-    const { profile_image } = loggedInUser[0];
-    setUserProfilePictureId(profile_image);
+    try {
+      const results = await db.users.list();
+      const users = await results.documents;
+      const loggedInUser = users.filter(
+        (thisUser) => thisUser.user_id == user.$id
+      );
+      const { profile_image, notification_seen } = loggedInUser[0];
+      setUserProfilePictureId(profile_image);
+      setNotificationSeen(notification_seen);
+    } catch (err) {
+      console.log("Error:", err.message);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +55,9 @@ const Header = () => {
           className="hidden md:flex items-center gap-4 hover:bg-zinc-600 bg-zinc-700 w-3/5 rounded-lg px-4 py-3"
         >
           <Filter className="h-6 w-6" />
-          <p className="w-full py-1 text-zinc-300">Search for votes by name or tags</p>
+          <p className="w-full py-1 text-zinc-300">
+            Search for votes by name or tags
+          </p>
           <SearchNormal1 className="h-6 w-6" />
         </Link>
         <div className="flex items-center gap-4">
@@ -53,7 +65,11 @@ const Header = () => {
           {user && (
             <div className="flex items-center justify-end gap-4">
               <Link to="/notifications">
-                <Notification className="h-6 w-6" />
+                {notificationSeen ? (
+                  <Notification className="h-6 w-6" />
+                ) : (
+                  <NotificationBing className="text-red-200 h-6 w-6" />
+                )}
               </Link>
               <Link
                 to="/create-vote"

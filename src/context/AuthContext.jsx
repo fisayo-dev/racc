@@ -10,6 +10,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(false);
+  const [notificationSeen, setNotificationSeen] = useState(null);
+
 
   useEffect(() => {
     if (!user) checkUserStatus();
@@ -67,15 +69,14 @@ export const AuthProvider = ({ children }) => {
     } = userInfo;
 
     try {
-
       // Step 1: Save use profile picture to bucket (storage)
       const profilePicture = await storage.createFile(
-        import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID, 
+        import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID,
         ID.unique(), // Generates a unique ID for the profile pictue
-        profile_picture,
+        profile_picture
       );
       const profileImageFileId = profilePicture.$id; // File ID for the uploaded image
-      
+
       // Step 2: Create user account
       await account.create(ID.unique(), email, password, username);
       // Logs user in after creating account
@@ -183,6 +184,8 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     logoutUser,
     deleteUser,
+    notificationSeen,
+    setNotificationSeen
   };
 
   return (

@@ -8,9 +8,9 @@ import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const Notifications = () => {
-  const { user } = useAuth();
-  const [notifications, setNotifications] = useState(null);
+  const { user, notificationSeen, setNotificationSeen } = useAuth();
 
+  const [notifications, setNotifications] = useState(null);
   const getTheUserFullName = async (userId) => {
     try {
       const results = await db.users.list([Query.equal("user_id", userId)]);
@@ -58,6 +58,15 @@ const Notifications = () => {
   };
 
   useEffect(() => {
+    const readAllNotificationsTrue = async () => {
+      const result = await db.users.list([Query.equal("user_id", user.$id)]);
+      const theUserColDoc = result.documents[0];
+      await db.users.update(theUserColDoc.$id, {
+        notification_seen: true,
+      });
+      setNotificationSeen(true);
+    };
+    readAllNotificationsTrue();
     fetchNotifications();
   }, []);
   return (

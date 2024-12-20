@@ -141,12 +141,16 @@ const VoteDescription = () => {
       await db.notifications.create({
         from: user.$id,
         to: particularVote.creator_id,
-        vote_id: particularVote.$id
+        vote_id: particularVote.$id,
       });
-      await db.users.update(particularVote.creator_id, {
+      const result = await db.users.list([
+        Query.equal("user_id", particularVote.creator_id),
+      ]);
+      const theUser = result.documents[0]
+      await db.users.update(theUser.$id, {
         notification_seen: false,
-      })
-      console.log('success')
+      });
+      console.log("success");
     } catch (err) {
       console.log(err.message);
     }
