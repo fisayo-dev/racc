@@ -4,7 +4,8 @@ import { Loader2Icon, CalendarIcon } from "lucide-react";
 import { ImageUp } from "lucide-react";
 import db from "../../appwrite/databases";
 import { storage } from "../../appwrite/config";
-import { Query } from "appwrite";
+import { Query, ID } from "appwrite";
+import Swal from "sweetalert2";
 import {
   Select,
   SelectContent,
@@ -24,9 +25,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { Edit2 } from "iconsax-react";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const UserProfileEdit = () => {
   const { user } = useAuth();
+  const [userColId, setUserColId] = useState("");
+
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -44,7 +49,7 @@ const UserProfileEdit = () => {
   const [profilePreview, setProfilePreview] = useState(null);
 
   const handleSelectingTag = (tagName) => {
-    if (profileTags.includes(tagName)) {
+    if (selectedTagsForProfile.includes(tagName)) {
       setSelectedTagsForProfile((prev) =>
         prev.filter((tag) => tag !== tagName)
       );
@@ -90,6 +95,8 @@ const UserProfileEdit = () => {
       const data = results2.documents;
       const thisUser = data[0];
 
+      setUserColId(thisUser.$id);
+
       // Getting other input data for user
       const thisUserFirstName = thisUser.first_name;
       const thisUserProfileTags = JSON.parse(thisUser.profile_tags);
@@ -121,8 +128,75 @@ const UserProfileEdit = () => {
     setLoading(false);
   };
 
-  const editProfile = async () => {};
+  const editProfile = async () => {
+    setLoading(true);
+    try {
+      let newImageUpdateId = fetchedImageId; // Default to the current image ID
 
+      if (profilePictureFile) {
+        try {
+          // Step 1: Delete old image if it exists
+          if (fetchedImageId) {
+            await storage.deleteFile(
+              import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID,
+              fetchedImageId
+            );
+          }
+        } catch (deleteError) {
+          console.warn(
+            "Warning: Old image could not be deleted. Proceeding with the new image upload.",
+            deleteError
+          );
+        }
+
+        try {
+          // Step 2: Upload the new image
+          const newImageUpload = await storage.createFile(
+            import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID,
+            ID.unique(), // Generate a new unique ID
+            profilePictureFile
+          );
+          newImageUpdateId = newImageUpload.$id;
+        } catch (uploadError) {
+          throw new Error("New image upload failed: " + uploadError.message);
+        }
+      }
+
+      // Step 3: Update the vote details in the database
+      await db.users.update(userColId, {
+        profile_image: newImageUpdateId,
+        first_name: firstName,
+        last_name: lastName,
+        profile_tags: JSON.stringify(selectedTagsForProfile),
+        country,
+        gender,
+        birth_date: date,
+        user_id: user.$id,
+      });
+
+      // Step 4: Notify the user of success
+      Swal.fire({
+        toast: true,
+        text: "Your vote was updated successfully!",
+        icon: "success",
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+      navigate(`/profile`);
+    } catch (err) {
+      console.error("Error updating user:", err.message);
+      Swal.fire({
+        toast: true,
+        text: "Failed to update your profile. Please try again!",
+        icon: "error",
+        position: "top",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     if (user) fetchOldData();
   }, [user]);
@@ -214,12 +288,12 @@ const UserProfileEdit = () => {
                         profileTags.map((tag, index) => (
                           <div
                             key={index}
-                            className={`${
+                            className={`transition-all duration-200 ${
                               selectedTagsForProfile.includes(tag)
-                                ? "bg-blue-400 border-blue-400 text-zinc-900"
-                                : "   hover:bg-blue-200 hover:text-zinc-900 border-zinc-700"
-                            } px-4 py-3 rounded-lg border-[0.1rem] transition shadow-lg  font-bold  cursor-pointer`}
-                            onClick={handleSelectingTag.bind(this, tag)}
+                                ? "bg-blue-400 border-blue-400  text-zinc-900 scale-105"
+                                : "hover:bg-blue-200 hover:text-zinc-900 border-zinc-700 scale-100"
+                            } p-2 rounded-lg`}
+                            onClick={() => handleSelectingTag(tag)} // Bind the function her
                           >
                             #{tag}
                           </div>
