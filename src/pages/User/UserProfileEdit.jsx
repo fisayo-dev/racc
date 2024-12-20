@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../../components";
 import { Loader2Icon, CalendarIcon } from "lucide-react";
 import { ImageUp } from "lucide-react";
 import db from "../../appwrite/databases";
+import { storage } from "../../appwrite/config";
 import { Query } from "appwrite";
 import {
   Select,
@@ -22,35 +23,39 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { Edit2 } from "iconsax-react";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "../../context/AuthContext";
 
 const UserProfileEdit = () => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("Female");
+  const [gender, setGender] = useState("");
   const [country, setCountry] = useState("");
   const [profileTags, setProfileTags] = useState([]);
+  const [selectedTagsForProfile, setSelectedTagsForProfile] = useState([]);
   const [date, setDate] = useState(null);
-
+  const [fetchedImageId, setFetchedImageId] = useState("");
   const [countries, setCountries] = useState([]);
   const [loadingCountries, setLoadingCountries] = useState(false);
   const [error, setError] = useState(null);
-  const [errors, setErrors] = useState({});
 
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
 
   const handleSelectingTag = (tagName) => {
     if (profileTags.includes(tagName)) {
-      setProfileTags((prev) => prev.filter((tag) => tag !== tagName));
+      setSelectedTagsForProfile((prev) =>
+        prev.filter((tag) => tag !== tagName)
+      );
     } else {
-      setProfileTags((prev) => [...prev, tagName]);
+      setSelectedTagsForProfile((prev) => [...prev, tagName]);
     }
   };
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfilePicture(file);
+      setProfilePictureFile(file);
       console.log(file);
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -61,23 +66,87 @@ const UserProfileEdit = () => {
   };
 
   const fetchOldData = async () => {
-    const fetchedTags = new Set(); // Defining fetched tags
+    setLoading(true);
+    try {
+      //   Step 1 : Fetch universal tags
+      const fetchedTags = new Set(); // Defining fetched tags
+      // Fetching all documents
+      const results1 = await db.votes.list();
+      const votes = results1.documents;
 
-    // Fetching all documents
-    const results = await db.votes.list();
-    const votes = results.documents;
-
-    // Looping through votes
-    votes.map((vote) => {
-      const tagsArrayForVote = JSON.parse(vote.tags); // Get each vote tags array
-      tagsArrayForVote.map((tag) => {
-        // Loop through each vote tag
-        fetchedTags.add(tag); // Sotre each vote tag in a set
+      // Looping through votes
+      votes.map((vote) => {
+        const tagsArrayForVote = JSON.parse(vote.tags); // Get each vote tags array
+        tagsArrayForVote.map((tag) => {
+          // Loop through each vote tag
+          fetchedTags.add(tag); // Sotre each vote tag in a set
+        });
       });
-    });
 
-    setProfileTags(Array.from(fetchedTags)); // store it later in an array
+      setProfileTags(Array.from(fetchedTags)); // store it later in an array
+
+      // Step 2: Fetch other data
+      const results2 = await db.users.list([Query.equal("user_id", user.$id)]);
+      const data = results2.documents;
+      const thisUser = data[0];
+
+      // Getting other input data for user
+      const thisUserFirstName = thisUser.first_name;
+      const thisUserProfileTags = JSON.parse(thisUser.profile_tags);
+      const thisUserLastName = thisUser.last_name;
+      const thisUserCountry = thisUser.country;
+      const thisUserBirthDate = thisUser.birth_date;
+      const thisUserGender = thisUser.gender;
+
+      //Step 3: FetchImage
+      const prevImgId = thisUser.profile_image;
+      setFetchedImageId(prevImgId);
+      const fetchedImage = storage.getFileDownload(
+        import.meta.env.VITE_PROFILE_IMAGES_BUCKET_ID,
+        prevImgId
+      );
+
+      // Set other user input to repective states
+      setFirstName(thisUserFirstName);
+      setLastName(thisUserLastName);
+      setGender(thisUserGender);
+      setCountry(thisUserCountry);
+      setDate(thisUserBirthDate);
+
+      setProfileTags(thisUserProfileTags);
+      setProfilePreview(fetchedImage);
+    } catch (err) {
+      console.log("Error:", err.message);
+    }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (user) fetchOldData();
+  }, [user]);
+
+  useEffect(() => {
+    // Fetch country data
+    const fetchCountries = async () => {
+      setLoadingCountries(true);
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        if (!response.ok) {
+          throw new Error("Failed to fetch countries");
+        }
+        const data = await response.json();
+        const countryNames = data.map((country) => country.name.common).sort();
+        setCountries(countryNames);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoadingCountries(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
   return (
     <div>
       <Header />
@@ -123,15 +192,15 @@ const UserProfileEdit = () => {
                     type="text"
                     className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
                     placeholder="Enter your last name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
 
               <div className="grid gap-4">
                 <label className="font-bold">Profile Tags</label>
-                <div className="2xl:w-3/12 md:w-5/12 sm:w-3/5 w-full mx-auto px-5">
+                <div className="w-full mx-auto px-5">
                   <div className="grid gap-6 justify-center">
                     {profileTags.length == 0 && (
                       <div className="my-6 mx-auto grid justify-center">
@@ -201,9 +270,6 @@ const UserProfileEdit = () => {
                     </SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.gender && (
-                  <p className="text-red-400">{errors.gender}</p>
-                )}
               </div>
               <div className="grid gap-2">
                 <label className="font-bold">Birth Date:</label>
@@ -229,7 +295,6 @@ const UserProfileEdit = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                {errors.date && <p className="text-red-400">{errors.date}</p>}
               </div>
             </div>
             <div className="flex px-4 py-3 rounded-lg item-center overflow-hidden mx-auto bg-zinc-300 text-zinc-900 cursor-pointer hover:bg-zinc-200 items-center gap-2 justify-center">
