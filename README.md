@@ -1,5 +1,7 @@
 # Racc - Online Voting Platform
 
+[![Racc Voting Image](public/RACC.jpg)](https://raccvoting.vercel.app)
+
 ## Overview
 
 **Racc is an online voting platform that allows users to create votes and participate in votes**
