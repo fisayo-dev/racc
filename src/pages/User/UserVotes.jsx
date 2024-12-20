@@ -6,20 +6,24 @@ import { InfoCircle, Trash } from "iconsax-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import VoteCard from "../../components/VoteCard";
-import { Pencil } from "lucide-react";
+import { Loader2Icon, Pencil } from "lucide-react";
 import Swal from "sweetalert2";
 import { getVoteStatus } from "../vote/VoteDescription";
 
 const UserVotes = () => {
   const { user } = useAuth();
   const userId = user.$id;
-  const [userVotes, setUserVotes] = useState([]);
+  const [userVotes, setUserVotes] = useState(null);
 
   const fetchUserVotes = async () => {
-    const results = await db.votes.list([Query.orderDesc("$createdAt")]);
-    const votes = results.documents;
-    const user_votes = votes.filter((vote) => vote.creator_id === userId);
-    setUserVotes(user_votes);
+    try {
+      const results = await db.votes.list([Query.orderDesc("$createdAt")]);
+      const votes = results.documents;
+      const user_votes = votes.filter((vote) => vote.creator_id === userId);
+      setUserVotes(user_votes || []);
+    } catch (err) {
+      console.log("Error:", err.message);
+    }
   };
 
   const handleDelete = async (voteId) => {
@@ -53,34 +57,40 @@ const UserVotes = () => {
     <div className="h-screen flex flex-col">
       <Header />
       <div className="app-container my-[8rem] grid gap-10">
-        {userVotes.length === 0 && (
+        {userVotes !== null && userVotes.length === 0 && (
           <div className="grid gap-3 mt-[5rem] text-blue-300">
             <InfoCircle className="mx-auto h-24 w-24 " />
             <p className="text-sm text-center">No votes created yet.</p>
           </div>
         )}
+        {userVotes == null && (
+          <div className="grid gap-3 mt-[5rem] text-blue-300">
+            <Loader2Icon className="mx-auto h-24 w-24 animate-spin" />
+            <p className="text-sm text-center">Fetching votes</p>
+          </div>
+        )}
 
-        {userVotes.length !== 0 && (
+        {userVotes !== null && userVotes.length !== 0 && (
           <h2 className="text-4xl font-bold">My Votes</h2>
         )}
         <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-          {userVotes.length !== 0 &&
+          {userVotes !== null && userVotes.length !== 0 &&
             userVotes.map((vote, index) => (
               <div className="grid gap-4 items-end">
                 <Link key={index} to={`/vote/${vote.$id}`}>
-                <VoteCard
-                  vote_img={vote.vote_img}
-                  id={vote.$id}
-                  title={vote.title}
-                  description={vote.description}
-                  options={vote.options}
-                  status="ongoing"
-                  tags={JSON.parse(vote.tags)}
-                  start_date={vote.start_date}
-                  end_date={vote.end_date}
-                  voters={vote.voters}
-                  creatorId={vote.creator_id}
-                />
+                  <VoteCard
+                    vote_img={vote.vote_img}
+                    id={vote.$id}
+                    title={vote.title}
+                    description={vote.description}
+                    options={vote.options}
+                    status="ongoing"
+                    tags={JSON.parse(vote.tags)}
+                    start_date={vote.start_date}
+                    end_date={vote.end_date}
+                    voters={vote.voters}
+                    creatorId={vote.creator_id}
+                  />
                 </Link>
                 <div className="flex items-center gap-3">
                   {getVoteStatus(vote.start_date, vote.end_date) ==
