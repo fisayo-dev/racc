@@ -177,7 +177,7 @@ const UserProfileEdit = () => {
       // Step 4: Notify the user of success
       Swal.fire({
         toast: true,
-        text: "Your vote was updated successfully!",
+        text: "Profile update was successful!",
         icon: "success",
         position: "top",
         showConfirmButton: false,
