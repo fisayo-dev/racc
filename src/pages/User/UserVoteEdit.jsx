@@ -190,7 +190,7 @@ const UserVoteEdit = () => {
       <Header />
       <div className="app-container my-[8rem]">
         {loading && (
-          <Loader2Icon className="mx-auto h-24 w-24 md:h-28 md:w-28 animate-spin my-10" />
+          <Loader2Icon className="mx-auto h-24 w-24 md:h-28 md:w-28 animate-spin my-20" />
         )}
         {!loading && (
           <div className="grid gap-10">

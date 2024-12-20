@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { Home, Signup, Login, Search } from "./pages";
 import VoteDescription from "./pages/vote/VoteDescription";
-import { Notifications, CreateVote, Profile, UserVotes, UserVoteEdit } from "./pages/User/";
+import { Notifications, CreateVote, Profile, UserVotes, UserVoteEdit, UserProfileEdit } from "./pages/User/";
 import PrivateRoutes from "./utils/PrivateRoutes";
 function App() {
   const router = createBrowserRouter(
@@ -23,6 +23,7 @@ function App() {
           <Route path="/create-vote" element={<CreateVote />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<UserProfileEdit />} />
           <Route path="/profile/my-votes" element={<UserVotes />} />
           <Route path="/profile/my-votes/edit/:vote_id" element={<UserVoteEdit />} />
         </Route>

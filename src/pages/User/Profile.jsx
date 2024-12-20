@@ -97,12 +97,12 @@ const Profile = () => {
                         className="bg-red-500 border-none text-white hover:bg-red-600"
                       />
                     </div> */}
-                    <div>
+                    <Link to="/profile/edit">
                       <Button
                         text="Edit"
                         className="bg-blue-400 text-zinc-900 border-none hover:bg-blue-500"
                       />
-                    </div>
+                    </Link>
                   </div>
                 </div>
               ) : (
