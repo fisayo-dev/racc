@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Notification, SearchNormal1 } from "iconsax-react";
+import { InfoCircle, Notification, SearchNormal1 } from "iconsax-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
+import { Query } from "appwrite";
 import image from "../assets/image.png";
 import { Loader2Icon, XIcon } from "lucide-react";
 import Swal from "sweetalert2";
@@ -20,43 +21,40 @@ const Search = () => {
 
   // Vote States
   const [listOfVotes, setListOfVotes] = useState([]);
-  const [loadingVotes, setLoadingVotes] = useState(true);
+  const [loadingVotes, setLoadingVotes] = useState(false);
+  const [lastFetchedSearchValue, setLastFetchedSearchValue] = useState("");
 
   // Tags states
   const [tagsList, setTagsList] = useState([]);
   const [hideTags, setHideTags] = useState(false);
 
   // Search functions
-  const fetchVotes = async (e) => {
-    //   Prevent default form submit
-    e.preventDefault();
-    //   Set loader to true
+  const fetchVotes = async () => {
+    // Do not fetch if no search value is provided
+    if (!searchValue.trim()) return;
+
     setLoadingVotes(true);
-    //   Fetch votes
     try {
       const results = await db.votes.list([Query.orderDesc("$createdAt")]);
       const votes = results.documents;
-      // Define filtered vots
-      let filteredVotes = [];
-      // If no tags, show all votes that match the search value
-      if (tagsList.length == 0) {
-        filteredVotes = votes.filter((vote) =>
-          vote.title.toLowerCase().contains(searchValue.toLocaleLowerCase())
-        );
-        setListOfVotes(filteredVotes);
-      } else {
-        // If tags, show all votes that match search vakue and have tags
-        filteredVotes = votes
-          .filter((vote) => {
-            const voteTags = vote.tags ? JSON.parse(vote.tags) : [];
-            return voteTags.some((tag) => tagsList.includes(tag));
-          })
-          .filter((vote) =>
-            vote.title.toLowerCase().contains(searchValue.toLocaleLowerCase())
-          );
-      }
+
+      // Filter votes based on tags and search value
+      let filteredVotes = votes.filter((vote) => {
+        const voteTitle = vote.title.toLowerCase();
+        const matchesSearchValue = voteTitle.includes(searchValue.toLowerCase());
+        if (tagsList.length === 0) {
+          return matchesSearchValue;
+        } else {
+          const voteTags = vote.tags ? JSON.parse(vote.tags) : [];
+          const matchesTags = voteTags.some((tag) => tagsList.includes(tag));
+          return matchesSearchValue && matchesTags;
+        }
+      });
+
+      setListOfVotes(filteredVotes || []);
+      setLastFetchedSearchValue(searchValue);
     } catch (err) {
-      console.error("Error:", err.message);
+      console.error("Error fetching votes:", err.message);
     }
     setLoadingVotes(false);
   };
@@ -64,7 +62,7 @@ const Search = () => {
   // Tag functions
   const addTag = (e) => {
     e.preventDefault();
-    if (tagsList.length == 7) {
+    if (tagsList.length >= 7) {
       Swal.fire({
         text: "You cannot add more than 7 tags for a vote",
         icon: "warning",
@@ -84,18 +82,18 @@ const Search = () => {
   };
 
   const deleteTag = (position) => {
-    setTagsList((prev) => prev.filter((__, index) => index !== position));
+    setTagsList((prev) => prev.filter((_, index) => index !== position));
   };
 
   // Fetching image if user is logged in
   const fetchUserImageId = async () => {
     const results = await db.users.list();
     const users = await results.documents;
-    const loggedInUser = users.filter(
-      (thisUser) => thisUser.user_id == user.$id
-    );
-    const { profile_image } = loggedInUser[0];
-    setUserProfilePictureId(profile_image);
+    const loggedInUser = users.filter((thisUser) => thisUser.user_id === user.$id);
+    if (loggedInUser[0]) {
+      const { profile_image } = loggedInUser[0];
+      setUserProfilePictureId(profile_image);
+    }
   };
 
   const fetchUserImage = () => {
@@ -108,9 +106,15 @@ const Search = () => {
     );
   };
 
+  // Effect for fetching votes when tags or search value changes
+  useEffect(() => {
+    if (searchValue.trim()) fetchVotes();
+  }, [tagsList, searchValue]);
+
   useEffect(() => {
     fetchUserImageId();
   }, []);
+
   return (
     <div>
       <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
@@ -159,7 +163,10 @@ const Search = () => {
         <div className="grid gap-7">
           <div className="div grid gap-4">
             <form
-              action=""
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetchVotes();
+              }}
               className="flex items-center bg-zinc-800 rounded-lg md:px-5 md:py-4 px-4 py-3 shadow-lg"
             >
               <input
@@ -183,10 +190,9 @@ const Search = () => {
               </div>
               {!hideTags && (
                 <div className="grid items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full ">
-                  {/* The arent element for the tags to filter search */}
                   <div className="add-tag-field py-2 overflow-scroll flex flex-nowrap items-center gap-3 ">
                     {tagsList.map((tag, index) => (
-                      <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex">
+                      <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex" key={index}>
                         <div
                           onClick={deleteTag.bind(this, index)}
                           className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"
@@ -197,12 +203,11 @@ const Search = () => {
                       </div>
                     ))}
                   </div>
-                  {/* Add Tag form */}
                   <form className="w-full" onSubmit={addTag}>
                     <input
                       type="text"
                       className="w-full py-2"
-                      placeholder="Type and press enter to and tag"
+                      placeholder="Type and press enter to add tag"
                       value={addTagValue}
                       onChange={(e) => setAddTagValue(e.target.value)}
                     />
@@ -216,9 +221,16 @@ const Search = () => {
               <Loader2Icon className="h-28 w-28 animate-spin" />
             </div>
           )}
+          {!loadingVotes &&
+            listOfVotes.length === 0 &&
+            lastFetchedSearchValue.trim() && (
+              <div className="grid gap-1 mx-auto mt-[1rem] ">
+                <InfoCircle className="h-28 w-28 mx-auto" />
+                <p className="text-center">No results for your search </p>
+              </div>
+            )}
           <div className="grid items-center gap-4 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
             {!loadingVotes &&
-              listOfVotes.length !== 0 &&
               listOfVotes.map((vote, index) => (
                 <Link key={index} to={`/vote/${vote.$id}`}>
                   <VoteCard
