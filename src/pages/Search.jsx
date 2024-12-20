@@ -11,8 +11,19 @@ const Search = () => {
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
 
   // Filter Search states
-  const [searchValue, setSeatchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [addTagValue, setAddTagValue] = useState("");
+
+  // Tags list
+  const [tagsList, setTagsList] = useState([]);
+
+  const addTag = (e) => {
+    e.preventDefault();
+    if (addTagValue.trim() !== "") {
+      setTagsList((prev) => [...prev, addTagValue]);
+      setAddTagValue("");
+    }
+  };
 
   // Fetching image if user is logged in
   const fetchUserImageId = async () => {
@@ -25,10 +36,6 @@ const Search = () => {
     setUserProfilePictureId(profile_image);
   };
 
-  useEffect(() => {
-    fetchUserImageId();
-  }, []);
-
   const fetchUserImage = () => {
     return (
       `https://cloud.appwrite.io/v1/storage/buckets/${
@@ -39,6 +46,9 @@ const Search = () => {
     );
   };
 
+  useEffect(() => {
+    fetchUserImageId();
+  }, []);
   return (
     <div>
       <div className="bg-zinc-900 shadow-md fixed bottom-100 top-0 w-full py-5 border-b-[0.1rem] border-zinc-700 text-white">
@@ -94,6 +104,8 @@ const Search = () => {
                 type="text"
                 className="w-full"
                 placeholder="Search for vote by title"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
               />
               <SearchNormal1 className="h-6 w-6" />
             </form>
@@ -102,17 +114,19 @@ const Search = () => {
               <div className="flex gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md">
                 {/* The arent element for the tags to filter search */}
                 <div className="flex items-center gap-3">
-                  <div className="bg-zinc-800 px-3 py-2 rounded-lg">#ai</div>
-                  <div className="bg-zinc-800 px-3 py-2 rounded-lg">
-                    #sports
-                  </div>
-                  <div className="bg-zinc-800 px-3 py-2 rounded-lg">#tech</div>
+                  {tagsList.map((tag) => (
+                    <div className="bg-zinc-800 px-3 py-2 rounded-lg">
+                      #{tag}
+                    </div>
+                  ))}
                 </div>
-                <form action="">
+                <form className="w-full" onSubmit={addTag}>
                   <input
                     type="text"
-                    className="w-full"
-                    placeholder="Add Tag by name"
+                    className="w-full py-2"
+                    placeholder="Type and press enter to and tag"
+                    value={addTagValue}
+                    onChange={(e) => setAddTagValue(e.target.value)}
                   />
                 </form>
               </div>
