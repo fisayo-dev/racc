@@ -5,7 +5,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { Home, Signup, Login } from "./pages";
+import { Home, Signup, Login, Search } from "./pages";
 import VoteDescription from "./pages/vote/VoteDescription";
 import { Notifications, CreateVote, Profile, UserVotes, UserVoteEdit } from "./pages/User/";
 import PrivateRoutes from "./utils/PrivateRoutes";
@@ -16,6 +16,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/search" element={<Search/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/vote/:id" element={<VoteDescription />} />
         <Route path="" element={<PrivateRoutes />}>
