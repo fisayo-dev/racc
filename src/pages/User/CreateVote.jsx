@@ -488,10 +488,10 @@ const CreateVote = () => {
                 </div>
               </div>
 
-              <div onClick={createVote}>
+              <div onClick={createVote} className="flex items-center">
                 <ButtonEl
                   text="Submit"
-                  className="w-full text-md hover:bg-zinc-300 bg-zinc-100 text-zinc-800 mx-auto my-5"
+                  className="w-full md:w-5/12 text-md hover:bg-zinc-300 bg-zinc-100 text-zinc-800  mx-auto my-5"
                 />
               </div>
             </div>
