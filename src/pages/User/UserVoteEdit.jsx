@@ -199,7 +199,7 @@ const UserVoteEdit = () => {
             <h2 className="text-center font-bold text-4xl">Edit Vote</h2>
             <div className="grid gap-3 mx-auto 2xl:w-3/5 md:w-4/6 w-full">
               <div className="grid gap-4">
-                <label>Vote Title</label>
+                <label className="font-bold">Vote Title</label>
                 <input
                   type="text"
                   className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
@@ -209,7 +209,7 @@ const UserVoteEdit = () => {
                 />
               </div>
               <div className="grid gap-4">
-                <label>Vote Description</label>
+                <label className="font-bold">Vote Description</label>
                 <textarea
                   type="text"
                   className="border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3"
@@ -219,7 +219,7 @@ const UserVoteEdit = () => {
                 ></textarea>
               </div>
               <div className="grid gap-4">
-                <label>Vote Image</label>
+                <label className="font-bold">Vote Image</label>
                 <p className="text-sm">
                   Upload an image about your vote to increase visiblilty.{" "}
                 </p>
@@ -253,7 +253,7 @@ const UserVoteEdit = () => {
                 </div>
               </div>
               <div className="grid gap-4">
-                <label>Vote Tags</label>
+                <label className="font-bold">Vote Tags</label>
                 <div className="grid lg:flex gap-3">
                   <div className="w-full flex items-center gap-2 border-[0.1rem] border-zinc-300 rounded-lg px-4 py-3">
                     <Hashtag className="h-6 w-6" />
@@ -341,7 +341,7 @@ const UserVoteEdit = () => {
                 <h2 className="text-md ">Vote Options:</h2>
                 {options.map((option, index) => (
                   <div key={index} className="grid gap-4">
-                    <label>Option {index + 1}</label>
+                    <label className="font-bold">Option {index + 1}</label>
                     <div className="flex gap-2">
                       <input
                         type="text"
