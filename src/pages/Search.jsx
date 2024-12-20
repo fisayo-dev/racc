@@ -6,6 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
 import { useEffect, useState } from "react";
 import image from "../assets/image.png";
+import { XIcon } from "lucide-react";
+import Swal from "sweetalert2";
 const Search = () => {
   const { user } = useAuth();
   const [userProfilePictureId, setUserProfilePictureId] = useState(null);
@@ -19,10 +21,27 @@ const Search = () => {
 
   const addTag = (e) => {
     e.preventDefault();
+    if (tagsList.length == 5) {
+      Swal.fire({
+        text: "You cannot add more than 6 tag for a vote",
+        icon: "warning",
+        toast: true,
+        position: "bottom-right",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      setAddTagValue("");
+      return;
+    }
     if (addTagValue.trim() !== "") {
       setTagsList((prev) => [...prev, addTagValue]);
       setAddTagValue("");
     }
+  };
+
+  const deleteTag = (position) => {
+    setTagsList((prev) => prev.filter((__,index)=>  index !== position));
   };
 
   // Fetching image if user is logged in
@@ -111,16 +130,22 @@ const Search = () => {
             </form>
             <div className="grid gap-2">
               <h2 className="text-[0.98rem] font-bold">Filters:</h2>
-              <div className="flex gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md">
+              <div className="add-tag-field flex gap-3 items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full overflow-scroll">
                 {/* The arent element for the tags to filter search */}
-                <div className="flex items-center gap-3">
-                  {tagsList.map((tag) => (
-                    <div className="bg-zinc-800 px-3 py-2 rounded-lg">
-                      #{tag}
+                <div className="reletive flex flex-wrap items-center gap-3 ">
+                  {tagsList.map((tag, index) => (
+                    <div className="relative bg-zinc-800 px-3 py-2 rounded-lg flex">
+                      <div
+                        onClick={deleteTag.bind(this, index)}
+                        className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"
+                      >
+                        <XIcon className="h-[1rem] w-[1rem] text-zinc-900" />
+                      </div>
+                      <p>#{tag}</p>
                     </div>
                   ))}
                 </div>
-                <form className="w-full" onSubmit={addTag}>
+                <form className="" onSubmit={addTag}>
                   <input
                     type="text"
                     className="w-full py-2"

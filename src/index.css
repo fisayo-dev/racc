@@ -102,3 +102,7 @@ input,button,select,textarea {
 .profile-grid {
   @apply gap-5 md:gap-10
 }
+
+.add-tag-field::-webkit-scrollbar {
+  height: 2px;
+}
