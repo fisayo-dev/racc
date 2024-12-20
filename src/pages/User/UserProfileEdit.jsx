@@ -113,13 +113,15 @@ const UserProfileEdit = () => {
       setCountry(thisUserCountry);
       setDate(thisUserBirthDate);
 
-      setProfileTags(thisUserProfileTags);
+      setSelectedTagsForProfile(thisUserProfileTags);
       setProfilePreview(fetchedImage);
     } catch (err) {
       console.log("Error:", err.message);
     }
     setLoading(false);
   };
+
+  const editProfile = async () => {};
 
   useEffect(() => {
     if (user) fetchOldData();
@@ -297,7 +299,10 @@ const UserProfileEdit = () => {
                 </Popover>
               </div>
             </div>
-            <div className="flex px-4 py-3 rounded-lg item-center overflow-hidden mx-auto bg-zinc-300 text-zinc-900 cursor-pointer hover:bg-zinc-200 items-center gap-2 justify-center">
+            <div
+              onClick={editProfile}
+              className="flex px-4 py-3 rounded-lg item-center overflow-hidden mx-auto bg-zinc-300 text-zinc-900 cursor-pointer hover:bg-zinc-200 items-center gap-2 justify-center"
+            >
               <Edit2 className="h-6 w-6" />
               <p>Save Changes</p>
             </div>
