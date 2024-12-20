@@ -93,7 +93,7 @@ const VoteCard = ({
     getCreatorProfile();
   }, []);
   return (
-    <div className="bg-zinc-800 h-[540px] md:h-[440px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
+    <div className="bg-zinc-800 h-[540px] md:h-[489px] overflow-hidden text-zinc-100 border-[0.1rem] border-zinc-800 hover:border-zinc-500 cursor-pointer shadow-md rounded-lg grid gap-2">
       <div className="grid items-center py-3 px-4 gap-4 md:gap-3">
         {voteCreator && (
           <div className=" text-zinc-200 flex items-center gap-2">
