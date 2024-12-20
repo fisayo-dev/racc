@@ -27,7 +27,7 @@ import { useAuth } from "../context/AuthContext";
 import { Eye, EyeSlash } from "iconsax-react";
 
 const Signup = () => {
-  const [formStatus, setFormStatus] = useState(1);
+  const [formStatus, setFormStatus] = useState(0);
   const { user, registerUser } = useAuth();
   const navigate = useNavigate();
 

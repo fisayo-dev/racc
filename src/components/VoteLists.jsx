@@ -1,35 +1,12 @@
 import VoteCard from "./VoteCard";
-import image1 from "../assets/samples/ballondor.png";
-import image2 from "../assets/samples/chess.png";
-import image3 from "../assets/samples/oscars.png";
-import image4 from "../assets/samples/nextjs.png";
-import image5 from "../assets/samples/nextjs2.png";
-import image6 from "../assets/samples/no.png";
-import image7 from "../assets/samples/performance.png";
-import image8 from "../assets/samples/tricks.png";
-import image9 from "../assets/samples/dailydotdev.png";
 import { Link } from "react-router-dom";
 import ButtonEl from "./Button";
-import landing_voters from "../assets/freepik__adjust__39359-removebg-preview.png";
+import landing_voters from "../assets/landing_image.png";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import db from "../appwrite/databases";
 import { Query } from "appwrite";
 import LoadingIcon from "./LoadingIcon";
-
-const images = [
-  image1,
-  image2,
-  image3,
-  image4,
-  image5,
-  image6,
-  image7,
-  image8,
-  image9,
-];
-
-const randomImage = () => images[Math.floor(Math.random() * images.length)];
 
 const VoteLists = () => {
   const { user } = useAuth();
@@ -112,7 +89,7 @@ const VoteLists = () => {
 
   return (
     <div className="mt-[7rem] mb-[4rem] text-white">
-      <div className="app-container grid gap-8">
+      <div className="app-container grid ">
         {!user && (
           <div className="flex items-center justify-center md:justify-between gap-5">
             <div className="grid gap-4">
@@ -186,5 +163,4 @@ const VoteLists = () => {
   );
 };
 
-export { randomImage };
 export default VoteLists;
