@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Filter, Notification, SearchNormal1 } from "iconsax-react";
+import { Notification, SearchNormal1 } from "iconsax-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import db from "../appwrite/databases";
@@ -16,8 +16,9 @@ const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [addTagValue, setAddTagValue] = useState("");
 
-  // Tags list
+  // Tags states
   const [tagsList, setTagsList] = useState([]);
+  const [hideTags, setHideTags] = useState(true);
 
   const addTag = (e) => {
     e.preventDefault();
@@ -129,33 +130,43 @@ const Search = () => {
               <SearchNormal1 className="h-6 w-6" />
             </form>
             <div className="grid gap-2">
-              <h2 className="text-[0.98rem] font-bold">Filters:</h2>
-              <div className="grid items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full ">
-                {/* The arent element for the tags to filter search */}
-                <div className="add-tag-field py-2 overflow-scroll flex flex-nowrap items-center gap-3 ">
-                  {tagsList.map((tag, index) => (
-                    <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex">
-                      <div
-                        onClick={deleteTag.bind(this, index)}
-                        className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"
-                      >
-                        <XIcon className="h-[1rem] w-[1rem] text-zinc-900" />
-                      </div>
-                      <p>#{tag}</p>
-                    </div>
-                  ))}
+              <div className="flex justify-between items-center">
+                <h2 className="text-[0.98rem] font-bold">Filters:</h2>
+                <div
+                  className="cursor-pointer hover:text-blue-300"
+                  onClick={() => setHideTags((prev) => !prev)}
+                >
+                  {hideTags ? "Show Tags" : "Hide Tags"}
                 </div>
-                {/* Add Tag form */}
-                <form className="w-full" onSubmit={addTag}>
-                  <input
-                    type="text"
-                    className="w-full py-2"
-                    placeholder="Type and press enter to and tag"
-                    value={addTagValue}
-                    onChange={(e) => setAddTagValue(e.target.value)}
-                  />
-                </form>
               </div>
+              {!hideTags && (
+                <div className="grid items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full ">
+                  {/* The arent element for the tags to filter search */}
+                  <div className="add-tag-field py-2 overflow-scroll flex flex-nowrap items-center gap-3 ">
+                    {tagsList.map((tag, index) => (
+                      <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex">
+                        <div
+                          onClick={deleteTag.bind(this, index)}
+                          className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"
+                        >
+                          <XIcon className="h-[1rem] w-[1rem] text-zinc-900" />
+                        </div>
+                        <p>#{tag}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Add Tag form */}
+                  <form className="w-full" onSubmit={addTag}>
+                    <input
+                      type="text"
+                      className="w-full py-2"
+                      placeholder="Type and press enter to and tag"
+                      value={addTagValue}
+                      onChange={(e) => setAddTagValue(e.target.value)}
+                    />
+                  </form>
+                </div>
+              )}
             </div>
           </div>
         </div>
