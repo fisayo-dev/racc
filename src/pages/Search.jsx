@@ -41,7 +41,9 @@ const Search = () => {
       // Filter votes based on tags and search value
       let filteredVotes = votes.filter((vote) => {
         const voteTitle = vote.title.toLowerCase();
-        const matchesSearchValue = voteTitle.includes(searchValue.toLowerCase());
+        const matchesSearchValue = voteTitle.includes(
+          searchValue.toLowerCase()
+        );
         if (tagsList.length === 0) {
           return matchesSearchValue;
         } else {
@@ -89,7 +91,9 @@ const Search = () => {
   const fetchUserImageId = async () => {
     const results = await db.users.list();
     const users = await results.documents;
-    const loggedInUser = users.filter((thisUser) => thisUser.user_id === user.$id);
+    const loggedInUser = users.filter(
+      (thisUser) => thisUser.user_id === user.$id
+    );
     if (loggedInUser[0]) {
       const { profile_image } = loggedInUser[0];
       setUserProfilePictureId(profile_image);
@@ -123,6 +127,9 @@ const Search = () => {
             Racc
           </Link>
           <div className="flex items-center gap-4">
+            <Link to="/search">
+              <SearchNormal1 className="block md:hidden hover:text-zinc-100 h-6 w-6 text-zinc-300" />
+            </Link>
             {user && (
               <div className="flex items-center justify-end gap-4">
                 <Link to="/notifications">
@@ -192,7 +199,10 @@ const Search = () => {
                 <div className="grid items-center px-3 py-2 border-[0.12rem] rounded-lg border-zinc-700 shadow-md w-full ">
                   <div className="add-tag-field py-2 overflow-scroll flex flex-nowrap items-center gap-3 ">
                     {tagsList.map((tag, index) => (
-                      <div className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex" key={index}>
+                      <div
+                        className="relative bg-zinc-800 px-3 py-2 mx-2 rounded-lg flex"
+                        key={index}
+                      >
                         <div
                           onClick={deleteTag.bind(this, index)}
                           className="absolute -right-[5%] -top-[12%] h-5 w-5 flex place-items-center justify-center rounded-full  bg-zinc-300"

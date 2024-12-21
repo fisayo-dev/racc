@@ -61,7 +61,9 @@ const Header = () => {
           <SearchNormal1 className="h-6 w-6" />
         </Link>
         <div className="flex items-center gap-4">
-          <SearchNormal1 className="block md:hidden h-6 w-6 text-zinc-300" />
+          <Link to="/search">
+            <SearchNormal1 className="block md:hidden hover:text-zinc-100 h-6 w-6 text-zinc-300" />
+          </Link>
           {user && (
             <div className="flex items-center justify-end gap-4">
               <Link to="/notifications">
@@ -77,7 +79,7 @@ const Header = () => {
               >
                 <PlusIcon className="h-6 w-6" />
               </Link>
-              <Link to="/profile"className="shadow-lg">
+              <Link to="/profile" className="shadow-lg">
                 <div
                   className="h-8 w-8 bg-cover  bg-center bg-zinc-500 rounded-full hover:scale-110 transition"
                   style={{ backgroundImage: `url(${fetchUserImage()})` }}

@@ -18,7 +18,9 @@ const Notifications = () => {
       await db.notifications.delete(notification_id);
       // Update the state by filtering out the deleted notification
       setNotifications((notifications) =>
-        notifications.filter((notification) => notification.$id !== notification_id)
+        notifications.filter(
+          (notification) => notification.$id !== notification_id
+        )
       );
 
       Swal.fire({
@@ -39,7 +41,7 @@ const Notifications = () => {
     try {
       const results = await db.users.list([Query.equal("user_id", userId)]);
       const theUser = results.documents[0];
-      return `${theUser.first_name} ${theUser.last_name}`;
+      return `${theUser.first_name} `;
     } catch (err) {
       console.log(err.message);
     }
