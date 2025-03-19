@@ -75,7 +75,7 @@ git clone https://github.com/fisayo-dev/racc.git
 2. Install the dependencies.
 
 ```bash
-npm install
+npm install # for npm
 ```
 
 3. Start the development server.
@@ -99,7 +99,7 @@ npm run dev
 
 ## Contributions
 
-This projet is an open-source project and we are glad to accept contribution. You can submit issues, fork the repository, and create pull requests.
+This projet is an open-source project and I am glad to accept contributions. You can submit issues, fork the repository, and create pull requests.
 
 ## Developer
 
